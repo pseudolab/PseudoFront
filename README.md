@@ -1,6 +1,6 @@
 # PseudoFront
 
-### TODO
+## TODO
 
 - eslint
 - code auto-fix
@@ -32,7 +32,7 @@
     - [https://github.com/surmon-china/vue-quill-editor](https://github.com/surmon-china/vue-quill-editor)
     - [https://quilljs.com/](https://quilljs.com/)
 
-### 특징
+## 특징
 
 - View, Component 가 아닌 로직별로 폴더가 분리 되어 있습니다
     - ex) components/api1/ApiComponent1.vue, mixins/option1.js
@@ -40,7 +40,7 @@
 - [https://github.com/seongpil0948/PseudoFront](https://github.com/seongpil0948/PseudoFront)
     - star 는 사랑입니다.
 
-### 컨벤션
+## 컨벤션
 
 - indent: space(2)
 - package manager: npm
