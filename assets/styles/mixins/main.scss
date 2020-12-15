@@ -1,0 +1,72 @@
+// progress
+@mixin progress-circular($left:50%, $top:50%, $z-index:1) {
+    left: $left;
+    top: $top;
+    z-index: $z-index;
+}
+// scroll
+@mixin scrollbar ($width:5px, $height:30px, $foreground-color:#e4e4e4,
+                $background-color: mix($foreground-color, white,  50%)) {
+
+    &::-webkit-scrollbar {
+        width:  $width;
+        height: $height;
+        background-color: $background-color;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+        border-radius: 20px;
+    }
+    
+    &::-webkit-scrollbar-track { 
+        background: $background-color;
+    }
+    // For Internet Explorer
+    & { 
+        scrollbar-face-color: $foreground-color;
+        scrollbar-track-color: $background-color;
+    }
+}
+
+@mixin circle ($width,  $height) {
+	border-radius: 50%;
+	width: $width;
+	height: $height;
+	text-align: center; /* horizon */
+	line-height: $height;
+}
+
+@mixin relative ($top, $left, $z-index) {
+	top: $top ;
+	left: $left;
+    z-index: $z-index;
+    position: relative;
+}
+
+@mixin absolute ($top, $left, $z-index) {
+	top: $top ;
+	left: $left;
+    z-index: $z-index;
+    position: absolute;
+}
+
+@mixin font-ko {
+    font-family: 'NanumSquare';
+    color: map-get($fitzme-colors, font-color);
+}
+
+@mixin category-font {
+    font-weight: 900;
+    color: map-get($fitzme-colors, font-color);
+}
+
+
+@mixin max-width ($divide-by: 0, ) {
+    $pure-width: 700px;
+    $width: $pure-width;
+    @if $divide-by > 0 {
+        $width: ($pure-width / $divide-by) - ($divide-by * 6);    
+    }
+    max-width: $width;
+    min-width: $width;
+}
