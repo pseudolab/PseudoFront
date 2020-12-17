@@ -10,14 +10,18 @@
 </template>
  
 <script>
-  import TextEditor from "@/components/api/quil/TextEditor.vue"
-  export default {
-    components: {
-      TextEditor,
-    },
-    data () {
-      return {}
-    },
-  }
+import TextEditor from "@/components/api/quil/TextEditor.vue"
+import heads from "@/static/mockDatas/heads.js"
+export default {
+  head() {
+    return heads.community
+  },
+  components: {
+    TextEditor,
+  },
+  data () {
+    return {}
+  },
+}
 </script>
  

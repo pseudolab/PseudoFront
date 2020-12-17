@@ -12,26 +12,30 @@
  
 <script>
   import TextEditor from "@/components/api/quil/TextEditor.vue"
-  export default {
-    components: {
-      TextEditor,
-    },
-    data () {
-      return {
-        heads: [
-          {
-            title: '가짜 연구소 ',
-            meta: [
-              {
-                hid: 'description',
-                name: 'description',
-                content: 'Home page description'
-              }
-            ],
-          }          
-        ]        
-      }
-    },
-  }
+import heads from "@/static/mockDatas/heads.js"
+export default {
+  head() {
+    return heads.query
+  },
+  components: {
+    TextEditor,
+  },
+  data () {
+    return {
+      heads: [
+        {
+          title: '가짜 연구소 ',
+          meta: [
+            {
+              hid: 'description',
+              name: 'description',
+              content: 'Home page description'
+            }
+          ],
+        }          
+      ]        
+    }
+  },
+}
 </script>
  

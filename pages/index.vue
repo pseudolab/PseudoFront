@@ -9,8 +9,10 @@
 </template>
 
 <script>
-
+import heads from "@/static/mockDatas/heads.js"
 export default {
-
+  head() {
+    return heads.main
+  }
 }
 </script>
