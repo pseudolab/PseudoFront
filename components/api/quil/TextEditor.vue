@@ -12,9 +12,23 @@
 </template>
 
 <script>
-import textEditor from "@/components/api/quil/mixins/textEditor.js"
 export default {
-  mixins: [ textEditor ],
+  data () {
+    return {
+      content: '<p>I am Example</p>',
+      editorOption: {
+        // some quill options
+        modules: {
+          // https://quilljs.com/
+          // https://github.com/surmon-china/vue-quill-editor
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block']
+          ]
+        }
+      }  
+    }
+  },  
   methods: {
     onEditorBlur(editor) {
       console.log('editor blur!', editor)
