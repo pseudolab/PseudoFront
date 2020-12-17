@@ -25,6 +25,7 @@ export default {
   ],
   plugins:[
     { src: "~plugins/vue-quill-editor.js", ssr: false },
+    { src: "~plugins/global-constants.js", ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
