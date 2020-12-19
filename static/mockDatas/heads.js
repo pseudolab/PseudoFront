@@ -11,20 +11,30 @@
 //     }
 //   }
 
+const htmlAttrs = {
+  // 주 언어 명시
+  lang: 'ko-KR',
+  dir: 'ltr'
+}
+
 export default {
     main: {
         title: 'pseudo lab',
+        htmlAttrs: htmlAttrs,
         meta: [
+          { charset: 'utf-8' },
           {
-            hid: 'pseudo lab',
-            name: 'pseudo lab',
-            content: 'pseudo lab description'
+            hid: 'google-site-verification',
+            name: 'google-site-verification',
+            content: 'dal5FRLPcu0fGm0RyDRg0anjcOwJhLRvEROdf0ZpHNQ'
           }
         ]        
     },   
     community: {
         title: '가짜 연구소 커뮤니티 페이지',
+        htmlAttrs: htmlAttrs,
         meta: [
+          { charset: 'utf-8' },
           {
             hid: '가짜 연구소 커뮤니티 페이지 hid',
             name: '가짜 연구소 커뮤니티 페이지 name',
@@ -34,7 +44,9 @@ export default {
     },   
     query: {
         title: '가짜 연구소 질문 페이지',
+        htmlAttrs: htmlAttrs,
         meta: [
+          { charset: 'utf-8' },
           {
             hid: '가짜 연구소 질문 페이지 hid',
             name: '가짜 연구소 질문 페이지 name',
@@ -44,7 +56,9 @@ export default {
     },   
     queryId:{
         title: '가짜 연구소 질문 개별 페이지',
+        htmlAttrs: htmlAttrs,
         meta: [
+          { charset: 'utf-8' },
           {
             hid: '가짜 연구소 질문 개별 페이지 hid',
             name: '가짜 연구소 질문 개별 페이지 name',
