@@ -75,8 +75,9 @@
 </template>
 
 <script>
-
+import { metaMixin } from "@/static/heads.js"
 export default {
+  mixins: [metaMixin],
   data () {
     return {
       drawer: false,

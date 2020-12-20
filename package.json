@@ -2,6 +2,12 @@
   "name": "PseudoFront",
   "version": "1.0.0",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "127.0.0.1",
+      "port": "3343"
+    }
+  },  
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
