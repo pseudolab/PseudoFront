@@ -1,3 +1,6 @@
-export const isValidString = str => {
-    return (str || str instanceof String)
-  }
+
+
+export const primitiveRules = {
+  str: str => str || str instanceof String,
+  int: int => int || int instanceof Number
+}

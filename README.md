@@ -1,7 +1,8 @@
 # PseudoFront
 
 ## TODO
-
+- 게시글 작성으로 부터 Api 완성 전까지 Store에 임시 저장 (mutation 이용)
+    - 후에 커뮤니티 홈으로 부터 게시글 정보 Store로 부터 받아와 리스트 형태 저장
 - eslint
 - code auto-fix
 - create .env files by mode(dev, prod)

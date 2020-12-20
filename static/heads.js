@@ -11,7 +11,7 @@
 //     }
 //   }
 
-import { isValidString } from "@/static/validations.js"
+import { primitiveRules } from "@/static/validations.js"
 
 export const metaMixin = {
   /*
@@ -20,13 +20,13 @@ export const metaMixin = {
   */
   head() {
     const pName = this.pageName
-    if (isValidString(pName)) {
+    if (primitiveRules.str(pName)) {
       alert("Page Name for Meta Tag is Required")
       return {}
     } else if (pName === 'indivisual') {
       let meta = general('indivisual')
       ['title', 'category', 'content'].forEach(k => {
-        if (!isValidString(this[k])) {
+        if (!primitiveRules.str(this[k])) {
           return alert("만약 개별 페이지인 경우 메타 태그가 존재 해야만 합니다.")
         }
       })
