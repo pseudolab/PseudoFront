@@ -62,7 +62,12 @@ const general = (pageName) => {
           hid: 'google-site-verification',
           name: 'google-site-verification',
           content: 'dal5FRLPcu0fGm0RyDRg0anjcOwJhLRvEROdf0ZpHNQ'
-        }
+        },
+        {
+          hid: 'naver-site-verification',
+          name: 'naver-site-verification',
+          content: 'd957f2cee00f0423b89dc47efa113ba5f83a9c2f'
+        }        
       ]    
     }
     case 'community': return {
