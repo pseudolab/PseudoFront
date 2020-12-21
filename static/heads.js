@@ -20,9 +20,8 @@ export const metaMixin = {
   */
   head() {
     const pName = this.pageName
-    console.log("in HEAD", pName)
     if (!primitiveRules.str(pName)) {
-      alert("Page Name for Meta Tag is Required")
+      console.log("Page Name for Meta Tag is Required In Head, The page name you entered is :", pName)
       return {}
     } else if (pName === 'indivisual') {
       let meta = general('indivisual')
