@@ -14,5 +14,10 @@ module.exports = {
   plugins: [
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    "no-trailing-spaces": 'off',
+    "comma-dangle": 'off',
+    "eol-last": 'off',
+    "no-console": 'off'
+  },
 }
