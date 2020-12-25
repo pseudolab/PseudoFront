@@ -1,18 +1,10 @@
 <template>
   <v-card>
-    <v-text-field 
-      v-model="obj.title"
-      solo
-      clearable
-      hide-details="auto"
-      class="headline"
-      label="제목"
-    />
     <div
       ref="editor"
       v-quill:myQuillEditor="editorOption"
       class="quill-editor"
-      :content="obj.content"
+      :content="content"
       @change="onEditorChange($event)"
       @blur="onEditorBlur($event)"
       @focus="onEditorFocus($event)"
@@ -22,12 +14,14 @@
 </template>
 <script>
 export default {
+  props: {
+    content: {
+      type: String,
+      required: true,
+    }
+  },
   data () {
     return {
-      obj: {
-        title: null,
-        content: null,
-      },
       editorOption: {
         // some quill options
         placeholder: '내용을 입력 해 주세요.',
@@ -67,7 +61,7 @@ export default {
     },
     onEditorChange ({ editor, html, text }) {
       console.log('editor change!', editor, html, text)
-      this.obj.content = html
+      this.$emit('update:content', html)
     }
   },      
 }

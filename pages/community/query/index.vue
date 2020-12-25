@@ -3,8 +3,15 @@
   <div>
     <v-row>
       <v-col>
-        질문 공간
-        <text-editor />
+        <v-text-field 
+          v-model="obj.title"
+          solo
+          clearable
+          hide-details="auto"
+          class="headline"
+          label="제목"
+        />
+        <text-editor :content.sync="obj.content" />
       </v-col>
     </v-row>
   </div>
@@ -20,6 +27,10 @@ export default {
   mixins: [headMixin],
   data () {
     return {
+      obj: {
+        title: '',
+        content: ''
+      }
     }
   },
   head () {
