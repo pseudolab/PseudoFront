@@ -26,6 +26,7 @@ export default {
         // some quill options
         placeholder: '내용을 입력 해 주세요.',
         modules: {
+          markdownShortcuts: {},
           // https://quilljs.com/
           // https://github.com/surmon-china/vue-quill-editor
           toolbar: [
@@ -35,7 +36,7 @@ export default {
             [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
             [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
             [{ direction: 'rtl' }], // text direction
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ size: ['small', false, 'large', 'huge'] }], 
             [{ color: [] }, { background: [] }], // dropdown with defaults from theme
             [{ font: [] }],
             [{ align: [] }],
