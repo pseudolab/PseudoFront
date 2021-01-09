@@ -15,6 +15,7 @@
     "@nuxtjs/pwa": "^3.0.2",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
+    "quill-markdown-shortcuts": "^0.0.10",
     "vue-quill-editor": "^3.0.6"
   },
   "devDependencies": {
