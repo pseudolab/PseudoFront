@@ -9,15 +9,17 @@ module.exports = {
   },
   extends: [
     '@nuxtjs',
+    'prettier',
+    'prettier/vue',
+    'plugin:prettier/recommended',
     'plugin:nuxt/recommended'
   ],
-  plugins: [
-  ],
+  plugins: ['prettier'],
   // add your custom rules here
   rules: {
-    "no-trailing-spaces": 'off',
-    "comma-dangle": 'off',
-    "eol-last": 'off',
-    "no-console": 'off'
-  },
+    'no-trailing-spaces': 'off',
+    'comma-dangle': 'off',
+    'eol-last': 'off',
+    'no-console': 'off'
+  }
 }
