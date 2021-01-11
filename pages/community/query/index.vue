@@ -3,7 +3,7 @@
   <div>
     <v-row>
       <v-col>
-        <v-text-field 
+        <v-text-field
           v-model="obj.title"
           solo
           clearable
@@ -16,16 +16,16 @@
     </v-row>
   </div>
 </template>
- 
+
 <script>
-import TextEditor from '@/components/api/quil/TextEditor.vue'
+import TextEditor from '@/components/input/quil/TextEditor.vue'
 import headMixin from '@/mixins/common/head.js'
 export default {
   components: {
-    TextEditor,
+    TextEditor
   },
   mixins: [headMixin],
-  data () {
+  data() {
     return {
       obj: {
         title: '',
@@ -33,8 +33,8 @@ export default {
       }
     }
   },
-  head () {
+  head() {
     return this.getHead({ pageName: 'query' })
-  }  
+  }
 }
 </script>
