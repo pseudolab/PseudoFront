@@ -10,7 +10,7 @@
       @focus="onEditorFocus($event)"
       @ready="onEditorReady($event)"
     />
-  </v-card>  
+  </v-card>
 </template>
 <script>
 export default {
@@ -18,9 +18,9 @@ export default {
     content: {
       type: String,
       required: true,
-    }
+    },
   },
-  data () {
+  data() {
     return {
       editorOption: {
         // some quill options
@@ -31,49 +31,50 @@ export default {
           // https://github.com/surmon-china/vue-quill-editor
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],            
+            ['blockquote', 'code-block'],
             [{ list: 'ordered' }, { list: 'bullet' }],
             [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
             [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
             [{ direction: 'rtl' }], // text direction
-            [{ size: ['small', false, 'large', 'huge'] }], 
+            [{ size: ['small', false, 'large', 'huge'] }],
             [{ color: [] }, { background: [] }], // dropdown with defaults from theme
             [{ font: [] }],
             [{ align: [] }],
             ['link', 'image', 'video', 'formula'],
-            ['clean']        
-          ]
-        }
-      }  
+            ['clean'],
+          ],
+        },
+      },
     }
   },
-  mounted () {
-    this.$refs.editor.parentElement.firstChild.style = 'border-radius: 0px 0px 5px 5px !important'
+  mounted() {
+    this.$refs.editor.parentElement.firstChild.style =
+      'border-radius: 0px 0px 5px 5px !important'
     console.log('app init, my quill insrance object is:', this.myQuillEditor)
-  },  
+  },
   methods: {
-    onEditorBlur (editor) {
+    onEditorBlur(editor) {
       console.log('editor blur!', editor)
     },
-    onEditorFocus (editor) {
+    onEditorFocus(editor) {
       console.log('editor focus!', editor)
     },
-    onEditorReady (editor) {
+    onEditorReady(editor) {
       console.log('editor ready!', editor)
     },
-    onEditorChange ({ editor, html, text }) {
+    onEditorChange({ editor, html, text }) {
       console.log('editor change!', editor, html, text)
       this.$emit('update:content', html)
-    }
-  },      
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-  .quill-editor {
-    min-height: 200px;
-    max-height: 400px;
-    overflow-y: auto;
-    border: none;
-  }
+.quill-editor {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: none;
+}
 </style>

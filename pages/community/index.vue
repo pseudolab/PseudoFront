@@ -14,11 +14,11 @@ import TextEditor from '@/components/input/quil/TextEditor.vue'
 import headMixin from '@/mixins/common/head.js'
 export default {
   components: {
-    TextEditor
+    TextEditor,
   },
   mixins: [headMixin],
   head() {
     return this.getHead({ pageName: 'community' })
-  }
+  },
 }
 </script>

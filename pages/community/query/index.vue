@@ -22,19 +22,19 @@ import TextEditor from '@/components/input/quil/TextEditor.vue'
 import headMixin from '@/mixins/common/head.js'
 export default {
   components: {
-    TextEditor
+    TextEditor,
   },
   mixins: [headMixin],
   data() {
     return {
       obj: {
         title: '',
-        content: ''
-      }
+        content: '',
+      },
     }
   },
   head() {
     return this.getHead({ pageName: 'query' })
-  }
+  },
 }
 </script>
