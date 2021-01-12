@@ -1,32 +1,16 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      v-model="drawer"
-      fixed
-      app
-    >
+    <v-navigation-drawer v-model="drawer" fixed app>
       <v-list>
-        <div
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <v-list-item
-            :to="item.to"
-            router
-            exact
-          >
+        <div v-for="(item, i) in items" :key="i">
+          <v-list-item :to="item.to" router exact>
             <v-list-item-content>
               <v-list-item-title v-text="item.title" />
             </v-list-item-content>
           </v-list-item>
         </div>
         <div v-for="(group, i) in groups" :key="i.title">
-          <v-list-group
-            v-model="group.isActive"
-            exact
-            router
-            value="true"
-          >
+          <v-list-group v-model="group.isActive" exact router value="true">
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title v-text="group.title" />
@@ -48,17 +32,11 @@
         </div>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      fixed
-      hide-on-scroll
-      app
-    >
+    <v-app-bar fixed hide-on-scroll app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="mainTitle" />
       <v-spacer />
-      <v-btn>
-        로그인
-      </v-btn>
+      <v-btn> 로그인 </v-btn>
       <!-- <v-btn v-if="isLoggedIn" text @click="logout">
         로그아웃
       </v-btn>
@@ -76,14 +54,14 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       drawer: false,
       items: [
         {
           title: '홈페이지',
-          to: '/'
-        }
+          to: '/',
+        },
       ],
       groups: [
         {
@@ -91,16 +69,16 @@ export default {
           childs: [
             {
               title: '커뮤니티 홈',
-              to: '/community/'
+              to: '/community/',
             },
             {
               title: '질문공간',
-              to: '/community/query/'
-            }
-          ]
+              to: '/community/query/',
+            },
+          ],
         },
-      ],    
-      mainTitle: '가짜 연구소'
+      ],
+      mainTitle: '가짜 연구소',
     }
   },
 }
