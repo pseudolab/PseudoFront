@@ -38,7 +38,13 @@
       </div>
     </template>
     <template v-slot:[`item.badges`]="{ item }">
-      <v-chip v-for="badge in item.badges" :key="badge">
+      <v-chip
+        v-for="badge in item.badges"
+        :key="badge"
+        class="ma-2"
+        :color="picChipColor(badge)"
+        text-color="white"
+      >
         {{ badge }}
       </v-chip>
     </template>
@@ -167,11 +173,22 @@ export default {
           },
         },
       ],
+      // TODO: fixture로 빼야 함
+      chips: [
+        { name: 'Levdfa', color: 'deep-purple accent-4' },
+        { name: 'Rucode', color: 'teal' },
+        { name: 'bubule', color: 'amber darken-3' },
+      ],
     }
   },
   methods: {
     calcDayAgo(date) {
       return Date.now() - date
+    },
+    picChipColor(name) {
+      const color = this.chips.find((val) => val.name === name)
+      if (color) return color.color
+      return 'blue-grey'
     },
   },
 }
