@@ -1,12 +1,12 @@
 <template>
   <section class="badge-board">
     <v-chip
-      v-for="({ name, color, isSelected }, index) in chips"
+      v-for="({ name, color, isOutline }, index) in chips"
       :key="name"
       class="ma-2"
       :color="color"
-      :outlined="isSelected"
-      :text-color="isSelected ? color : 'white'"
+      :outlined="isOutline"
+      :text-color="isOutline ? color : 'white'"
       @click="select(index)"
     >
       {{ name }}
@@ -14,19 +14,24 @@
   </section>
 </template>
 <script>
+/*
+props:
+  chips: - 필수
+    attribute: name, color, isOutline
+emit:
+  @selectChip:
+    parameter: index
+*/
 export default {
-  // TODO: fixture로 빼야 함
-  // TODO: select method를 의존성 제거를 해야 함 (emit 사용)
-  data: () => ({
-    chips: [
-      { name: 'Levdfa', color: 'deep-purple accent-4', isSelected: true },
-      { name: 'Rucode', color: 'teal', isSelected: true },
-      { name: 'bubule', color: 'amber darken-3', isSelected: true },
-    ],
-  }),
+  props: {
+    chips: {
+      required: true,
+      type: Array,
+    },
+  },
   methods: {
     select(index) {
-      this.chips[index].isSelected = !this.chips[index].isSelected
+      this.$emit('selectChip', index)
     },
   },
 }
