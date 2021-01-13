@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
+    :items="tableData"
     :items-per-page="5"
     class="table"
   >
@@ -102,7 +102,7 @@ export default {
         { value: 'writer', sortable: false },
         { value: 'contributer', sortable: false },
       ],
-      desserts: [
+      tableData: [
         {
           icon: 'test.png',
           medal: true,
