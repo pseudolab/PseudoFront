@@ -1,17 +1,20 @@
 <template>
-  <section class="badge-board">
+  <v-chip-group
+    class="badge-board"
+    :multiple="true"
+    @change="changeSelectedChips"
+  >
     <v-chip
-      v-for="({ name, color, isOutline }, index) in chips"
+      v-for="{ name, color, isSelected } in chips"
       :key="name"
       class="ma-2"
       :color="color"
-      :outlined="isOutline"
-      :text-color="isOutline ? color : 'white'"
-      @click="select(index)"
+      :outlined="!isSelected"
+      :text-color="isSelected ? 'white' : color"
     >
       {{ name }}
     </v-chip>
-  </section>
+  </v-chip-group>
 </template>
 <script>
 /*
@@ -30,8 +33,8 @@ export default {
     },
   },
   methods: {
-    select(index) {
-      this.$emit('selectChip', index)
+    changeSelectedChips(chips) {
+      this.$emit('changeSelectedChips', chips)
     },
   },
 }
