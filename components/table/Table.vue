@@ -95,8 +95,17 @@
   </v-data-table>
 </template>
 <script>
-// TODO: grid로 작업되어있는부분 v-col v-row로 변경할 것
+/*
+  Table은 단순히 보여주는 용도로만 사용 됨.
+*/
+// TODO: pagenation하는 부분을 밖으로 빼내야 함
 export default {
+  props: {
+    tableData: {
+      type: Array,
+      isRequired: true,
+    },
+  },
   data() {
     return {
       headers: [
@@ -108,72 +117,7 @@ export default {
         { value: 'writer', sortable: false },
         { value: 'contributer', sortable: false },
       ],
-      tableData: [
-        {
-          icon: 'test.png',
-          medal: true,
-          weight: 24,
-          info: {
-            title: 'TabNet 논문 리뷰',
-            likes: 17,
-            comments: 5,
-            quotations: 2,
-            date: Date.now(),
-          },
-          badges: ['Levdfa', 'Rucode'],
-          writer: {
-            icon: 'test3.png',
-            name: 'Duck',
-            level: 99,
-            exp: 30,
-            accumulation: 50,
-          },
-          contributer: [
-            {
-              icon: 'test3.png',
-              name: 'Duck',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-            {
-              icon: 'test3.png',
-              name: 'Duck2',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-            {
-              icon: 'test3.png',
-              name: 'Duck3',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-          ],
-        },
-        {
-          icon: 'test.png',
-          medal: false,
-          weight: 37,
-          info: {
-            title: 'TabNet 논문 리뷰',
-            likes: 17,
-            comments: 5,
-            quotations: 2,
-            date: Date.now(),
-          },
-          badges: ['Levdfa', 'Rucode', 'bubule'],
-          writer: {
-            icon: 'test3.png',
-            name: 'Duck',
-            level: 99,
-            exp: 90,
-            accumulation: 50,
-          },
-        },
-      ],
-      // TODO: fixture로 빼야 함
+      // TODO: fixture로 빼야 함 - 나중에 api로 받아올 부분
       chips: [
         { name: 'Levdfa', color: 'deep-purple accent-4' },
         { name: 'Rucode', color: 'teal' },
