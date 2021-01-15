@@ -1,6 +1,6 @@
 <template>
   <v-chip-group
-    class="badge-board"
+    class="chip-board"
     :multiple="true"
     @change="changeSelectedChips"
   >
