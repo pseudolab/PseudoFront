@@ -4,6 +4,8 @@
     :items="tableData"
     :items-per-page="5"
     class="table"
+    :loading="false"
+    @click:row="clickRow"
   >
     <template v-slot:[`item.icon`]="{ item }">
       <v-avatar>
@@ -105,6 +107,10 @@ export default {
       type: Array,
       isRequired: true,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -133,6 +139,12 @@ export default {
       const color = this.chips.find((val) => val.name === name)
       if (color) return color.color
       return 'blue-grey'
+    },
+    clickRow() {
+      // ref: https://vuetifyjs.com/en/api/v-data-table/#click:row
+      /*
+        클릭 이벤트
+      */
     },
   },
 }
