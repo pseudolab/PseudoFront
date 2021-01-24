@@ -5,12 +5,11 @@
     @change="changeSelectedChips"
   >
     <v-chip
-      v-for="{ name, color, isSelected } in chips"
+      v-for="{ name, isSelected } in chips"
       :key="name"
       class="ma-2"
-      :color="color"
       :outlined="!isSelected"
-      :text-color="isSelected ? 'white' : color"
+      label
     >
       {{ name }}
     </v-chip>
@@ -20,7 +19,7 @@
 /*
 props:
   chips: - 필수
-    attribute: name, color, isOutline
+    attribute: name, isOutline
 emit:
   @selectChip:
     parameter: index

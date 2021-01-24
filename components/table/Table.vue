@@ -1,5 +1,6 @@
 <template>
   <v-data-table
+    hide-default-header
     :headers="headers"
     :items="tableData"
     :items-per-page="5"
@@ -22,13 +23,7 @@
       {{ item.info.comments }}
       <v-icon>mdi-format-quote-open-outline</v-icon>
       {{ item.info.quotations }}
-      <v-chip
-        v-for="badge in item.info.badges"
-        :key="badge"
-        class="ma-2"
-        :color="picChipColor(badge)"
-        text-color="white"
-      >
+      <v-chip v-for="badge in item.info.badges" :key="badge" class="mr-1" label>
         {{ badge }}
       </v-chip>
     </template>
@@ -116,11 +111,6 @@ export default {
   methods: {
     calcDayAgo(date) {
       return Date.now() - date
-    },
-    picChipColor(name) {
-      const color = this.chips.find((val) => val.name === name)
-      if (color) return color.color
-      return 'blue-grey'
     },
     clickRow() {
       // ref: https://vuetifyjs.com/en/api/v-data-table/#click:row
