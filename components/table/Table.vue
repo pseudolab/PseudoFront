@@ -7,22 +7,6 @@
     :loading="false"
     @click:row="clickRow"
   >
-    <template v-slot:[`item.icon`]="{ item }">
-      <v-avatar>
-        <img :src="require(`~/assets/img/${item.icon}`)" alt="icon img" />
-      </v-avatar>
-    </template>
-    <template v-slot:[`item.medal`]="{ item }">
-      <img v-if="item.medal" src="~/assets/img/test2.png" alt="medal img" />
-    </template>
-    <template v-slot:[`item.weight`]="{ item }">
-      <div class="table__weight">
-        <div>&#9650;</div>
-        <div>
-          {{ item.weight }}
-        </div>
-      </div>
-    </template>
     <template v-slot:[`item.info`]="{ item }">
       <div>
         <div>
