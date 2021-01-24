@@ -8,24 +8,22 @@
     @click:row="clickRow"
   >
     <template v-slot:[`item.info`]="{ item }">
-      <div>
-        <div>
+      <div class="table--item--top">
+        <h4 class="mr-1">
           {{ item.info.title }}
-        </div>
-        <v-icon>mdi-thumb-up-outline</v-icon>
-        {{ item.info.likes }}
-        <v-icon>mdi-comment-processing-outline</v-icon>
-        {{ item.info.comments }}
-        <v-icon>mdi-format-quote-open-outline</v-icon>
-        {{ item.info.quotations }}
-        <div>
+        </h4>
+        <span>
           {{ calcDayAgo(item.info.date) | dayAgo }}
-        </div>
+        </span>
       </div>
-    </template>
-    <template v-slot:[`item.badges`]="{ item }">
+      <v-icon>mdi-thumb-up-outline</v-icon>
+      {{ item.info.likes }}
+      <v-icon>mdi-comment-processing-outline</v-icon>
+      {{ item.info.comments }}
+      <v-icon>mdi-format-quote-open-outline</v-icon>
+      {{ item.info.quotations }}
       <v-chip
-        v-for="badge in item.badges"
+        v-for="badge in item.info.badges"
         :key="badge"
         class="ma-2"
         :color="picChipColor(badge)"
@@ -135,8 +133,10 @@ export default {
 </script>
 <style lang="scss">
 .table {
-  &__weight {
-    color: #78baca;
+  &--item {
+    &--top {
+      display: flex;
+    }
   }
   &__writer {
     display: flex;
