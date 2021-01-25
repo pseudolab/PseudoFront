@@ -6,25 +6,21 @@
       background-color="white"
       rounded
     />
-    <article class="archive--trend">
+    <article class="archive--trend d-flex align-center px-6">
       <strong>Trending</strong>
       <ChipBoadr :chips="chips" @changeSelectedChips="changeSelectedChips" />
     </article>
-    <article class="archive--btn-box">
+    <article class="archive--btn-box d-flex justify-space-between">
       <v-btn outlined> 글쓰기 </v-btn>
       <v-btn-toggle mandatory group dense class="archive--btn-box--sort">
         <v-btn>최신순</v-btn>
         <v-btn>추천순</v-btn>
       </v-btn-toggle>
     </article>
-    <hr
-      :style="{
-        border: 'none',
-        height: '1px',
-        backgroundColor: 'rgb(224,224,224)',
-      }"
-    />
-    <Table :table-data="tableData" :loading="loading" />
+    <div class="d-flex">
+      <Table :table-data="tableData" :loading="loading" />
+      <RankBoard />
+    </div>
   </section>
 </template>
 
@@ -131,14 +127,7 @@ export default {
 </script>
 <style lang="scss">
 .archive {
-  &--trend {
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-  }
   &--btn-box {
-    display: flex;
-    justify-content: space-between;
     & .v-btn--active > .v-btn__content {
       color: #000;
     }
