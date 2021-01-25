@@ -30,12 +30,15 @@
 
 <script>
 import headMixin from '@/mixins/common/head.js'
-import ChipBoadr from '@/components/table/ChipBoadr.vue'
-import Table from '@/components/table/Table.vue'
+import ChipBoadr from '@/components/common/ChipBoadr.vue'
+import Table from '@/components/common/Table.vue'
+import RankBoard from '@/components/common/RankBoard.vue'
+
 export default {
   components: {
     ChipBoadr,
     Table,
+    RankBoard,
   },
   mixins: [headMixin],
   data() {

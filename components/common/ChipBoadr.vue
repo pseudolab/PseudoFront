@@ -7,7 +7,7 @@
     <v-chip
       v-for="{ name, isSelected } in chips"
       :key="name"
-      class="ma-2"
+      class="ms-2"
       :outlined="!isSelected"
       label
     >
@@ -38,4 +38,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped></style>
