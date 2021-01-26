@@ -10,7 +10,7 @@
       <strong>Trending</strong>
       <ChipBoadr :chips="chips" @changeSelectedChips="changeSelectedChips" />
     </article>
-    <v-btn outlined> 글쓰기 </v-btn>
+    <v-btn class="font-weight-bold" outlined> 글쓰기 </v-btn>
     <div class="d-flex">
       <Table
         :table-data="tableData"
