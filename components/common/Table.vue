@@ -54,6 +54,7 @@
             :width="40"
             :is-animation="true"
           />
+          {{ item.writer.name }}
         </div>
       </template>
       <template v-slot:[`item.contributer`]="{ item }">
