@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <article class="table">
+    <v-btn-toggle mandatory group dense class="table--sort d-flex justify-end">
+      <v-btn class="table--sort__btn">최신순</v-btn>
+      <v-btn class="table--sort__btn">추천순</v-btn>
+    </v-btn-toggle>
     <hr
       :style="{
         border: 'none',
@@ -12,7 +16,6 @@
       :headers="headers"
       :items="tableData"
       :items-per-page="5"
-      class="table"
       :loading="false"
       @click:row="clickRow"
     >
@@ -85,7 +88,7 @@
         </div>
       </template>
     </v-data-table>
-  </div>
+  </article>
 </template>
 <script>
 /*
@@ -147,11 +150,19 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  &__contributer {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+  &--sort {
+    &__btn {
+      margin: 0 3px 0 0 !important;
+      padding: 0 !important;
+      height: 20px !important;
+    }
+    & .v-btn--active > .v-btn__content {
+      color: #000;
+    }
+    &
+      .v-btn:not(.v-btn--text):not(.v-btn--outlined):not(:hover).v-btn--active:before {
+      opacity: 0;
+    }
   }
 }
 </style>

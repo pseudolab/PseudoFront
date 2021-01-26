@@ -10,13 +10,7 @@
       <strong>Trending</strong>
       <ChipBoadr :chips="chips" @changeSelectedChips="changeSelectedChips" />
     </article>
-    <article class="archive--btn-box d-flex justify-space-between">
-      <v-btn outlined> 글쓰기 </v-btn>
-      <v-btn-toggle mandatory group dense class="archive--btn-box--sort">
-        <v-btn>최신순</v-btn>
-        <v-btn>추천순</v-btn>
-      </v-btn-toggle>
-    </article>
+    <v-btn outlined> 글쓰기 </v-btn>
     <div class="d-flex">
       <Table :table-data="tableData" :loading="loading" />
       <RankBoard />
@@ -125,15 +119,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-.archive {
-  &--btn-box {
-    & .v-btn--active > .v-btn__content {
-      color: #000;
-    }
-    & .v-btn:not(.v-btn--text):not(.v-btn--outlined).v-btn--active:before {
-      opacity: 0;
-    }
-  }
-}
-</style>
