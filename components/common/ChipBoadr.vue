@@ -19,7 +19,7 @@
 /*
 props:
   chips: - 필수
-    attribute: name, isOutline
+    attribute: {name, isSelected} // Object type
 emit:
   @selectChip:
     parameter: index
