@@ -12,7 +12,11 @@
     </article>
     <v-btn outlined> 글쓰기 </v-btn>
     <div class="d-flex">
-      <Table :table-data="tableData" :loading="loading" />
+      <Table
+        :table-data="tableData"
+        :loading="loading"
+        class="flex-grow-1 mr-3"
+      />
       <RankBoard />
     </div>
   </section>
