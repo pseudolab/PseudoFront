@@ -3,6 +3,28 @@
     <clipPath id="clip-circle">
       <circle cx="50" cy="50" r="33" />
     </clipPath>
+    <circle
+      cx="50"
+      cy="50"
+      r="40"
+      stroke="#dddddd"
+      stroke-width="5"
+      fill="#fff"
+    />
+    <path
+      class="exp"
+      :d="drawArc({ x: 50, y: 50, radius: 40, degree: exp })"
+      :stroke="expColor"
+      :stroke-width="strokeWidth"
+      fill="#fff"
+    />
+    <path
+      class="remain-exp"
+      :d="drawArc({ x: 50, y: 50, radius: 40, degree: remainExp }, exp)"
+      :stroke="makePaleColor(expColor)"
+      :stroke-width="strokeWidth"
+      fill="#fff"
+    />
     <image
       id="user-profile-img"
       :href="imgUrl"
@@ -10,28 +32,6 @@
       width="100%"
       height="100%"
       clip-path="url(#clip-circle)"
-    />
-    <circle
-      cx="50"
-      cy="50"
-      r="40"
-      stroke="#dddddd"
-      stroke-width="5"
-      fill="transparent"
-    />
-    <path
-      class="exp"
-      :d="drawArc({ x: 50, y: 50, radius: 40, degree: exp })"
-      :stroke="expColor"
-      :stroke-width="strokeWidth"
-      fill="transparent"
-    />
-    <path
-      class="remain-exp"
-      :d="drawArc({ x: 50, y: 50, radius: 40, degree: remainExp }, exp)"
-      :stroke="makePaleColor(expColor)"
-      :stroke-width="strokeWidth"
-      fill="transparent"
     />
   </svg>
 </template>
