@@ -46,45 +46,29 @@
 
       <template v-slot:[`item.writer`]="{ item }">
         <div class="table__writer">
-          <v-avatar>
-            <img
-              :src="require(`~/assets/img/${item.writer.icon}`)"
-              alt="icon img"
-            />
-          </v-avatar>
-          <div>
-            <div>
-              {{ item.writer.name }}
-            </div>
-            <div>
-              {{ item.writer.level }}
-            </div>
-            <div>
-              <v-progress-linear
-                color="yellow"
-                :value="item.writer.exp"
-                rounded
-              />
-            </div>
-            <div>
-              <v-progress-linear
-                color="indigo"
-                :value="item.writer.accumulation"
-                rounded
-              />
-            </div>
-          </div>
+          <UserProfile
+            :img-url="require('~/assets/img/test.png')"
+            exp-color="#3cb043"
+            :exp="item.writer.exp"
+            :remain-exp="item.writer.accumulation"
+            :width="40"
+            :is-animation="true"
+          />
         </div>
       </template>
       <template v-slot:[`item.contributer`]="{ item }">
-        <div class="table__contributer">
-          <v-avatar
+        <div class="table--contributer">
+          <UserProfile
             v-for="{ icon, name } in item.contributer"
             :key="name"
-            size="30"
-          >
-            <img :src="require(`~/assets/img/${icon}`)" alt="icon img" />
-          </v-avatar>
+            class="table--contributer__profile"
+            :img-url="require(`~/assets/img/${icon}`)"
+            exp-color="#3cb043"
+            :exp="item.writer.exp"
+            :remain-exp="item.writer.accumulation"
+            :width="30"
+            :is-animation="false"
+          />
         </div>
       </template>
     </v-data-table>
@@ -95,7 +79,11 @@
   Table은 단순히 보여주는 용도로만 사용 됨.
 */
 // TODO: pagenation하는 부분을 밖으로 빼내야 함
+import UserProfile from '@/components/common/UserProfile.vue'
 export default {
+  components: {
+    UserProfile,
+  },
   props: {
     tableData: {
       type: Array,
@@ -149,6 +137,18 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  &--contributer {
+    display: flex;
+    position: relative;
+    &__profile {
+      @for $i from 1 to 4 {
+        &:nth-child(#{$i}) {
+          position: relative;
+          left: calc(10px - 10px * #{$i});
+        }
+      }
+    }
   }
   &--sort {
     &__btn {
