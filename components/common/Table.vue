@@ -98,20 +98,12 @@ export default {
   data() {
     return {
       headers: [
-        { value: 'icon', sortable: false },
-        { value: 'medal', sortable: false },
-        { value: 'weight', sortable: false },
         { value: 'info', sortable: false },
-        { value: 'badges', sortable: false },
         { value: 'writer', sortable: false },
         { value: 'contributer', sortable: false },
       ],
       // TODO: fixture로 빼야 함 - 나중에 api로 받아올 부분
-      chips: [
-        { name: 'Levdfa', color: 'deep-purple accent-4' },
-        { name: 'Rucode', color: 'teal' },
-        { name: 'bubule', color: 'amber darken-3' },
-      ],
+      chips: [{ name: 'Levdfa' }, { name: 'Rucode' }, { name: 'bubule' }],
     }
   },
   methods: {
