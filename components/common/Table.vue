@@ -8,7 +8,7 @@
       :style="{
         border: 'none',
         height: '1px',
-        backgroundColor: 'rgb(224,224,224)',
+        backgroundColor: 'rgba(0,0,0,0.12)',
       }"
     />
     <v-data-table
@@ -20,57 +20,68 @@
       @click:row="clickRow"
     >
       <template v-slot:[`item.info`]="{ item }">
-        <div class="table--item--top">
+        <div class="table--item--top mb-2">
           <h4 class="mr-1">
             {{ item.info.title }}
           </h4>
-          <span>
+          <span class="grey--text">
             {{ calcDayAgo(item.info.date) | dayAgo }}
           </span>
         </div>
         <v-icon>mdi-thumb-up-outline</v-icon>
-        {{ item.info.likes }}
-        <v-icon>mdi-comment-processing-outline</v-icon>
-        {{ item.info.comments }}
-        <v-icon>mdi-format-quote-open-outline</v-icon>
-        {{ item.info.quotations }}
+        <span class="font-weight-bold">{{ item.info.likes }}</span>
+        <v-icon class="ml-2">mdi-comment-processing-outline</v-icon>
+        <span class="font-weight-bold">{{ item.info.comments }}</span>
+        <v-icon class="ml-2">mdi-format-quote-open-outline</v-icon>
+        <span class="font-weight-bold">{{ item.info.quotations }}</span>
         <v-chip
           v-for="badge in item.info.badges"
           :key="badge"
-          class="mr-1"
+          class="ms-2"
           label
+          x-small
+          text-color="white"
         >
           {{ badge }}
         </v-chip>
       </template>
 
       <template v-slot:[`item.writer`]="{ item }">
-        <div class="table__writer">
-          <UserProfile
-            :img-url="require('~/assets/img/test.png')"
-            exp-color="#3cb043"
-            :exp="item.writer.exp"
-            :remain-exp="item.writer.accumulation"
-            :width="40"
-            :is-animation="true"
-          />
-          {{ item.writer.name }}
-        </div>
-      </template>
-      <template v-slot:[`item.contributer`]="{ item }">
-        <div class="table--contributer">
-          <UserProfile
-            v-for="{ icon, name } in item.contributer"
-            :key="name"
-            class="table--contributer__profile"
-            :img-url="require(`~/assets/img/${icon}`)"
-            exp-color="#3cb043"
-            :exp="item.writer.exp"
-            :remain-exp="item.writer.accumulation"
-            :width="30"
-            :is-animation="false"
-          />
-        </div>
+        <v-row no-gutters justify="end">
+          <v-col class="d-flex justify-center" :cols="5">
+            <UserProfile
+              :img-url="require('~/assets/img/test.png')"
+              exp-color="#3cb043"
+              :exp="item.writer.exp"
+              :remain-exp="item.writer.accumulation"
+              :width="40"
+              :is-animation="true"
+            />
+          </v-col>
+          <v-col class="table--contributer d-flex justify-center" :cols="3">
+            <div
+              v-for="({ icon, name }, idx) in item.contributer"
+              :key="name"
+              class="table--contributer__profile"
+            >
+              <UserProfile
+                v-if="idx < 4"
+                :img-url="require(`~/assets/img/${icon}`)"
+                exp-color="#3cb043"
+                :exp="item.writer.exp"
+                :remain-exp="item.writer.accumulation"
+                :width="30"
+                :is-animation="false"
+              />
+            </div>
+          </v-col>
+        </v-row>
+        <v-row no-gutters justify="end">
+          <v-col class="text-center font-weight-bold" :cols="5">
+            {{ item.writer.name }}
+          </v-col>
+          <v-col :cols="3" />
+        </v-row>
       </template>
     </v-data-table>
   </article>
@@ -100,7 +111,6 @@ export default {
       headers: [
         { value: 'info', sortable: false },
         { value: 'writer', sortable: false },
-        { value: 'contributer', sortable: false },
       ],
       // TODO: fixture로 빼야 함 - 나중에 api로 받아올 부분
       chips: [{ name: 'Levdfa' }, { name: 'Rucode' }, { name: 'bubule' }],
@@ -121,21 +131,24 @@ export default {
 </script>
 <style lang="scss">
 .table {
+  & .v-data-table {
+    background-color: transparent !important;
+    & tbody tr td {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+  }
   &--item {
     &--top {
       display: flex;
     }
   }
-  &__writer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   &--contributer {
-    display: flex;
     position: relative;
     &__profile {
-      @for $i from 1 to 4 {
+      display: flex;
+      align-items: center;
+      @for $i from 1 to 5 {
         &:nth-child(#{$i}) {
           position: relative;
           left: calc(10px - 10px * #{$i});
