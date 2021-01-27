@@ -28,7 +28,8 @@
             {{ calcDayAgo(item.info.date) | dayAgo }}
           </span>
         </div>
-        <v-icon>mdi-thumb-up-outline</v-icon>
+        <v-icon v-if="item.info.isLiked">mdi-thumb-up</v-icon>
+        <v-icon v-else>mdi-thumb-up-outline</v-icon>
         <span class="font-weight-bold">{{ item.info.likes }}</span>
         <v-icon class="ml-2">mdi-comment-processing-outline</v-icon>
         <span class="font-weight-bold">{{ item.info.comments }}</span>
