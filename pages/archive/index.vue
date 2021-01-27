@@ -1,21 +1,25 @@
 <template>
   <section class="archive">
     <v-text-field
+      class="px-15 mb-3"
       prepend-inner-icon="mdi-magnify"
       placeholder="검색어를 입력하세요"
       background-color="white"
       rounded
+      solo
+      :hide-details="true"
+      flat
     />
-    <article class="archive--trend d-flex align-center px-6">
+    <article class="archive--trend d-flex align-center px-15 mb-4">
       <strong>Trending</strong>
       <ChipBoadr :chips="chips" @changeSelectedChips="changeSelectedChips" />
     </article>
-    <v-btn class="font-weight-bold" outlined> 글쓰기 </v-btn>
+    <v-btn class="archive__write-btn font-weight-bold" outlined> 글쓰기 </v-btn>
     <div class="d-flex">
       <Table
         :table-data="tableData"
         :loading="loading"
-        class="flex-grow-1 mr-3"
+        class="flex-grow-1 mr-5"
       />
       <RankBoard />
     </div>
@@ -84,6 +88,20 @@ export default {
               exp: 30,
               accumulation: 50,
             },
+            {
+              icon: 'test3.png',
+              name: 'Duck3',
+              level: 99,
+              exp: 30,
+              accumulation: 50,
+            },
+            {
+              icon: 'test3.png',
+              name: 'Duck3',
+              level: 99,
+              exp: 30,
+              accumulation: 50,
+            },
           ],
         },
         {
@@ -123,3 +141,10 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.archive {
+  &__write-btn {
+    background-color: white !important;
+  }
+}
+</style>

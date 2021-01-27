@@ -1,6 +1,6 @@
 <template>
-  <v-card class="rank-board px-8 py-3" outlined>
-    <v-card-title> 가짜연구소 멤버 랭킹 </v-card-title>
+  <v-card class="rank-board px-3 py-3 text-center" outlined>
+    <h4 class="mb-4">가짜연구소 멤버 랭킹</h4>
     <div
       v-for="({ icon, name, postCount, exp, accumulation }, idx) in rankInfo"
       :key="idx"
@@ -14,9 +14,11 @@
         :width="40"
         :is-animation="false"
       />
-      <span class="rank-board__name mr-auto ml-3">{{ name }}</span>
-      <span class="rank-board__postCount mr-1">{{ postCount }}</span>
-      <span class="rank-board__posts">posts</span>
+      <span class="rank-board__name ml-1">{{ name }}</span>
+      <span class="rank-board__postCount ml-4 mr-1 grey--text">{{
+        postCount
+      }}</span>
+      <span class="rank-board__posts grey--text">posts</span>
     </div>
   </v-card>
 </template>
