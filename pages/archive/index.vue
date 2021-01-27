@@ -58,6 +58,7 @@ export default {
             quotations: 2,
             date: Date.now(),
             badges: ['Levdfa', 'Rucode'],
+            isLiked: true,
           },
           writer: {
             icon: 'test3.png',
@@ -112,6 +113,7 @@ export default {
             quotations: 2,
             date: Date.now(),
             badges: ['Levdfa', 'Rucode'],
+            isLiked: false,
           },
           writer: {
             icon: 'test3.png',
@@ -145,6 +147,7 @@ export default {
             quotations: 2,
             date: Date.now(),
             badges: ['Levdfa', 'Rucode', 'bubule'],
+            isLiked: false,
           },
           writer: {
             icon: 'test3.png',
