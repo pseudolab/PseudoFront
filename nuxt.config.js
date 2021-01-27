@@ -27,6 +27,7 @@ export default {
   plugins: [
     { src: '~plugins/vue-quill-editor', ssr: false },
     '~plugins/date-filter.js',
+    '~plugins/global-constants.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
