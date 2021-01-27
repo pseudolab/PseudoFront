@@ -69,7 +69,7 @@ export default {
           contributer: [
             {
               icon: 'test3.png',
-              name: 'Duck',
+              name: 'Duck1',
               level: 99,
               exp: 30,
               accumulation: 50,
@@ -90,14 +90,47 @@ export default {
             },
             {
               icon: 'test3.png',
-              name: 'Duck3',
+              name: 'Duck4',
               level: 99,
               exp: 30,
               accumulation: 50,
             },
             {
               icon: 'test3.png',
-              name: 'Duck3',
+              name: 'Duck5',
+              level: 99,
+              exp: 30,
+              accumulation: 50,
+            },
+          ],
+        },
+        {
+          info: {
+            title: 'TabNet 논문 리뷰',
+            likes: 17,
+            comments: 5,
+            quotations: 2,
+            date: Date.now(),
+            badges: ['Levdfa', 'Rucode'],
+          },
+          writer: {
+            icon: 'test3.png',
+            name: 'DuckDuckDuckDuck',
+            level: 99,
+            exp: 30,
+            accumulation: 50,
+          },
+          contributer: [
+            {
+              icon: 'test3.png',
+              name: 'Duck1',
+              level: 99,
+              exp: 30,
+              accumulation: 50,
+            },
+            {
+              icon: 'test3.png',
+              name: 'Duck2',
               level: 99,
               exp: 30,
               accumulation: 50,
@@ -115,7 +148,7 @@ export default {
           },
           writer: {
             icon: 'test3.png',
-            name: 'Duck',
+            name: 'Du',
             level: 99,
             exp: 90,
             accumulation: 50,
