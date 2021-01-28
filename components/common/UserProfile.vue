@@ -46,16 +46,17 @@ props:
 export default {
   props: {
     imgUrl: {
+      // NOTE: 기본 이미지 받아서 기본 defualt에 넣는 작업 필요.
       isRequired: true,
       type: String,
     },
     exp: {
       type: Number,
-      isRequired: true,
+      default: 0,
     },
     remainExp: {
       type: Number,
-      isRequired: true,
+      default: 0,
     },
     width: {
       type: Number,
