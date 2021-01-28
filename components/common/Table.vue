@@ -148,7 +148,7 @@ export default {
   props: {
     tableData: {
       type: Array,
-      isRequired: true,
+      default: () => [],
     },
     loading: {
       type: Boolean,
