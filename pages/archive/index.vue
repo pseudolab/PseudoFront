@@ -32,6 +32,10 @@ import ChipBoadr from '@/components/common/ChipBoadr.vue'
 import Table from '@/components/common/Table.vue'
 import RankBoard from '@/components/common/RankBoard.vue'
 
+// mock data
+import archiveTableData from '@/mock/archive/archiveTableData.js'
+import subjectCategoryData from '@/mock/subjectCategoryData.js'
+
 export default {
   components: {
     ChipBoadr,
@@ -43,121 +47,11 @@ export default {
     return {
       // TODO: fixture로 빼야 함 - 나중에 api로 받아올 부분
       loading: false,
-      chips: [
-        { name: 'Levdfa', isSelected: false },
-        { name: 'Rucode', isSelected: false },
-        { name: 'bubule', isSelected: false },
-      ],
-
-      tableData: [
-        {
-          info: {
-            title: 'TabNet 논문 리뷰',
-            likes: 17,
-            comments: 5,
-            quotations: 2,
-            date: Date.now(),
-            badges: ['Levdfa', 'Rucode'],
-            isLiked: true,
-          },
-          writer: {
-            icon: 'test3.png',
-            name: 'Duck',
-            level: 99,
-            exp: 30,
-            accumulation: 50,
-          },
-          contributer: [
-            {
-              icon: 'test3.png',
-              name: 'Duck1',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-            {
-              icon: 'test3.png',
-              name: 'Duck2',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-            {
-              icon: 'test3.png',
-              name: 'Duck3',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-            {
-              icon: 'test3.png',
-              name: 'Duck4',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-            {
-              icon: 'test3.png',
-              name: 'Duck5',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-          ],
-        },
-        {
-          info: {
-            title: 'TabNet 논문 리뷰',
-            likes: 17,
-            comments: 5,
-            quotations: 2,
-            date: Date.now(),
-            badges: ['Levdfa', 'Rucode'],
-            isLiked: false,
-          },
-          writer: {
-            icon: 'test3.png',
-            name: 'DuckDuckDuckDuck',
-            level: 99,
-            exp: 30,
-            accumulation: 50,
-          },
-          contributer: [
-            {
-              icon: 'test3.png',
-              name: 'Duck1',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-            {
-              icon: 'test3.png',
-              name: 'Duck2',
-              level: 99,
-              exp: 30,
-              accumulation: 50,
-            },
-          ],
-        },
-        {
-          info: {
-            title: 'TabNet 논문 리뷰',
-            likes: 17,
-            comments: 5,
-            quotations: 2,
-            date: Date.now(),
-            badges: ['Levdfa', 'Rucode', 'bubule'],
-            isLiked: false,
-          },
-          writer: {
-            icon: 'test3.png',
-            name: 'Du',
-            level: 99,
-            exp: 90,
-            accumulation: 50,
-          },
-        },
-      ],
+      chips: subjectCategoryData.map((subject) => ({
+        name: subject,
+        isSelected: false,
+      })),
+      tableData: archiveTableData,
     }
   },
   methods: {
