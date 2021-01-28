@@ -1,8 +1,9 @@
 <template>
   <section class="archive">
-    <v-text-field
+    <v-autocomplete
       class="px-15 mb-3"
       prepend-inner-icon="mdi-magnify"
+      :items="subjectCategory"
       placeholder="검색어를 입력하세요"
       background-color="white"
       rounded
@@ -51,6 +52,7 @@ export default {
         name: subject,
         isSelected: false,
       })),
+      subjectCategory: subjectCategoryData,
       tableData: archiveTableData,
     }
   },
