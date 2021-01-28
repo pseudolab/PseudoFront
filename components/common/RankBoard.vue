@@ -25,42 +25,18 @@
 <script>
 import UserProfile from '@/components/common/UserProfile.vue'
 
+// mock data
+import archiveRankInfoData from '@/mock/archive/archiveRankInfoData.js'
+
 export default {
   components: {
     UserProfile,
   },
-  data: () => ({
-    rankInfo: [
-      {
-        icon: 'test3.png',
-        name: 'Name',
-        postCount: 130,
-        exp: 30,
-        accumulation: 50,
-      },
-      {
-        icon: 'test3.png',
-        name: 'Name',
-        postCount: 130,
-        exp: 30,
-        accumulation: 50,
-      },
-      {
-        icon: 'test3.png',
-        name: 'Name',
-        postCount: 130,
-        exp: 30,
-        accumulation: 50,
-      },
-      {
-        icon: 'test3.png',
-        name: 'Name',
-        postCount: 130,
-        exp: 30,
-        accumulation: 50,
-      },
-    ],
-  }),
+  data() {
+    return {
+      rankInfo: archiveRankInfoData,
+    }
+  },
 }
 </script>
 <style lang="scss" scoped>
