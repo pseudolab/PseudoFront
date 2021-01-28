@@ -43,6 +43,8 @@ props:
     360을 기준으로 각도로 대입해야 한다. 만일
     exp + remainExp 값이 360을 초과할 경우 360까지만 그려지도록 되어있음
 */
+import colorStringToHex from '@/fixture/colorStringToHex.js'
+
 export default {
   props: {
     imgUrl: {
@@ -96,11 +98,16 @@ export default {
     }, 0)
   },
   methods: {
+    makeHexToString(colorStr) {
+      return colorStringToHex[colorStr]
+    },
     makePaleColor(color) {
       if (!color) {
         return
       }
-      // FIXME: hex로 들어오지 않는 상황에 대한 처리 추후에 작업
+      if (color[0] !== '#') {
+        color = this.makeHexToString(color)
+      }
       return color + 'ad'
     },
     drawArc(props, startDegree = 0) {
