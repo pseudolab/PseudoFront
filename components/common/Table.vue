@@ -25,7 +25,7 @@
             {{ item.info.title }}
           </h4>
           <span class="grey--text">
-            {{ calcDayAgo(item.info.date) | dayAgo }}
+            {{ calcDayAgo(item.info.date) | dayAgo }} 전
           </span>
         </div>
         <v-icon v-if="item.info.isLiked">mdi-thumb-up</v-icon>
