@@ -59,7 +59,7 @@
               >
                 <UserProfile
                   :img-url="require('~/assets/img/test.png')"
-                  exp-color="#3cb043"
+                  exp-color="red"
                   :exp="item.writer.exp"
                   :remain-exp="item.writer.accumulation"
                   :width="40"
@@ -101,7 +101,7 @@
             <div class="d-flex align-center">
               <UserProfile
                 :img-url="require('~/assets/img/test.png')"
-                exp-color="#3cb043"
+                exp-color="red"
                 :exp="item.writer.exp"
                 :remain-exp="item.writer.accumulation"
                 :width="40"
