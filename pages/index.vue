@@ -1,14 +1,20 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card> Main Page </v-card>
+    <v-col>
+      <v-card>
+        <pseudo-editor />
+      </v-card>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import headMixin from '@/mixins/common/head.js'
+import PseudoEditor from '@/components/input/editor/PseudoEditor.vue'
 export default {
+  components: {
+    PseudoEditor,
+  },
   mixins: [headMixin],
   data() {
     return {}
