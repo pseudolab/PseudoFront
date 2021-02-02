@@ -43,7 +43,7 @@ props:
     360을 기준으로 각도로 대입해야 한다. 만일
     exp + remainExp 값이 360을 초과할 경우 360까지만 그려지도록 되어있음
 */
-import colorStringToHex from '@/fixture/colorStringToHex.js'
+import colorStringToHex from '@/fixture/common/colorStringToHex.js'
 
 export default {
   props: {
