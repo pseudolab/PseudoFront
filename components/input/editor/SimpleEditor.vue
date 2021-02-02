@@ -53,6 +53,9 @@ export default {
           contenteditable: true,
         },
         on: {
+          click(e) {
+            self.$emit('click', e)
+          },
           keyup: (evt) => {
             // console.log(
             //   `shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,
