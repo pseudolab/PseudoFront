@@ -1,42 +1,49 @@
 <template>
-  <section class="profile">
-    <ActivityCalender :year="2021" :calender-dataset="calenderDataset" />
-    <HexagonGraph
-      :activity-score-data-set="activityScoreDataSet"
-      :has-animation="true"
-      color="#0077a3b0"
-    />
+  <section class="profile d-flex">
+    <UserInfo class="mr-6" />
+    <div>
+      <v-chip-group mandatory @change="changeSelectedMenu">
+        <v-chip
+          v-for="(name, idx) in profileMenues"
+          :key="name"
+          class="ms-2"
+          label
+          :outlined="!(idx === selectedMenuIdx)"
+        >
+          {{ name }}
+        </v-chip>
+      </v-chip-group>
+      <Summary class="mb-15" />
+      <Following class="mb-15" />
+      <Activity />
+    </div>
   </section>
 </template>
 <script>
 import headMixin from '@/mixins/common/head.js'
-import HexagonGraph from '@/components/profile/HexagonGraph.vue'
-import ActivityCalender from '@/components/profile/ActivityCalender.vue'
-
-// mock data
-import {
-  activityScoreDataMaxScore,
-  activityScoreDatascore,
-} from '@/mock/profile/activityScoreData.js'
-import { calenderDataset } from '@/mock/profile/activityCalenderData.js'
+import UserInfo from '@/components/profile/UserInfo.vue'
+import Summary from '@/components/profile/Summary.vue'
+import Following from '@/components/profile/Following.vue'
+import Activity from '@/components/profile/Activity.vue'
 
 export default {
   components: {
-    HexagonGraph,
-    ActivityCalender,
+    UserInfo,
+    Summary,
+    Following,
+    Activity,
   },
   mixins: [headMixin],
   data() {
     return {
-      calenderDataset,
+      profileMenues: ['Summary', 'Posts', 'Q & A', 'Rank', 'Bookmarks'],
+      selectedMenuIdx: 0,
     }
   },
-  computed: {
-    activityScoreDataSet() {
-      return activityScoreDataMaxScore.map(
-        (_, idx) =>
-          (activityScoreDatascore[idx] / activityScoreDataMaxScore[idx]) * 100
-      )
+
+  methods: {
+    changeSelectedMenu(idx) {
+      this.selectedMenuIdx = idx
     },
   },
   head() {
