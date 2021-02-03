@@ -1,13 +1,12 @@
 <script>
 import SimpleEditor from '@/components/input/editor/SimpleEditor.vue'
+import EditorToolbar from '@/components/input/editor/EditorToolbar.vue'
 export default {
   data() {
     return {
       isActive: false,
     }
   },
-  mounted() {},
-  methods: {},
   render(h) {
     const self = this
     return h(
@@ -27,7 +26,6 @@ export default {
               value: self.isActive,
               closeOnClick: true,
               closeOnContentClick: false,
-              dark: true,
               absolute: true,
             },
             on: {
@@ -39,17 +37,7 @@ export default {
               },
             },
           },
-          [
-            h(
-              'v-card',
-              {
-                style: {
-                  'background-color': 'red',
-                },
-              },
-              ['CARDCARD']
-            ),
-          ]
+          [h(EditorToolbar)]
         ),
       ]
     )
