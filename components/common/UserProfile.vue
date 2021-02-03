@@ -16,14 +16,14 @@
       :d="drawArc({ x: 50, y: 50, radius: 40, degree: exp })"
       :stroke="expColor"
       :stroke-width="strokeWidth"
-      fill="#fff"
+      fill="transparent"
     />
     <path
       class="remain-exp"
       :d="drawArc({ x: 50, y: 50, radius: 40, degree: remainExp }, exp)"
       :stroke="makePaleColor(expColor)"
       :stroke-width="strokeWidth"
-      fill="#fff"
+      fill="transparent"
     />
     <image
       id="user-profile-img"
