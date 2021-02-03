@@ -71,21 +71,48 @@ export default {
       }, 0) + 5
     const sideLen = (width - 2 * space) / Math.sqrt(3)
     const pointPositions = calcPointPosition(space, sideLen)
+    const quaterPointPositions = calcInnerPointPosition(
+      sideLen,
+      Array(6).fill(25)
+    )
     const halfPointPositions = calcInnerPointPosition(
       sideLen,
       Array(6).fill(50)
     )
+    const threeQuaterPointPositions = calcInnerPointPosition(
+      sideLen,
+      Array(6).fill(75)
+    )
 
     const curVal = hasAnimation ? 0 : maxDataVal
-    this.render(sideLen, pointPositions, halfPointPositions, maxDataVal, curVal)
+    this.render(
+      sideLen,
+      pointPositions,
+      quaterPointPositions,
+      halfPointPositions,
+      threeQuaterPointPositions,
+      maxDataVal,
+      curVal
+    )
   },
   methods: {
-    render(sideLen, pointPositions, halfPointPositions, maxDataVal, curVal) {
+    render(
+      sideLen,
+      pointPositions,
+      quaterPointPositions,
+      halfPointPositions,
+      threeQuaterPointPositions,
+      maxDataVal,
+      curVal
+    ) {
       const ctx = this.$el.getContext('2d')
       const { width, entries, activityScoreDataSet, color, fontColor } = this
       const { calcInnerPointPosition } = this
       ctx.clearRect(0, 0, width, width)
       // draw outline
+      ctx.fillStyle = '#E9EFF1'
+      ctx.strokeStyle = '#737373'
+      ctx.lineWidth = 2
       ctx.beginPath()
       ctx.moveTo(pointPositions[0][0], pointPositions[0][1])
       for (let i = 1; i < 6; i++) {
@@ -93,22 +120,52 @@ export default {
         ctx.lineTo(x, y)
       }
       ctx.closePath()
+      ctx.fill()
       ctx.stroke()
 
       // draw text
       ctx.fillStyle = fontColor
       const textState = [
-        { textAlign: 'center', textBaseline: 'bottom' },
-        { textAlign: 'left', textBaseline: 'middle' },
-        { textAlign: 'left', textBaseline: 'middle' },
-        { textAlign: 'center', textBaseline: 'top' },
-        { textAlign: 'right', textBaseline: 'middle' },
-        { textAlign: 'right', textBaseline: 'middle' },
+        {
+          textAlign: 'center',
+          textBaseline: 'bottom',
+          paddingX: 0,
+          paddingY: -5,
+        },
+        {
+          textAlign: 'left',
+          textBaseline: 'middle',
+          paddingX: 10,
+          paddingY: 0,
+        },
+        {
+          textAlign: 'left',
+          textBaseline: 'middle',
+          paddingX: 10,
+          paddingY: 0,
+        },
+        { textAlign: 'center', textBaseline: 'top', paddingX: 0, paddingY: 5 },
+        {
+          textAlign: 'right',
+          textBaseline: 'middle',
+          paddingX: -10,
+          paddingY: 0,
+        },
+        {
+          textAlign: 'right',
+          textBaseline: 'middle',
+          paddingX: -10,
+          paddingY: 0,
+        },
       ]
       pointPositions.forEach(([x, y], idx) => {
         ctx.textAlign = textState[idx].textAlign
         ctx.textBaseline = textState[idx].textBaseline
-        ctx.fillText(entries[idx], x, y)
+        ctx.fillText(
+          entries[idx],
+          textState[idx].paddingX + x,
+          textState[idx].paddingY + y
+        )
       })
 
       const innerPointPositions = calcInnerPointPosition(
@@ -125,6 +182,7 @@ export default {
       }
       ctx.closePath()
       ctx.fill()
+      ctx.stroke()
 
       // draw innerline
       pointPositions.forEach(([x, y]) => {
@@ -135,6 +193,15 @@ export default {
       })
 
       ctx.beginPath()
+      ctx.moveTo(quaterPointPositions[0][0], quaterPointPositions[0][1])
+      for (let i = 1; i < 6; i++) {
+        const [x, y] = quaterPointPositions[i]
+        ctx.lineTo(x, y)
+      }
+      ctx.closePath()
+      ctx.stroke()
+
+      ctx.beginPath()
       ctx.moveTo(halfPointPositions[0][0], halfPointPositions[0][1])
       for (let i = 1; i < 6; i++) {
         const [x, y] = halfPointPositions[i]
@@ -142,13 +209,28 @@ export default {
       }
       ctx.closePath()
       ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(
+        threeQuaterPointPositions[0][0],
+        threeQuaterPointPositions[0][1]
+      )
+      for (let i = 1; i < 6; i++) {
+        const [x, y] = threeQuaterPointPositions[i]
+        ctx.lineTo(x, y)
+      }
+      ctx.closePath()
+      ctx.stroke()
+
       if (maxDataVal > curVal)
         window.requestAnimationFrame(
           this.render.bind(
             this,
             sideLen,
             pointPositions,
+            quaterPointPositions,
             halfPointPositions,
+            threeQuaterPointPositions,
             maxDataVal,
             curVal + 1
           )
