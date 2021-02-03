@@ -5,8 +5,16 @@
   .editor {
     min-height: 30vh;
   }
-
 }
 .custom-gist {
   margin: 0% 10%;
-}      
+}
+
+.editor-toolbar {
+  max-width: 40vw;
+  min-width: 10vw;
+  height: 5vh;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}

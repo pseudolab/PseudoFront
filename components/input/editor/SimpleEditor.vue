@@ -36,8 +36,8 @@ export default {
       // startwith 0
       return this.$refs.editor.childElementCount
     },
-    format(command, value) {
-      document.execCommand(command, true, value)
+    format(cmd, value) {
+      document.execCommand(cmd, true, value)
     },
   },
   render(h) {
