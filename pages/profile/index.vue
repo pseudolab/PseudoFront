@@ -4,6 +4,7 @@
     <HexagonGraph
       :activity-score-data-set="activityScoreDataSet"
       :has-animation="true"
+      color="#0077a3b0"
     />
   </section>
 </template>
