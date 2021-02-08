@@ -1,16 +1,21 @@
 <template>
   <!-- src="/v.png" -->
   <div>
-    <v-row>
-      <v-col> 질문 목록 </v-col>
+    <v-row justify="center">
+      <v-col>
+        <query-form />
+      </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
 import headMixin from '@/mixins/common/head.js'
+import QueryForm from '@/components/input/QueryForm.vue'
 export default {
-  components: {},
+  components: {
+    QueryForm,
+  },
   mixins: [headMixin],
   head() {
     return this.getHead({ pageName: 'query' })

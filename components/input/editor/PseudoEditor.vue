@@ -1,10 +1,12 @@
 <script>
 import SimpleEditor from '@/components/input/editor/SimpleEditor.vue'
 import EditorToolbar from '@/components/input/editor/EditorToolbar.vue'
+import gist from '@/mixins/input/gist.js'
 export default {
+  mixins: [gist],
   data() {
     return {
-      isActive: false,
+      menuActive: false,
     }
   },
   render(h) {
@@ -23,21 +25,24 @@ export default {
             props: {
               contentClass: 'menu-content',
               origin: 'top right',
-              value: self.isActive,
+              value: self.menuActive,
               closeOnClick: true,
               closeOnContentClick: false,
               absolute: true,
             },
             on: {
-              input: (val) => (self.isActive = val),
+              input: (val) => (self.menuActive = val),
             },
             scopedSlots: {
               activator: ({ on }) => {
-                return h(SimpleEditor, { ref: 'editor', on })
+                return h(SimpleEditor, {
+                  ref: 'editor',
+                  on,
+                })
               },
             },
           },
-          [h(EditorToolbar)]
+          [h(EditorToolbar), self.genGistForm(h)]
         ),
       ]
     )
