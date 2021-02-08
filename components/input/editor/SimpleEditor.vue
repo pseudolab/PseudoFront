@@ -1,40 +1,9 @@
 <script>
 export default {
-  data() {
-    return {
-      gistId: null,
-      file: null,
-    }
-  },
-  watch: {
-    gistId(newId) {
-      if (!newId) {
-        return
-      }
-      let url = `https://gist.github.com/${newId}.json`
-      if (this.file) {
-        url = `${url}?file=${this.file}`
-      }
-      this.$axios.get(url).then((res) => {
-        const newDiv = res.data.div
-        const txtArea = this.$refs.editor
-        const classAdded = newDiv.replace(
-          'class="gist"',
-          'class="gist custom-gist" contenteditable="false"'
-        )
-        const addedArea = classAdded + '<div> </br> <div>'
-        txtArea.innerHTML += addedArea
-        txtArea.lastElementChild.focus()
-      })
-    },
-  },
-  mounted() {
-    this.gistId = 'e20d226dffc02452ce5f80e195336bc6'
-  },
   methods: {
     getNumOfLines() {
       // startwith 0
-      return this.$refs.editor.childElementCount
+      return this.$refs.txtArea.childElementCount
     },
     format(cmd, value) {
       document.execCommand(cmd, true, value)
@@ -45,9 +14,9 @@ export default {
     return h(
       'div',
       {
-        ref: 'editor',
+        ref: 'txtArea',
         class: {
-          editor: true,
+          txtArea: true,
         },
         attrs: {
           contenteditable: true,

@@ -1,0 +1,118 @@
+<script>
+import PseudoEditor from '@/components/input/editor/PseudoEditor.vue'
+export default {
+  data() {
+    return {
+      ctgr: '',
+      title: '',
+      author: '',
+      participants: [],
+      keywords: [],
+      ctgrs: [
+        {
+          ko: '질문',
+          val: 'QandA',
+        },
+        {
+          ko: '기록',
+          val: 'Archive',
+        },
+      ],
+    }
+  },
+  methods: {
+    genContent(h) {
+      const self = this
+      const child = []
+      child.push(
+        h('v-autocomplete', {
+          props: {
+            'item-value': 'val',
+            'item-text': 'ko',
+            'cache-items': true,
+            label: '카테고리',
+            outlined: true,
+            items: self.ctgrs,
+          },
+        })
+      )
+      const datas = ['title', 'author']
+      const txts = ['제목', '작성자']
+      txts.forEach((label, idx) => {
+        child.push(
+          h('v-text-field', {
+            props: {
+              outlined: true,
+              label,
+              value: self[datas[idx]],
+            },
+            on: {
+              input: (val) => {
+                self[datas[idx]] = val
+              },
+            },
+          })
+        )
+      })
+      child.push(
+        h('v-combobox', {
+          props: {
+            multiple: true,
+            chips: true,
+            value: self.participants,
+            outlined: true,
+            label: '참여자',
+            'search-input.sync': self.partiTxt,
+            'deletable-chips': true,
+          },
+          on: {
+            input: (val) => {
+              self.participants = val
+            },
+          },
+        })
+      )
+      child.push(h(PseudoEditor))
+      child.push(
+        h('v-combobox', {
+          props: {
+            multiple: true,
+            chips: true,
+            value: self.keywords,
+            outlined: true,
+            label: '키워드',
+            'search-input.sync': self.keyTxts,
+            'deletable-chips': true,
+          },
+          on: {
+            input: (val) => {
+              self.keywords = val
+            },
+          },
+        })
+      )
+      child.push(
+        h('v-card-actions', [
+          h('v-spacer'),
+          h('v-btn', ['등록']),
+          h('v-btn', ['취소']),
+          h('v-spacer'),
+        ])
+      )
+      return child
+    },
+  },
+  render(h) {
+    // 카테고리(오토) 제목 작성자 참여자
+    return h(
+      'v-card',
+      {
+        class: {
+          'pa-12': true,
+        },
+      },
+      this.genContent(h)
+    )
+  },
+}
+</script>
