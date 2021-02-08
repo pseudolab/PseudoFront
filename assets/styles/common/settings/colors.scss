@@ -1,0 +1,28 @@
+@import "../functions";
+// Reference ;
+// /vuetify/packages/vuetify/src/styles/settings/_colors.scss;
+
+$p-blue: () !default;
+$p-blue: map-deep-merge(
+    (
+        base: #0077a3,
+    ),
+    $p-blue
+);
+
+$p-grey: () !default;
+$p-grey: map-deep-merge(
+    (
+        base: #e9eff1,
+    ),
+    $p-grey
+);
+
+$p-colors: () !default;
+$p-colors: map-deep-merge(
+    (
+        p-blue: $p-blue,
+        p-grey: $p-grey,
+    ),
+    $p-colors
+);
