@@ -116,3 +116,32 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+@import url('https://github.githubassets.com/assets/gist-embed-4ac6018bcc05457cde2f66d2e7299d11.css');
+.editor-container {
+  width: 100%;
+  height: 100%;
+  border: thin solid map-get($p-blue, 'base');
+  padding: 3%;
+}
+.txtArea {
+  min-height: 30vh;
+}
+.custom-gist {
+  margin: 0% 10%;
+}
+
+.editor-toolbar {
+  max-width: 40vw;
+  min-width: 20vw;
+  height: 5vh;
+  padding: 0px 0.7vw;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v-text-field__details {
+  display: none;
+}
+</style>
