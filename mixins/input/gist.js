@@ -48,7 +48,6 @@ export default {
           h(
             'v-form',
             {
-              color: 'primary',
               ref: 'gistForm',
               props: {
                 'lazy-validation': true,

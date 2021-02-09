@@ -1,22 +1,44 @@
 // Ref: https://github.com/nuxt-community/vuetify-module#customvariables
 //
-// The variables you want to modify
-// $font-size-root: 20px;
+// The vuetify  variables you want to modify
 // !default = low priority
-// mix: func (color1, color2, weight) = color1에 대한 color2의 weight 만큼의 비율로 섞는다.
 // vuetify 의 변수명과 겹치지 않게 조심하세요
-
-// @import '~vuetify/src/styles/styles.sass';
-// @import './funcs.scss';
-// @import './maps.scss';
-// @import './mixins.scss';
 @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
-@import "./styles/";
+@import './styles/';
 
 $tooltip-background-color: #fff;
 $tooltip-text-color: #000;
+$p-b-grey:map-get($p-grey, 'base');
+$p-b-blue: map-get($p-blue, 'base');
+$p-shadow: (blue: 0 4px 16px 0 rgb(0 119 163 / 38%),
+);
+
+.theme--light.v-application {
+  background-color: $p-b-grey;
+}
 
 .theme--light.v-chip.v-chip--outlined:focus::before {
   opacity: 0;
   color: rgba(0, 0, 0, 0.87);
+}
+
+.v-text-field fieldset,
+.v-text-field .v-input__control,
+.v-text-field .v-input__slot {
+  border-radius: inherit;
+  border-color: $p-b-blue;
+}
+
+.v-autocomplete__content.v-menu__content {
+  box-shadow: map-get($map: $p-shadow, $key: 'blue');
+}
+
+.theme--light.v-btn.v-btn--has-bg {
+  background-color: #ffff;
+  border: thin solid $p-b-blue;
+
+  &:hover {
+    background-color: $p-b-blue;
+    color: #ffff
+  }
 }

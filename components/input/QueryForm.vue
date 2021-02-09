@@ -118,15 +118,24 @@ export default {
 </script>
 <style lang="scss">
 @import url('https://github.githubassets.com/assets/gist-embed-4ac6018bcc05457cde2f66d2e7299d11.css');
+* {
+  [contenteditable]:focus {
+    outline: 0px solid transparent;
+  }
+}
+$p-b-blue: map-get($p-blue, 'base');
+
 .editor-container {
   width: 100%;
   height: 100%;
-  border: thin solid map-get($p-blue, 'base');
+  border: thin solid $p-b-blue;
   padding: 3%;
+
+  .txtArea {
+    min-height: 30vh;
+  }
 }
-.txtArea {
-  min-height: 30vh;
-}
+
 .custom-gist {
   margin: 0% 10%;
 }
