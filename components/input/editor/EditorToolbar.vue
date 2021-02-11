@@ -38,12 +38,12 @@ export default {
           //
           on: {
             click(e) {
-              const s = document.getSelection().baseNode
-              // using clientHeight * locateRatio
-              const locateRatio = (
-                s.offsetTop / s.parentNode.clientHeight
-              ).toFixed(3)
-              context.parent.addSection(locateRatio)
+              const qPage = context.parent.$parent.$parent.$parent
+              const id = qPage.sections.length + 1
+              const s = document.getSelection()
+              const el = s.type === 'Range' ? s.baseNode.parentNode : s.baseNode
+              el.setAttribute('id', `section-${id}`)
+              qPage.addSection(id)
             },
           },
         },
