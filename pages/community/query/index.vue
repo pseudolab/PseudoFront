@@ -2,9 +2,11 @@
   <!-- src="/v.png" -->
   <div>
     <v-row justify="center">
-      <v-col>
+      <v-col cols="1"> </v-col>
+      <v-col cols="10">
         <query-form />
       </v-col>
+      <v-col cols="1" />
     </v-row>
   </div>
 </template>

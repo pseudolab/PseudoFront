@@ -22,8 +22,10 @@ export default {
           contenteditable: true,
         },
         on: {
-          click(e) {
-            self.$emit('click', e)
+          mousedown: (evt) => {
+            if (evt.button === 2) {
+              this.$emit('click', evt)
+            }
           },
           keyup: (evt) => {
             // console.log(
@@ -32,7 +34,6 @@ export default {
             //   'currentTarget:',
             //   evt.currentTarget
             // )
-            console.log('getNumOfLines:', self.getNumOfLines())
             if (evt.keyCode === '91') {
               self.format('bold')
             }
