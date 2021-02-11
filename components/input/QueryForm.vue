@@ -131,7 +131,7 @@ $p-b-blue: map-get($p-blue, 'base');
   border: thin solid $p-b-blue;
   padding: 3%;
 
-  .txtArea {
+  #txtArea {
     min-height: 30vh;
   }
 }

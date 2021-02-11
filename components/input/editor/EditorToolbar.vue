@@ -34,6 +34,27 @@ export default {
       h(
         'v-icon',
         {
+          // offsetTop: 528
+          //
+          on: {
+            click(e) {
+              const s = document.getSelection().baseNode
+              // using clientHeight * locateRatio
+              const locateRatio = (
+                s.offsetTop / s.parentNode.clientHeight
+              ).toFixed(3)
+              context.parent.addSection(locateRatio)
+            },
+          },
+        },
+        ['mdi-alien']
+      )
+    )
+
+    btns.push(
+      h(
+        'v-icon',
+        {
           on: {
             click(e) {
               context.parent._data.gistActive = true
