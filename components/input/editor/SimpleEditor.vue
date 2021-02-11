@@ -2,7 +2,7 @@
 export default {
   methods: {
     getNumOfLines() {
-      // startwith 0
+      // startwith 0, elementNodeReference
       return this.$refs.txtArea.childElementCount
     },
     format(cmd, value) {
@@ -14,12 +14,10 @@ export default {
     return h(
       'div',
       {
-        ref: 'txtArea',
-        class: {
-          txtArea: true,
-        },
+        ref: 'txtArea', // for element
         attrs: {
           contenteditable: true,
+          id: 'txtArea', // for node
         },
         on: {
           mousedown: (evt) => {
