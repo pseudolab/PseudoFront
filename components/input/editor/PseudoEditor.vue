@@ -24,11 +24,13 @@ export default {
           {
             props: {
               contentClass: 'menu-content',
-              origin: 'top right',
               value: self.menuActive,
               closeOnClick: true,
               closeOnContentClick: false,
               absolute: true,
+              top: true,
+              'offset-y': true,
+              'offset-x': true,
             },
             on: {
               input: (val) => (self.menuActive = val),

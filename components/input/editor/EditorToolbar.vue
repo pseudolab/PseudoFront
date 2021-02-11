@@ -10,12 +10,25 @@ export default {
         const keys = Object.keys(CmdDict)
         return arr.every((cmd) => keys.includes(cmd))
       },
-      default: () => ['bold', 'fontSize', 'backColor', 'copy'],
+      default: () => ['bold', 'copy'],
     },
   },
   render(h, context) {
+    const format = (cmd, value) => document.execCommand(cmd, true, value)
+    // const cmdDict = CmdDict
     const btns = context.props.cmds.map((cmd) => {
-      return h('v-icon', [CmdDict[cmd].src])
+      return h(
+        'v-icon',
+        {
+          on: {
+            click(e) {
+              format(cmd)
+            },
+          },
+        },
+        // icon name
+        [CmdDict[cmd].src]
+      )
     })
     btns.push(
       h(
