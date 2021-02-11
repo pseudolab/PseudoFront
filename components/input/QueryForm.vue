@@ -123,7 +123,6 @@ export default {
     outline: 0px solid transparent;
   }
 }
-$p-b-blue: map-get($p-blue, 'base');
 
 .editor-container {
   width: 100%;

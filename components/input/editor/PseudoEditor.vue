@@ -7,16 +7,7 @@ export default {
   data() {
     return {
       menuActive: false,
-      sections: [],
     }
-  },
-  methods: {
-    addSection(locateRatio) {
-      this.sections.push({
-        name: 'default' + this.sections.length + 1,
-        locateRatio,
-      })
-    },
   },
   render(h) {
     const self = this

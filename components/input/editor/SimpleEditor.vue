@@ -11,35 +11,31 @@ export default {
   },
   render(h) {
     const self = this
-    return h(
-      'div',
-      {
-        ref: 'txtArea', // for element
-        attrs: {
-          contenteditable: true,
-          id: 'txtArea', // for node
+    return h('div', {
+      ref: 'txtArea', // for element
+      attrs: {
+        contenteditable: true,
+        id: 'txtArea', // for node
+      },
+      on: {
+        mousedown: (evt) => {
+          if (evt.button === 2) {
+            this.$emit('click', evt)
+          }
         },
-        on: {
-          mousedown: (evt) => {
-            if (evt.button === 2) {
-              this.$emit('click', evt)
-            }
-          },
-          keyup: (evt) => {
-            // console.log(
-            //   `shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,
-            //   evt,
-            //   'currentTarget:',
-            //   evt.currentTarget
-            // )
-            if (evt.keyCode === '91') {
-              self.format('bold')
-            }
-          },
+        keyup: (evt) => {
+          // console.log(
+          //   `shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,
+          //   evt,
+          //   'currentTarget:',
+          //   evt.currentTarget
+          // )
+          if (evt.keyCode === '91') {
+            self.format('bold')
+          }
         },
       },
-      ['내용을 입력 하세요']
-    )
+    })
   },
 }
 </script>
