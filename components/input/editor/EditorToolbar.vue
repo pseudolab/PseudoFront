@@ -5,37 +5,38 @@ export default {
   props: {
     cmds: {
       type: Array,
-      required: false,
+      required: true,
       validator: (arr) => {
         const keys = Object.keys(CmdDict)
         return arr.every((cmd) => keys.includes(cmd))
       },
-      default: () => ['bold', 'copy'],
     },
   },
   render(h, context) {
     const format = (cmd, value) => document.execCommand(cmd, true, value)
-    // const cmdDict = CmdDict
     const btns = context.props.cmds.map((cmd) => {
-      return h(
-        'v-icon',
-        {
-          on: {
-            click(e) {
-              format(cmd)
-            },
-          },
+      const option = {
+        props: {},
+        on: {},
+        style: {
+          'max-width': '1.2vw',
         },
-        // icon name
-        [CmdDict[cmd].src]
-      )
+      }
+      const c = CmdDict[cmd]
+      const child = []
+      option.on.click = (e) => format(cmd)
+      if (c.tag === 'v-icon') {
+        child.push(c.src)
+      } else if (c.tag === 'v-img') {
+        option.props.src = c.src
+      }
+      return h(c.tag, option, child)
     })
+    // Section add Btn
     btns.push(
       h(
         'v-icon',
         {
-          // offsetTop: 528
-          //
           on: {
             click(e) {
               const qPage = context.parent.$parent.$parent.$parent
@@ -50,7 +51,7 @@ export default {
         ['mdi-alien']
       )
     )
-
+    // gist component on
     btns.push(
       h(
         'v-icon',

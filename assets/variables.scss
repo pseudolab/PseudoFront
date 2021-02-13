@@ -29,7 +29,8 @@ $p-shadow: (
 }
 
 .v-autocomplete__content.v-menu__content {
-  box-shadow: map-get($map: $p-shadow, $key: 'blue');
+  // box-shadow: map-get($map: $p-shadow, $key: 'blue');
+  box-shadow: 0 4px 16px 0 rgb(0 119 163 / 38%);
 }
 
 .theme--light.v-btn.v-btn--has-bg {
