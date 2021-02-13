@@ -124,8 +124,14 @@
             </span>
           </div>
         </v-tooltip>
-      </template>
-    </v-data-table>
+    <div class="text-center">
+      <v-pagination
+        v-model="pageIdx"
+        :length="10"
+        :total-visible="6"
+        @input="changePage"
+      ></v-pagination>
+    </div>
   </article>
 </template>
 <script>
@@ -158,10 +164,12 @@ export default {
       chips: [{ name: 'Levdfa' }, { name: 'Rucode' }, { name: 'bubule' }],
       sortType: ['최신순', '추천순'],
       sortTypeIdx: 0,
+      pageIdx: 1,
     }
   },
   mounted() {
     this.$emit('changeSortType', this.sortType[0])
+    this.$emit('changePage', 1)
   },
   methods: {
     calcDayAgo(date) {
@@ -170,6 +178,9 @@ export default {
     changeSortType(idx) {
       this.sortTypeIdx = idx
       this.$emit('changeSortType', this.sortType[idx])
+    },
+    changePage(idx) {
+      this.$emit('changePage', idx)
     },
   },
 }
