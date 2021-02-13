@@ -1,26 +1,19 @@
 <template>
   <article class="table">
-    <v-btn-toggle mandatory group dense class="table--sort d-flex justify-end">
-      <v-btn class="table--sort__btn">최신순</v-btn>
-      <v-btn class="table--sort__btn">추천순</v-btn>
-    </v-btn-toggle>
-    <hr
-      :style="{
-        border: 'none',
-        height: '1px',
-        backgroundColor: 'rgba(0,0,0,0.12)',
-      }"
-    />
-    <v-data-table
-      hide-default-header
-      :headers="headers"
-      :items="tableData"
-      :items-per-page="5"
-      :loading="false"
-      @click:row="clickRow"
+    <div
+      class="table--sort d-flex justify-end"
+      :class="{ 'mt-2': sortType.length === 0 }"
     >
-      <template v-slot:[`item.info`]="{ item }">
-        <div class="table--item--top mb-2">
+      <button
+        v-for="(type, idx) in sortType"
+        :key="type"
+        class="table--sort__btn"
+        :class="{ 'font-weight-bold': sortTypeIdx === idx }"
+        @click="changeSortType(idx)"
+      >
+        {{ type }}
+      </button>
+    </div>
           <h4 class="mr-1">
             {{ item.info.title }}
           </h4>
@@ -163,17 +156,20 @@ export default {
       ],
       // TODO: fixture로 빼야 함 - 나중에 api로 받아올 부분
       chips: [{ name: 'Levdfa' }, { name: 'Rucode' }, { name: 'bubule' }],
+      sortType: ['최신순', '추천순'],
+      sortTypeIdx: 0,
     }
+  },
+  mounted() {
+    this.$emit('changeSortType', this.sortType[0])
   },
   methods: {
     calcDayAgo(date) {
       return Date.now() - date
     },
-    clickRow() {
-      // ref: https://vuetifyjs.com/en/api/v-data-table/#click:row
-      /*
-        클릭 이벤트
-      */
+    changeSortType(idx) {
+      this.sortTypeIdx = idx
+      this.$emit('changeSortType', this.sortType[idx])
     },
   },
 }
