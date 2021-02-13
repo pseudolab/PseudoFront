@@ -22,6 +22,7 @@
         :loading="loading"
         class="flex-grow-1 mr-5"
         @changeSortType="changeSortType"
+        @changePage="changePage"
       />
       <RankBoard />
     </div>
@@ -56,6 +57,7 @@ export default {
       subjectCategory: subjectCategoryData,
       tableData: archiveTableData,
       sortType: null,
+      pageIdx: null,
     }
   },
   methods: {
@@ -72,6 +74,10 @@ export default {
     changeSortType(type) {
       // TODO: sortType 관련 항목 설정
       this.sortType = type
+    },
+    changePage(idx) {
+      // TODO: pageIdx 관련 항목 설정
+      this.pageIdx = idx
     },
   },
   head() {
