@@ -21,6 +21,7 @@
         :table-data="tableData"
         :loading="loading"
         class="flex-grow-1 mr-5"
+        @changeSortType="changeSortType"
       />
       <RankBoard />
     </div>
@@ -54,6 +55,7 @@ export default {
       })),
       subjectCategory: subjectCategoryData,
       tableData: archiveTableData,
+      sortType: null,
     }
   },
   methods: {
@@ -66,6 +68,10 @@ export default {
         }
       })
       // TODO: selected chip을 api에 어떻게 보내줄지 결정한 후 작업.
+    },
+    changeSortType(type) {
+      // TODO: sortType 관련 항목 설정
+      this.sortType = type
     },
   },
   head() {
