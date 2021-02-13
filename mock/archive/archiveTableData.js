@@ -94,7 +94,7 @@ const archiveTableData = [
     },
     writer: {
       icon: 'test3.png',
-      name: 'DuckDuckDuckDuck',
+      name: 'Case:TooLongName',
       level: 99,
       exp: 30,
       accumulation: 50,
