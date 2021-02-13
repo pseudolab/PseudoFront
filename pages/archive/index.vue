@@ -10,12 +10,15 @@
       solo
       :hide-details="true"
       flat
+      color="primary"
     />
     <article class="archive--trend d-flex align-center px-15 mb-4">
-      <strong>Trending</strong>
+      <strong style="color: #0077a3">Trending</strong>
       <ChipBoadr :chips="chips" @changeSelectedChips="changeSelectedChips" />
     </article>
-    <v-btn class="archive__write-btn font-weight-bold" outlined> 글쓰기 </v-btn>
+    <v-btn class="archive__write-btn font-weight-bold" color="primary" outlined>
+      글쓰기
+    </v-btn>
     <div class="d-flex">
       <Table
         :table-data="tableData"
@@ -48,7 +51,6 @@ export default {
   mixins: [headMixin],
   data() {
     return {
-      // TODO: fixture로 빼야 함 - 나중에 api로 받아올 부분
       loading: false,
       chips: subjectCategoryData.map((subject) => ({
         name: subject,
@@ -85,10 +87,16 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .archive {
   &__write-btn {
     background-color: white !important;
+  }
+  & input:focus {
+    color: #0077a3 !important;
+    &::placeholder {
+      color: #0077a3 !important;
+    }
   }
 }
 </style>

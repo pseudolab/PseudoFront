@@ -1,7 +1,7 @@
 <template>
   <article class="table">
     <div
-      class="table--sort d-flex justify-end"
+      class="table--sort d-flex justify-end mb-2"
       :class="{ 'mt-2': sortType.length === 0 }"
     >
       <button
@@ -14,6 +14,14 @@
         {{ type }}
       </button>
     </div>
+    <v-card
+      v-for="(item, idx) in tableData"
+      :key="idx"
+      class="mb-4 pa-3 d-flex"
+      @click="clickRow"
+    >
+      <div class="d-flex flex-column justify-space-between">
+        <div class="d-flex table--item--top">
           <h4 class="mr-1">
             {{ item.info.title }}
           </h4>
@@ -21,109 +29,97 @@
             {{ calcDayAgo(item.info.date) | dayAgo }} 전
           </span>
         </div>
-        <v-icon v-if="item.info.isLiked">mdi-thumb-up</v-icon>
-        <v-icon v-else>mdi-thumb-up-outline</v-icon>
-        <span class="font-weight-bold">{{ item.info.likes }}</span>
-        <v-icon class="ml-2">mdi-comment-processing-outline</v-icon>
-        <span class="font-weight-bold">{{ item.info.comments }}</span>
-        <v-icon class="ml-2">mdi-format-quote-open-outline</v-icon>
-        <span class="font-weight-bold">{{ item.info.quotations }}</span>
-        <v-chip
-          v-for="badge in item.info.badges"
-          :key="badge"
-          class="ms-2"
-          label
-          x-small
-          text-color="white"
-        >
-          {{ badge }}
-        </v-chip>
-      </template>
-
-      <template v-slot:[`item.writer`]="{ item }">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-row no-gutters justify="end">
-              <v-col
-                class="d-flex justify-center"
-                :cols="5"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <UserProfile
-                  :img-url="require('~/assets/img/test.png')"
-                  exp-color="red"
-                  :exp="item.writer.exp"
-                  :remain-exp="item.writer.accumulation"
-                  :width="40"
-                  :is-animation="true"
-                />
-              </v-col>
-              <v-col
-                class="table--contributer d-flex justify-start"
-                :cols="3"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <div
-                  v-for="({ icon, name }, idx) in item.contributer"
-                  :key="name"
-                  class="table--contributer__profile"
-                >
-                  <UserProfile
-                    v-if="idx < 4"
-                    :img-url="require(`~/assets/img/${icon}`)"
-                    exp-color="#3cb043"
-                    :exp="item.writer.exp"
-                    :remain-exp="item.writer.accumulation"
-                    :width="30"
-                    :is-animation="false"
-                  />
-                </div>
-              </v-col>
-            </v-row>
-            <v-row no-gutters justify="end">
-              <v-col class="text-center font-weight-bold" :cols="5">
-                {{ item.writer.name }}
-              </v-col>
-              <v-col :cols="3" />
-            </v-row>
-          </template>
-          <div>
-            <h4 class="block">작성자</h4>
-            <div class="d-flex align-center">
+        <div>
+          <v-icon v-if="item.info.isLiked">mdi-thumb-up</v-icon>
+          <v-icon v-else>mdi-thumb-up-outline</v-icon>
+          <span class="font-weight-bold">{{ item.info.likes }}</span>
+          <v-icon class="ml-2">mdi-comment-processing-outline</v-icon>
+          <span class="font-weight-bold">{{ item.info.comments }}</span>
+          <v-icon class="ml-2">mdi-format-quote-open-outline</v-icon>
+          <span class="font-weight-bold">{{ item.info.quotations }}</span>
+          <v-chip
+            v-for="badge in item.info.badges"
+            :key="badge"
+            class="ms-2"
+            label
+            x-small
+            color="primary"
+          >
+            {{ badge }}
+          </v-chip>
+        </div>
+      </div>
+      <v-tooltip bottom content-class="table--tooltip">
+        <template v-slot:activator="{ on, attrs }">
+          <div class="ml-auto d-flex" v-bind="attrs" v-on="on">
+            <div class="table--writer">
               <UserProfile
                 :img-url="require('~/assets/img/test.png')"
                 exp-color="red"
                 :exp="item.writer.exp"
                 :remain-exp="item.writer.accumulation"
                 :width="40"
-                :is-animation="false"
+                :is-animation="true"
               />
-              <span class="ml-3">
+              <div class="text-center font-weight-bold">
                 {{ item.writer.name }}
-              </span>
+              </div>
+            </div>
+            <div class="table--contributer d-flex justify-start" :cols="4">
+              <div
+                v-for="({ icon, name }, contributer_idx) in item.contributer"
+                :key="name"
+                class="table--contributer__profile"
+              >
+                <UserProfile
+                  v-if="contributer_idx < 4"
+                  :img-url="require(`~/assets/img/${icon}`)"
+                  exp-color="#3cb043"
+                  :exp="item.writer.exp"
+                  :remain-exp="item.writer.accumulation"
+                  :width="30"
+                  :is-animation="false"
+                />
+              </div>
             </div>
           </div>
-          <h5 v-if="item.contributer">참여자</h5>
-          <div
-            v-for="{ icon, name } in item.contributer"
-            :key="name"
-            class="d-flex align-center"
-          >
+        </template>
+        <div>
+          <h4 class="block">작성자</h4>
+          <div class="d-flex align-center">
             <UserProfile
-              :img-url="require(`~/assets/img/${icon}`)"
-              exp-color="#3cb043"
+              :img-url="require('~/assets/img/test.png')"
+              exp-color="red"
               :exp="item.writer.exp"
               :remain-exp="item.writer.accumulation"
               :width="40"
               :is-animation="false"
             />
             <span class="ml-3">
-              {{ name }}
+              {{ item.writer.name }}
             </span>
           </div>
-        </v-tooltip>
+        </div>
+        <h5 v-if="item.contributer">참여자</h5>
+        <div
+          v-for="{ icon, name } in item.contributer"
+          :key="name"
+          class="d-flex align-center"
+        >
+          <UserProfile
+            :img-url="require(`~/assets/img/${icon}`)"
+            exp-color="#3cb043"
+            :exp="item.writer.exp"
+            :remain-exp="item.writer.accumulation"
+            :width="40"
+            :is-animation="false"
+          />
+          <span class="ml-3">
+            {{ name }}
+          </span>
+        </div>
+      </v-tooltip>
+    </v-card>
     <div class="text-center">
       <v-pagination
         v-model="pageIdx"
@@ -175,6 +171,9 @@ export default {
     calcDayAgo(date) {
       return Date.now() - date
     },
+    clickRow(e) {
+      // NOTE: mouse-event가 parameter로 들어옵니다. 이에 따라 선택된 row가 무엇인지 data-set에 id값으로 저장하는것이 바람직할 것 같습니다.
+    },
     changeSortType(idx) {
       this.sortTypeIdx = idx
       this.$emit('changeSortType', this.sortType[idx])
@@ -187,21 +186,17 @@ export default {
 </script>
 <style lang="scss">
 .table {
-  & .v-data-table {
-    background-color: transparent !important;
-    & tbody tr td {
-      padding-top: 10px !important;
-      padding-bottom: 10px !important;
-    }
-  }
-  &--item {
-    &--top {
-      display: flex;
-    }
+  &--writer {
+    width: 50px;
+    white-space: nowrap;
+    text-align: center;
   }
   &--contributer {
+    margin-left: 20px;
+    width: 80px;
     position: relative;
     left: -20px;
+    padding-bottom: 24px;
     &__profile {
       display: flex;
       align-items: center;
@@ -215,9 +210,10 @@ export default {
   }
   &--sort {
     &__btn {
-      margin: 0 3px 0 0 !important;
-      padding: 0 !important;
-      height: 20px !important;
+      font-size: 12px;
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
     }
     & .v-btn--active > .v-btn__content {
       color: #000;
@@ -227,8 +223,12 @@ export default {
       opacity: 0;
     }
   }
-  & .v-tooltip__content {
-    background-color: #fff;
+  &--tooltip.v-tooltip__content {
+    background-color: #e8eced;
+    color: #595959;
+    &.menuable__content__active {
+      opacity: 1 !important;
+    }
   }
 }
 </style>

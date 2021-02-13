@@ -6,11 +6,10 @@
 @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 @import './styles/';
 
-$tooltip-background-color: #fff;
-$tooltip-text-color: #000;
-$p-b-grey:map-get($p-grey, 'base');
+$p-b-grey: map-get($p-grey, 'base');
 $p-b-blue: map-get($p-blue, 'base');
-$p-shadow: (blue: 0 4px 16px 0 rgb(0 119 163 / 38%),
+$p-shadow: (
+  blue: 0 4px 16px 0 rgb(0 119 163 / 38%),
 );
 
 .theme--light.v-application {
@@ -39,6 +38,6 @@ $p-shadow: (blue: 0 4px 16px 0 rgb(0 119 163 / 38%),
 
   &:hover {
     background-color: $p-b-blue;
-    color: #ffff
+    color: #ffff;
   }
 }
