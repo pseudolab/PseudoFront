@@ -1,6 +1,11 @@
 <template>
-  <v-card class="rank-board px-3 py-3 text-center" outlined>
-    <h4 class="mb-4">가짜연구소 멤버 랭킹</h4>
+  <v-card
+    class="rank-board px-3 py-5 text-center"
+    color="#F9FBFC"
+    rounded
+    outlined
+  >
+    <h5 class="mb-5">가짜연구소 멤버 랭킹</h5>
     <div
       v-for="({ icon, name, postCount, exp, accumulation }, idx) in rankInfo"
       :key="idx"
