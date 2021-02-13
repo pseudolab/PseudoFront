@@ -62,6 +62,8 @@ export default {
           title: '홈페이지',
           to: '/',
         },
+        { title: '아카이브', to: '/archive' },
+        { title: '프로필', to: '/profile' },
       ],
       groups: [
         {
