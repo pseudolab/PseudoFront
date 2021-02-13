@@ -152,4 +152,9 @@ export default {
 .v-text-field__details {
   display: none;
 }
+.v-list-item__title {
+  align-self: center;
+  font-size: 1rem;
+  color: $p-b-blue;
+}
 </style>
