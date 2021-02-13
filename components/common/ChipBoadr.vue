@@ -10,6 +10,7 @@
       class="ms-2"
       :outlined="!isSelected"
       label
+      color="primary"
     >
       {{ name }}
     </v-chip>
