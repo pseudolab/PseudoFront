@@ -1,5 +1,16 @@
 <template>
-  <svg width="800" height="120" class="activity-calender"></svg>
+  <div class="activity-calender">
+    <svg
+      ref="calender"
+      width="800"
+      height="120"
+      class="activity-calender--calender"
+    ></svg>
+    <div class="activity-calender--bottom">
+      <a href="">Learn how we count contributions.</a>
+      <svg ref="palette" width="150" height="15"></svg>
+    </div>
+  </div>
 </template>
 <script>
 import { ColorPalette } from '@/fixture/profile/activityCalender.js'
@@ -24,12 +35,14 @@ export default {
   },
   mounted() {
     const { year, isLeapYear, calenderDataset } = this
+    const tileSize = 11
+    const gap = tileSize + 3
 
     const calenderContext = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'g'
     )
-    calenderContext.setAttribute('transform', `translate(20, 20)`)
+    calenderContext.setAttribute('transform', `translate(40, 20)`)
 
     // tile click event
     let selectedTile = null
@@ -49,7 +62,7 @@ export default {
         }
       }
     })
-    this.$el.appendChild(calenderContext)
+    this.$refs.calender.appendChild(calenderContext)
 
     const dayStringSet = ['Mon', 'Wed', 'Fri']
     const monthStringSet = [
@@ -104,27 +117,30 @@ export default {
         'http://www.w3.org/2000/svg',
         'g'
       )
-      weekTile.setAttribute('transform', `translate(${14 * col}, 0)`)
+      weekTile.setAttribute('transform', `translate(${gap * col}, 0)`)
       for (let i = startOffset; i <= endOffset; i++) {
         const tile = document.createElementNS(
           'http://www.w3.org/2000/svg',
           'rect'
         )
 
-        tile.setAttribute('width', 10)
-        tile.setAttribute('height', 10)
+        tile.setAttribute('width', tileSize)
+        tile.setAttribute('height', tileSize)
         tile.setAttribute('x', 0)
-        tile.setAttribute('y', 14 * i)
+        tile.setAttribute('y', gap * i)
         tile.setAttribute('rx', 2)
         const curFullDate = makeDataDate(curMonthIdx, curDate)
         tile.setAttribute('data-date', curFullDate)
         if (calenderDataset[curFullDate]) {
-          const gap = Math.ceil(100 / ColorPalette.length)
-          const tileColor =
-            ColorPalette[Math.floor(calenderDataset[curFullDate] / gap)]
+          const interval = Math.ceil(100 / ColorPalette.length)
+          let step = Math.floor((calenderDataset[curFullDate] - 1) / interval)
+          if (step >= ColorPalette.length) {
+            step = ColorPalette.length - 1
+          }
+          const tileColor = ColorPalette[step]
           tile.setAttribute('fill', tileColor)
         } else {
-          tile.setAttribute('fill', '#d0d0d0')
+          tile.setAttribute('fill', '#E8E7E7')
         }
 
         curDate += 1
@@ -158,7 +174,7 @@ export default {
       const curAccTile = (i + 1) * 7 - firstOffset
       if (curAccTile > dateAcc[curMonthIdx]) {
         calenderContext.appendChild(
-          addTextSVG(monthStringSet[curMonthIdx], i * 14, -10)
+          addTextSVG(monthStringSet[curMonthIdx], i * gap, -10)
         )
         curMonthIdx += 1
       }
@@ -172,29 +188,70 @@ export default {
         calenderContext.appendChild(makeWeekTile(i, 0, 6))
       }
     }
+    this.$refs.palette.appendChild(addTextSVG('LESS', 0, 9))
+    for (let i = 0; i < ColorPalette.length; i++) {
+      const tile = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'rect'
+      )
+      tile.setAttribute('width', tileSize)
+      tile.setAttribute('height', tileSize)
+      tile.setAttribute('fill', ColorPalette[i])
+      tile.setAttribute('x', gap * i + 30)
+      tile.setAttribute('y', 0)
+
+      this.$refs.palette.appendChild(tile)
+    }
+    this.$refs.palette.appendChild(
+      addTextSVG('MORE', gap * ColorPalette.length + 35, 9)
+    )
   },
 }
 </script>
 <style lang="scss">
 .activity-calender {
-  & text {
-    font-size: 9px;
-    text-anchor: start;
-    fill: #333;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  & .opacity {
+  padding: 30px 10px;
+  background-color: white;
+  &--calender {
+    & text {
+      font-size: 9px;
+      text-anchor: start;
+      fill: #333;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    & .opacity {
+      & rect {
+        opacity: 0.5;
+      }
+    }
     & rect {
-      opacity: 0.5;
+      cursor: pointer;
+      &.active {
+        opacity: 1;
+      }
     }
   }
-  & rect {
-    cursor: pointer;
-    &.active {
-      opacity: 1;
+  &--bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 40px;
+    a {
+      color: #0077a3;
+      text-decoration: none;
+      font-size: 10px;
+    }
+    & text {
+      font-size: 9px;
+      text-anchor: start;
+      fill: #333;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
   }
 }
