@@ -1,6 +1,6 @@
 <template>
   <section class="following">
-    <v-chip class="mb-4" label> Following </v-chip>
+    <v-chip class="mb-4" label color="primary"> Following </v-chip>
     <article>
       <v-card
         v-for="{ name, description, followers } in followings"
@@ -13,7 +13,7 @@
           {{ description }}
         </p>
         <div>
-          <v-icon>mdi-account</v-icon>
+          <v-icon x-small color="#989898">mdi-account</v-icon>
           Followers&nbsp;
           {{ followers }}
         </div>
@@ -72,6 +72,15 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    & h2 {
+      color: $p-b-blue;
+      font-size: 14px;
+    }
+    & p,
+    div {
+      color: #989898;
+      font-size: 10px;
+    }
   }
 }
 </style>
