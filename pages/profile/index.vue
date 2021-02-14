@@ -9,6 +9,7 @@
           class="ms-2"
           label
           :outlined="!(idx === selectedMenuIdx)"
+          color="primary"
         >
           {{ name }}
         </v-chip>
