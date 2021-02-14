@@ -1,3 +1,3 @@
-const ColorPalette = ['#70e080', '#50c060', '#30a040', '#108020', '#006000']
+const ColorPalette = ['#AAE8FE', '#7ed9fa', '#4FC9F5', '#0A9ED4', '#0077A3']
 
 export { ColorPalette }
