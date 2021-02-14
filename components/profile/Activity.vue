@@ -1,6 +1,6 @@
 <template>
   <section class="activity">
-    <v-chip class="mb-4" label> Activity </v-chip>
+    <v-chip class="mb-4" label color="primary"> Activity </v-chip>
     <article>
       <HexagonGraph
         :activity-score-data-set="activityScoreDataSet"
