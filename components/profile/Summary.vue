@@ -17,16 +17,28 @@ export default {}
 </script>
 <style lang="scss" scoped>
 .summary {
-  & article:not(:last-child) {
-    border-right: inherit;
-    border-radius: 0 !important;
+  & article {
+    color: $p-b-blue;
+    &:not(:last-child) {
+      border-right: inherit;
+      border-radius: 0 !important;
+    }
   }
   & p {
     padding: 0;
     margin: 0;
   }
   & strong {
-    font-size: 40px;
+    font-size: 25px;
+  }
+
+  & h4 {
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  & span {
+    color: #909090;
   }
 }
 </style>
