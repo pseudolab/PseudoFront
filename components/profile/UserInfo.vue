@@ -21,6 +21,16 @@
       <h3>개인 웹페이지</h3>
       <p>www.abc.com</p>
     </v-card>
+    <v-btn
+      class="d-block ml-auto mt-4"
+      :style="{
+        border: 'none',
+      }"
+      disabled
+      small
+      depressed
+      >Edit</v-btn
+    >
   </section>
 </template>
 <script>
@@ -32,4 +42,15 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.user-info {
+  & h3 {
+    color: #797979;
+    font-size: 16px;
+  }
+  & p {
+    color: #797979;
+    font-size: 10px;
+  }
+}
+</style>
