@@ -2,12 +2,12 @@
   <section class="activity">
     <v-chip class="mb-4" label> Activity </v-chip>
     <article>
-      <ActivityCalender :year="2021" :calender-dataset="calenderDataset" />
       <HexagonGraph
         :activity-score-data-set="activityScoreDataSet"
         :has-animation="true"
         color="#0077a3b0"
       />
+      <ActivityCalender :year="2021" :calender-dataset="calenderDataset" />
     </article>
   </section>
 </template>
