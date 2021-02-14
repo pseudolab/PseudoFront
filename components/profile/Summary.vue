@@ -10,10 +10,21 @@
         <p><strong class="mr-3">423</strong><span>of 179,059</span></p>
       </article>
     </v-card>
+
+    <Following class="mb-15 mt-15" />
+    <Activity />
   </article>
 </template>
 <script>
-export default {}
+import Following from '@/components/profile/Following.vue'
+import Activity from '@/components/profile/Activity.vue'
+
+export default {
+  components: {
+    Following,
+    Activity,
+  },
+}
 </script>
 <style lang="scss" scoped>
 .summary {
