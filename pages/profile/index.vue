@@ -1,8 +1,8 @@
 <template>
-  <section class="profile d-flex">
-    <UserInfo class="mr-6" />
+  <section class="profile d-flex my-15 justify-space-between">
+    <UserInfo />
     <div>
-      <v-chip-group mandatory @change="changeSelectedMenu">
+      <v-chip-group class="mb-5" mandatory @change="changeSelectedMenu">
         <v-chip
           v-for="(name, idx) in profileMenues"
           :key="name"
@@ -14,9 +14,7 @@
           {{ name }}
         </v-chip>
       </v-chip-group>
-      <Summary class="mb-15" />
-      <Following class="mb-15" />
-      <Activity />
+      <Summary v-if="selectedMenuIdx === 0" />
     </div>
   </section>
 </template>
@@ -24,15 +22,11 @@
 import headMixin from '@/mixins/common/head.js'
 import UserInfo from '@/components/profile/UserInfo.vue'
 import Summary from '@/components/profile/Summary.vue'
-import Following from '@/components/profile/Following.vue'
-import Activity from '@/components/profile/Activity.vue'
 
 export default {
   components: {
     UserInfo,
     Summary,
-    Following,
-    Activity,
   },
   mixins: [headMixin],
   data() {
