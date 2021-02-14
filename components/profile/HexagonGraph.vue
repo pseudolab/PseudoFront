@@ -6,11 +6,11 @@ export default {
   props: {
     width: {
       type: Number,
-      default: 500,
+      default: 300,
     },
     fontSize: {
       type: Number,
-      default: 20,
+      default: 12,
     },
     entries: {
       type: Array,
@@ -49,6 +49,7 @@ export default {
       activityScoreDataSet,
       hasAnimation,
     } = this
+
     const { calcPointPosition, calcInnerPointPosition } = this
     ctx.font = `${fontSize}px Arial`
     if (entries.length !== 6 || activityScoreDataSet.length !== 6) {
@@ -109,10 +110,12 @@ export default {
       const { width, entries, activityScoreDataSet, color, fontColor } = this
       const { calcInnerPointPosition } = this
       ctx.clearRect(0, 0, width, width)
+      ctx.fillStyle = 'white'
+      ctx.fillRect(0, 0, width, width)
       // draw outline
       ctx.fillStyle = '#E9EFF1'
       ctx.strokeStyle = '#737373'
-      ctx.lineWidth = 2
+      ctx.lineWidth = 1
       ctx.beginPath()
       ctx.moveTo(pointPositions[0][0], pointPositions[0][1])
       for (let i = 1; i < 6; i++) {
