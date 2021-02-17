@@ -19,18 +19,21 @@ export default {
         props: {},
         on: {},
         style: {
-          'max-width': '1.2vw',
+          width: '1.2vw',
+          height: '1.2vh',
         },
       }
       const c = CmdDict[cmd]
       const child = []
-      option.on.click = (e) => format(cmd)
+      const command = cmd.includes('_') ? cmd.split('_')[0] : cmd
+      option.on.click = (e) => format(command, c.val)
       if (c.tag === 'v-icon') {
         child.push(c.src)
       } else if (c.tag === 'v-img') {
         option.props.src = c.src
+        option.props.contain = true
       }
-      return h(c.tag, option, child)
+      return h('v-btn', { props: { icon: true } }, [h(c.tag, option, child)])
     })
     // Section add Btn
     btns.push(
