@@ -48,7 +48,7 @@ export default {
           [
             h(EditorToolbar, {
               props: {
-                cmds: ['selectAll', 'bold', 'copy', 'backColor'],
+                cmds: ['selectAll', 'bold', 'heading_2', 'heading_3'],
               },
             }),
             self.genGistForm(h),
