@@ -1,10 +1,11 @@
 <script>
 export default {
+  data() {
+    return {
+      html: '',
+    }
+  },
   methods: {
-    getNumOfLines() {
-      // startwith 0, elementNodeReference
-      return this.$refs.txtArea.childElementCount
-    },
     format(cmd, value) {
       document.execCommand(cmd, true, value)
     },
@@ -23,13 +24,12 @@ export default {
             this.$emit('click', evt)
           }
         },
+        input: (evt) => {
+          self.html = evt.target.innerHTML
+          console.log('input evt', evt.target.value, evt)
+        },
         keyup: (evt) => {
-          // console.log(
-          //   `shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,
-          //   evt,
-          //   'currentTarget:',
-          //   evt.currentTarget
-          // )
+          // console.log(`shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,evt,currentTarget:',evt.currentTarget)
           if (evt.keyCode === '91') {
             self.format('bold')
           }
