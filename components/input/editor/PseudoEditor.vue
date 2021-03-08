@@ -34,7 +34,6 @@ export default {
             },
             on: {
               input: (val) => (self.menuActive = val),
-              lineNum: (n) => console.log(n),
             },
             scopedSlots: {
               activator: ({ on }) => {
