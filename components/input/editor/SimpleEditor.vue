@@ -1,4 +1,5 @@
 <script>
+import marked from 'marked'
 export default {
   data() {
     return {
@@ -25,8 +26,10 @@ export default {
           }
         },
         input: (evt) => {
+          // Selected Node
+          const node = window.getSelection().anchorNode
+          node.outerHTML = node.data ? marked(node.data) : null
           self.html = evt.target.innerHTML
-          console.log('input evt', evt.target.value, evt)
         },
         keyup: (evt) => {
           // console.log(`shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,evt,currentTarget:',evt.currentTarget)
