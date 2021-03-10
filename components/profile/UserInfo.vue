@@ -9,17 +9,17 @@
       :is-animation="true"
     />
     <v-card class="pa-3" outlined>
-      <h2 class="mb-3">Name</h2>
-      <h3>한 줄 소개</h3>
-      <p>한 줄 설명 추가</p>
-      <h3>소속</h3>
-      <p>가짜 연구소</p>
-      <h3>지역</h3>
-      <p>서울</p>
-      <h3>메일 주소</h3>
-      <p>abc@abc.com</p>
-      <h3>개인 웹페이지</h3>
-      <p>www.abc.com</p>
+      <v-card-title class="mb-3">Name</v-card-title>
+      <v-card-subtitle>한 줄 소개</v-card-subtitle>
+      <v-card-text> 한 줄 설명 추가 </v-card-text>
+      <v-card-subtitle>소속</v-card-subtitle>
+      <v-card-text> 가짜 연구소 </v-card-text>
+      <v-card-subtitle>지역</v-card-subtitle>
+      <v-card-text> 서울 </v-card-text>
+      <v-card-subtitle>메일 주소</v-card-subtitle>
+      <v-card-text> abc@abc.com </v-card-text>
+      <v-card-subtitle>개인 웹페이지</v-card-subtitle>
+      <v-card-text> www.abc.com </v-card-text>
     </v-card>
     <v-btn
       class="d-block ml-auto mt-4"
@@ -44,13 +44,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .user-info {
-  & h3 {
+  & .theme--light.v-card .v-card__subtitle {
     color: #797979;
     font-size: 16px;
+    padding: 0;
   }
-  & p {
+  & .theme--light.v-card > .v-card__text {
     color: #797979;
     font-size: 10px;
+    padding: 0;
   }
 }
 </style>
