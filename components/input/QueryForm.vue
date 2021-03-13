@@ -20,7 +20,22 @@ export default {
       ],
     }
   },
+  computed: {
+    txtArea() {
+      return document.getElementById('txtArea')
+    },
+  },
   methods: {
+    getContent() {
+      return {
+        ctgr: this.ctgr,
+        title: this.title,
+        author: this.author,
+        participants: this.participants,
+        keywords: this.keywords,
+        content: this.txtArea.innerHTML,
+      }
+    },
     genContent(h) {
       const self = this
       const child = []
@@ -33,6 +48,11 @@ export default {
             label: '카테고리',
             outlined: true,
             items: self.ctgrs,
+          },
+          on: {
+            change: (val) => {
+              self.ctgr = val
+            },
           },
         })
       )
@@ -94,7 +114,19 @@ export default {
       child.push(
         h('v-card-actions', [
           h('v-spacer'),
-          h('v-btn', ['등록']),
+          h(
+            'v-btn',
+            {
+              on: {
+                click: (e) => {
+                  const queryObj = self.getContent()
+                  console.log('queryObj', queryObj)
+                  alert('queryObj', queryObj)
+                },
+              },
+            },
+            ['등록']
+          ),
           h('v-btn', ['취소']),
           h('v-spacer'),
         ])
