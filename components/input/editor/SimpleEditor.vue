@@ -1,5 +1,5 @@
 <script>
-// import marked from 'marked'
+import marked from 'marked'
 export default {
   data() {
     return {
@@ -35,15 +35,20 @@ export default {
             }
           },
           input: (evt) => {
-            // self.html = evt.target.innerHTML
-            // const node = window.getSelection().anchorNode
-            // if (!self.editNode.innerHTML.startsWith('<')) {
-            //   self.editNode.innerHTML =
-            //     '<div>' + self.editNode.innerHTML + '</div>'
-            // } else if (node.data) {
-            //   // node.parentElement.outerHTML = marked(node.data)
-            //   // node.parentElement.focus()
-            // }
+            const s = window.getSelection()
+            const node = s.anchorNode
+            const m = marked(node.textContent).replace('\n', '')
+            const chr = evt.data
+            const origin = node.parentElement
+            const prev = node.previousSibling // line change
+
+            if (!chr && prev && s.anchorOffset === 0) {
+              prev.outerHTML = marked(prev.textContent)
+            } else if (origin.outerHTML !== m) {
+              // 커서위치 Row의 마크다운 적용
+              // console.log(`orgiin.outerHTML: ${origin.outerHTML} \n m: ${m}`)
+            }
+            self.html = self.editNode.innerHTML
           },
           keyup: (evt) => {
             // console.log(`shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,evt,currentTarget:',evt.currentTarget)
