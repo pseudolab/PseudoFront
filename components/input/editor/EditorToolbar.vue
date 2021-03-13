@@ -43,10 +43,10 @@ export default {
           on: {
             click(e) {
               const qPage = context.parent.$parent.$parent.$parent
-              const id = qPage.sections.length + 1
               const s = document.getSelection()
+              const id = s.anchorNode.textContent
               const el = s.type === 'Range' ? s.baseNode.parentNode : s.baseNode
-              el.setAttribute('id', `section-${id}`)
+              el.setAttribute('id', id)
               qPage.addSection(id)
             },
           },
