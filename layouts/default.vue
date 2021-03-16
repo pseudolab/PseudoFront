@@ -1,50 +1,34 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" fixed app>
-      <v-list>
-        <div v-for="(item, i) in items" :key="i">
-          <v-list-item :to="item.to" router exact>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title" />
-            </v-list-item-content>
-          </v-list-item>
-        </div>
-        <div v-for="(group, i) in groups" :key="i.title">
-          <v-list-group v-model="group.isActive" exact router value="true">
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title v-text="group.title" />
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              v-for="(child, i) in group.childs"
-              :key="i"
-              :to="child.to"
-              router
-              exact
-            >
-              <v-list-item-content class="ml-7">
-                <v-list-item-title v-text="child.title" />
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-        </div>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar fixed hide-on-scroll app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="mainTitle" />
-      <v-spacer />
-      <v-btn> 로그인 </v-btn>
-      <!-- <v-btn v-if="isLoggedIn" text @click="logout">
-        로그아웃
-      </v-btn>
-      <v-btn v-else text nuxt to="/login">
-        로그인
-      </v-btn> -->
-    </v-app-bar>
     <v-main>
+      <v-app-bar>
+        <v-responsive :aspect-ratio="1 / 1" height="64">
+          <nuxt-link
+            class="logo"
+            tag="img"
+            :src="require('~/assets/img/pseudoLab.png')"
+            to="/"
+            width="64"
+          />
+        </v-responsive>
+        <v-tabs>
+          <v-tab class="pa-0 ma-0" style="min-width: 0px" to="/" />
+          <v-tab
+            v-for="(item, index) in items"
+            :key="index + 1"
+            class="navigation"
+            :to="item.to"
+          >
+            {{ item.title }}
+          </v-tab>
+        </v-tabs>
+        <v-btn plain>
+          <v-avatar size="30">
+            <img :src="require('~/assets/img/google.png')" alt="sign-in" />
+          </v-avatar>
+          <span class="ml-2"> 로그인 </span>
+        </v-btn>
+      </v-app-bar>
       <v-container>
         <nuxt />
       </v-container>
@@ -57,31 +41,27 @@ export default {
   data() {
     return {
       drawer: false,
+      activeTab: 0,
       items: [
-        {
-          title: '홈페이지',
-          to: '/',
-        },
         { title: '아카이브', to: '/archive' },
-        { title: '프로필', to: '/profile' },
-      ],
-      groups: [
-        {
-          title: '커뮤니티',
-          childs: [
-            {
-              title: '커뮤니티 홈',
-              to: '/community/',
-            },
-            {
-              title: '질문공간',
-              to: '/community/query/',
-            },
-          ],
-        },
+        { title: '커뮤니티', to: '/community' },
       ],
       mainTitle: '가짜 연구소',
     }
   },
 }
 </script>
+<style lang="scss" scoped>
+.logo {
+  cursor: pointer;
+}
+.navigation {
+  flex-grow: 1;
+  &:nth-of-type(2) {
+    margin-left: auto;
+  }
+  &:last-of-type {
+    margin-right: auto;
+  }
+}
+</style>
