@@ -22,7 +22,28 @@
             {{ item.title }}
           </v-tab>
         </v-tabs>
-        <v-btn plain>
+
+        <v-menu v-if="isSignIn" offset-y nudge-bottom="8">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn plain v-bind="attrs" height="100%" v-on="on">
+              <UserProfile
+                v-if="isSignIn"
+                :img-url="require('~/assets/img/test.png')"
+                exp-color="red"
+                :exp="30"
+                :remain-exp="40"
+                :width="50"
+              />
+              <span class="ml-2"> 사용자 1 </span>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item @click="signOut">
+              <v-list-item-title>로그 아웃</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-btn v-else plain @click="signIn">
           <v-avatar size="30">
             <img :src="require('~/assets/img/google.png')" alt="sign-in" />
           </v-avatar>
@@ -37,7 +58,13 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import UserProfile from '@/components/common/UserProfile.vue'
+
 export default {
+  components: {
+    UserProfile,
+  },
   data() {
     return {
       drawer: false,
@@ -48,6 +75,17 @@ export default {
       ],
       mainTitle: '가짜 연구소',
     }
+  },
+  computed: {
+    isSignIn() {
+      return this.$store.state.signIn.isSignIn
+    },
+  },
+  methods: {
+    ...mapMutations({
+      signIn: 'signIn/signIn',
+      signOut: 'signIn/signOut',
+    }),
   },
 }
 </script>
