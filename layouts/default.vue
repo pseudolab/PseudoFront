@@ -2,15 +2,13 @@
   <v-app>
     <v-main>
       <v-app-bar>
-        <v-responsive :aspect-ratio="1 / 1" height="64">
-          <nuxt-link
-            class="logo"
-            tag="img"
-            :src="require('~/assets/img/pseudoLab.png')"
-            to="/"
-            width="64"
-          />
-        </v-responsive>
+        <nuxt-link
+          class="logo"
+          tag="img"
+          :src="require('~/assets/img/pseudoLab.png')"
+          to="/"
+          height="100%"
+        />
         <v-tabs>
           <v-tab class="pa-0 ma-0" style="min-width: 0px" to="/" />
           <v-tab
