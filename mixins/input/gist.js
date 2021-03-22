@@ -18,7 +18,7 @@ export default {
       if (!id) {
         return
       }
-      let url = `https://gist.github.com/${id}.json`
+      let url = `/git/${id}.json`
       if (this.file) {
         url = `${url}?file=${this.file}`
       }

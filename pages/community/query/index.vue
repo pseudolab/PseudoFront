@@ -33,7 +33,24 @@ export default {
       sections: [],
     }
   },
+  computed: {
+    sectionIds() {
+      return this.sections.map((obj) => obj.id)
+    },
+  },
+  mounted() {
+    document.addEventListener('updateSections', this.updateSections)
+  },
   methods: {
+    updateSections() {
+      const txtArea = document.getElementById('txtArea')
+      const idElements = txtArea.querySelectorAll("*[id]:not([id=''])")
+      idElements.forEach((el) => {
+        if (!this.sectionIds.includes(el.id)) {
+          this.addSection(el.id)
+        }
+      })
+    },
     addSection(id) {
       this.sections.push({ id })
     },
