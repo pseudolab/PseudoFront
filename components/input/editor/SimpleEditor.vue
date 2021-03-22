@@ -43,6 +43,7 @@ export default {
             const prev = node.previousSibling // line change
 
             if (!chr && prev && s.anchorOffset === 0) {
+              console.log('prev.textContent: ', prev.textContent)
               prev.outerHTML = marked(prev.textContent)
             } else if (origin.outerHTML !== m) {
               // 커서위치 Row의 마크다운 적용
@@ -51,7 +52,11 @@ export default {
             self.html = self.editNode.innerHTML
           },
           keyup: (evt) => {
-            // console.log(`shiftKey: ${evt.shiftKey}\n keyCode: ${evt.keyCode}, \n evt:`,evt,currentTarget:',evt.currentTarget)
+            if (evt.code === 'Enter') {
+              self.editNode.dispatchEvent(
+                new CustomEvent('updateSections', { bubbles: true })
+              )
+            }
             if (evt.keyCode === '91') {
               self.format('bold')
             }
