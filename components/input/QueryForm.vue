@@ -121,7 +121,7 @@ export default {
                 click: (e) => {
                   const queryObj = self.getContent()
                   console.log('queryObj', queryObj)
-                  alert('queryObj', queryObj)
+                  this.axios.post('/posts')
                 },
               },
             },
