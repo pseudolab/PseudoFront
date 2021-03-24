@@ -23,6 +23,7 @@ export default {
   plugins: [
     '~plugins/date-filter.js',
     '~plugins/global-constants.js',
+    '~/plugins/axios'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

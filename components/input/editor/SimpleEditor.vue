@@ -16,6 +16,17 @@ export default {
     format(cmd, value) {
       document.execCommand(cmd, true, value)
     },
+    getAnchorElements() {
+      const s = window.getSelection()
+      const node = s.anchorNode
+      return {
+        node,
+        selection: s,
+        parentElement: node.parentElement,
+        prevElement: node.previousSibling,
+        nextElement: node.nextSibling,
+      }
+    },
   },
   render(h) {
     const self = this
@@ -35,19 +46,19 @@ export default {
             }
           },
           input: (evt) => {
-            const s = window.getSelection()
-            const node = s.anchorNode
-            const m = marked(node.textContent).replace('\n', '')
+            const {
+              prevElement,
+              parentElement,
+              selection,
+              node,
+            } = self.getAnchorElements()
             const chr = evt.data
-            const origin = node.parentElement
-            const prev = node.previousSibling // line change
-
-            if (!chr && prev && s.anchorOffset === 0) {
-              console.log('prev.textContent: ', prev.textContent)
-              prev.outerHTML = marked(prev.textContent)
-            } else if (origin.outerHTML !== m) {
+            const m = marked(node.textContent).replace('\n', '')
+            if (!chr && prevElement && selection.anchorOffset === 0) {
+              prevElement.outerHTML = marked(prevElement.textContent)
+            } else if (parentElement.outerHTML !== m) {
               // 커서위치 Row의 마크다운 적용
-              // console.log(`orgiin.outerHTML: ${origin.outerHTML} \n m: ${m}`)
+              // console.log(`orgiin.outerHTML: ${parentElement.outerHTML} \n m: ${m}`)
             }
             self.html = self.editNode.innerHTML
           },
