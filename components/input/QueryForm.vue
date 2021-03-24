@@ -1,6 +1,5 @@
 <script>
 import PseudoEditor from '@/components/input/editor/PseudoEditor.vue'
-import axios from 'axios' // FIXME: Will be removed
 export default {
   data() {
     return {
@@ -134,15 +133,8 @@ export default {
                     }, new FormData())
                   const formdata = objToForm(queryObj)
                   // FIXME: How to access to Injected Lib in JSX Or and parent
-                  console.log(
-                    'queryObj',
-                    queryObj,
-                    'axios',
-                    self.axios,
-                    'self',
-                    self
-                  )
-                  axios.post(
+                  console.log('queryObj:', queryObj)
+                  self.$root.context.$axios.post(
                     'http://18.191.67.71:4000/routes/posts', // url
                     formdata, // data
                     {
