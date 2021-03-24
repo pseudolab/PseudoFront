@@ -1,10 +1,11 @@
 <script>
 import PseudoEditor from '@/components/input/editor/PseudoEditor.vue'
+import axios from 'axios' // FIXME: Will be removed
 export default {
   data() {
     return {
       ctgr: '',
-      title: '',
+      subject: '',
       author: '',
       participants: [],
       keywords: [],
@@ -29,7 +30,7 @@ export default {
     getContent() {
       return {
         ctgr: this.ctgr,
-        title: this.title,
+        subject: this.subject,
         author: this.author,
         participants: this.participants,
         keywords: this.keywords,
@@ -56,7 +57,7 @@ export default {
           },
         })
       )
-      const datas = ['title', 'author']
+      const datas = ['subject', 'author']
       const txts = ['제목', '작성자']
       txts.forEach((label, idx) => {
         child.push(
@@ -92,7 +93,11 @@ export default {
           },
         })
       )
-      child.push(h(PseudoEditor))
+      child.push(
+        h(PseudoEditor, {
+          ref: 'psedoEditor',
+        })
+      )
       child.push(
         h('v-combobox', {
           props: {
@@ -119,9 +124,34 @@ export default {
             {
               on: {
                 click: (e) => {
-                  const queryObj = self.getContent()
-                  console.log('queryObj', queryObj)
-                  this.axios.post('/posts')
+                  const queryObj = Object.assign(self.getContent(), {
+                    files: self.$refs.psedoEditor.files, // FIXME: 나중에 queryObj 위로 전달해서 거기서 전송하도록
+                  })
+                  const objToForm = (queryObj) =>
+                    Object.keys(queryObj).reduce((form, k) => {
+                      form.append(k, queryObj[k])
+                      return form
+                    }, new FormData())
+                  const formdata = objToForm(queryObj)
+                  // FIXME: How to access to Injected Lib in JSX Or and parent
+                  console.log(
+                    'queryObj',
+                    queryObj,
+                    'axios',
+                    self.axios,
+                    'self',
+                    self
+                  )
+                  axios.post(
+                    'http://18.191.67.71:4000/routes/posts', // url
+                    formdata, // data
+                    {
+                      // config
+                      headers: {
+                        'Content-Type': 'multipart/form-data',
+                      },
+                    }
+                  )
                 },
               },
             },
