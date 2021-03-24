@@ -18,8 +18,9 @@ export default {
           fr.abort()
           reject(new DOMException('Problem parsing input file.'))
         }
-        fr.onload = () => {
-          resolve(fr.result)
+        fr.onload = (e) => {
+          resolve(e.target.result)
+          // resolve(fr.result)
         }
         if (returnType === 'url') {
           fr.readAsDataURL(file)
@@ -56,19 +57,14 @@ export default {
             change: async (vals) => {
               self.files = vals
               const { node } = this.$refs.editor.getAnchorElements()
-              let newLine = 'Why not Adjusted ???????'
+              const newLine = document.createElement('p')
               try {
                 const imgUrl = await self.readSingleFile(self.files)
-                const imgElement = h('v-img', {
-                  props: {
-                    src: imgUrl,
-                    contain: true,
-                    transition: true,
-                  },
-                })
-                newLine = h('p', [imgElement])
+                const imgElement = new Image(100, 100)
+                imgElement.src = imgUrl
+                newLine.appendChild(imgElement)
               } catch (err) {
-                newLine = h('p', [err])
+                newLine.appendChild(err)
               } finally {
                 // #FIXME: 이거 왜 OBJECT 로 쓰이냐.. 동적 엘리먼트 추가가 안되네..
                 node.parentElement.after(newLine)
