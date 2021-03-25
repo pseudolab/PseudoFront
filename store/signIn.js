@@ -1,12 +1,17 @@
 export const state = () => ({
-  isSignIn: true,
+  isSignIn: false,
 })
 
 export const mutations = {
-  signIn(state) {
-    state.isSignIn = true
+  SET_IS_SIGN_IN(state, signState) {
+    state.isSignIn = signState
   },
-  signOut(state) {
-    state.isSignIn = false
+}
+
+export const actions = {
+  async signIn({ commit }) {
+    const result = await this.$axios.$get('/routes/auths/authTest')
+    console.log(result)
+    commit('SET_IS_SIGN_IN', true)
   },
 }

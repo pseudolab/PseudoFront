@@ -25,7 +25,6 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn plain v-bind="attrs" height="100%" v-on="on">
               <UserProfile
-                v-if="isSignIn"
                 :img-url="require('~/assets/img/test.png')"
                 exp-color="red"
                 :exp="30"
@@ -36,12 +35,12 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item @click="signOut">
+            <v-list-item @click="setIsSignIn(false)">
               <v-list-item-title>로그 아웃</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-btn v-else plain @click="signIn">
+        <v-btn v-else plain @click="signInGoogle">
           <v-avatar size="30">
             <img :src="require('~/assets/img/google.png')" alt="sign-in" />
           </v-avatar>
@@ -56,7 +55,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import UserProfile from '@/components/common/UserProfile.vue'
 
 export default {
@@ -81,9 +80,16 @@ export default {
   },
   methods: {
     ...mapMutations({
-      signIn: 'signIn/signIn',
-      signOut: 'signIn/signOut',
+      setIsSignIn: 'signIn/SET_IS_SIGN_IN',
     }),
+    ...mapActions({
+      signIn: 'signIn/signIn',
+    }),
+    async signInGoogle() {
+      console.log('loging - ing')
+      await this.signIn()
+      console.log('loging - end')
+    },
   },
 }
 </script>
