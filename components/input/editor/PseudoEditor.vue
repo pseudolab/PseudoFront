@@ -54,12 +54,22 @@ export default {
               on: {
                 fileChange: ({ file }) => {
                   self.files.push(file)
-                  const { node } = this.$refs.editor.getAnchorElements()
+                  const {
+                    parentElement,
+                  } = this.$refs.editor.getAnchorElements()
                   const newLine = document.createElement('p')
                   fileToElement(file).then((element) => {
                     newLine.appendChild(element)
-                    node.parentElement.after(newLine)
+                    parentElement.after(newLine)
                   })
+                },
+                addSection: () => {
+                  const {
+                    parentElement,
+                    node,
+                  } = this.$refs.editor.getAnchorElements()
+                  parentElement.setAttribute('id', node.textContent)
+                  self.$refs.editor.trggerUpdateSections()
                 },
               },
             }),
