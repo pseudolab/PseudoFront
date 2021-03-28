@@ -21,27 +21,6 @@ export default {
         },
       },
       [
-        h('v-file-input', {
-          props: {
-            value: self.files,
-            'prepend-icon': 'mdi-camera',
-            hideInput: true,
-            multiple: true,
-            chips: true,
-          },
-          on: {
-            change: (vals) => {
-              self.files = vals
-              const { node } = this.$refs.editor.getAnchorElements()
-              const newLine = document.createElement('p')
-              fileToElement(self.files).then((element) => {
-                console.log(element)
-                newLine.appendChild(element)
-                node.parentElement.after(newLine)
-              })
-            },
-          },
-        }),
         h(
           'v-menu',
           {
@@ -71,6 +50,17 @@ export default {
             h(EditorToolbar, {
               props: {
                 cmds: ['selectAll', 'bold', 'heading_2', 'heading_3'],
+              },
+              on: {
+                fileChange: ({ file }) => {
+                  self.files.push(file)
+                  const { node } = this.$refs.editor.getAnchorElements()
+                  const newLine = document.createElement('p')
+                  fileToElement(file).then((element) => {
+                    newLine.appendChild(element)
+                    node.parentElement.after(newLine)
+                  })
+                },
               },
             }),
             self.genGistForm(h),

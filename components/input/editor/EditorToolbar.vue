@@ -1,7 +1,6 @@
 <script>
 import { CmdDict } from '@/fixture/cmds.js'
 export default {
-  functional: true,
   props: {
     cmds: {
       type: Array,
@@ -12,9 +11,10 @@ export default {
       },
     },
   },
-  render(h, context) {
+  render(h) {
     const format = (cmd, value) => document.execCommand(cmd, true, value)
-    const btns = context.props.cmds.map((cmd) => {
+    const self = this
+    const btns = self.cmds.map((cmd) => {
       const option = {
         props: {},
         on: {},
@@ -42,7 +42,7 @@ export default {
         {
           on: {
             click(e) {
-              const qPage = context.parent.$parent.$parent.$parent
+              const qPage = self.parent.$parent.$parent.$parent
               const s = document.getSelection()
               const id = s.anchorNode.textContent
               const el = s.type === 'Range' ? s.baseNode.parentNode : s.baseNode
@@ -61,12 +61,26 @@ export default {
         {
           on: {
             click(e) {
-              context.parent._data.gistActive = true
+              self.parent._data.gistActive = true
             },
           },
         },
         ['mdi-github']
       )
+    )
+    btns.push(
+      h('v-file-input', {
+        props: {
+          'prepend-icon': 'mdi-camera',
+          hideInput: true,
+          chips: true,
+        },
+        on: {
+          change: (file) => {
+            self.$emit('fileChange', { file })
+          },
+        },
+      })
     )
     return h(
       'v-card',
