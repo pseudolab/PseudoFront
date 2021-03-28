@@ -2,6 +2,7 @@
 import SimpleEditor from '@/components/input/editor/SimpleEditor.vue'
 import EditorToolbar from '@/components/input/editor/EditorToolbar.vue'
 import gist from '@/mixins/input/gist.js'
+import { fileToElement } from '@/fixture/common/fileManage.js'
 export default {
   mixins: [gist],
   data() {
@@ -9,31 +10,6 @@ export default {
       menuActive: false,
       files: [],
     }
-  },
-  methods: {
-    readSingleFile(file, returnType = 'url') {
-      const fr = new FileReader()
-      return new Promise((resolve, reject) => {
-        fr.onerror = () => {
-          fr.abort()
-          reject(new DOMException('Problem parsing input file.'))
-        }
-        fr.onload = (e) => {
-          resolve(e.target.result)
-          // resolve(fr.result)
-        }
-        if (returnType === 'url') {
-          fr.readAsDataURL(file)
-        } else if (returnType === 'txt') {
-          fr.read.readAsText(file)
-        } else {
-          reject(
-            new DOMException(`
-            returnType: '${returnType}' not matched in readSingleFile`)
-          )
-        }
-      })
-    },
   },
   render(h) {
     const self = this
@@ -54,21 +30,15 @@ export default {
             chips: true,
           },
           on: {
-            change: async (vals) => {
+            change: (vals) => {
               self.files = vals
               const { node } = this.$refs.editor.getAnchorElements()
               const newLine = document.createElement('p')
-              try {
-                const imgUrl = await self.readSingleFile(self.files)
-                const imgElement = new Image(100, 100)
-                imgElement.src = imgUrl
-                newLine.appendChild(imgElement)
-              } catch (err) {
-                newLine.appendChild(err)
-              } finally {
-                // #FIXME: 이거 왜 OBJECT 로 쓰이냐.. 동적 엘리먼트 추가가 안되네..
+              fileToElement(self.files).then((element) => {
+                console.log(element)
+                newLine.appendChild(element)
                 node.parentElement.after(newLine)
-              }
+              })
             },
           },
         }),
