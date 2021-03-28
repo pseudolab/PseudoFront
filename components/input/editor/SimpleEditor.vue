@@ -19,13 +19,21 @@ export default {
     getAnchorElements() {
       const s = window.getSelection()
       const node = s.anchorNode
+      // parent is not Editor element, Just wrapping marked element
+      const parent =
+        node.parentElement.id === 'txtArea' ? node : node.parentElement
       return {
         node,
         selection: s,
-        parentElement: node.parentElement,
+        parentElement: parent,
         prevElement: node.previousSibling,
         nextElement: node.nextSibling,
       }
+    },
+    trggerUpdateSections() {
+      this.editNode.dispatchEvent(
+        new CustomEvent('updateSections', { bubbles: true })
+      )
     },
   },
   render(h) {
@@ -64,9 +72,7 @@ export default {
           },
           keyup: (evt) => {
             if (evt.code === 'Enter') {
-              self.editNode.dispatchEvent(
-                new CustomEvent('updateSections', { bubbles: true })
-              )
+              self.trggerUpdateSections()
             }
             if (evt.keyCode === '91') {
               self.format('bold')

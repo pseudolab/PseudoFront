@@ -42,12 +42,7 @@ export default {
         {
           on: {
             click(e) {
-              const qPage = self.parent.$parent.$parent.$parent
-              const s = document.getSelection()
-              const id = s.anchorNode.textContent
-              const el = s.type === 'Range' ? s.baseNode.parentNode : s.baseNode
-              el.setAttribute('id', id)
-              qPage.addSection(id)
+              self.$emit('addSection')
             },
           },
         },

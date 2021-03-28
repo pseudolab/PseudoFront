@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     updateSections() {
+      console.log('updateSections')
       const txtArea = document.getElementById('txtArea')
       const idElements = txtArea.querySelectorAll("*[id]:not([id=''])")
       idElements.forEach((el) => {
