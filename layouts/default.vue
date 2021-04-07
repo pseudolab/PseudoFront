@@ -85,9 +85,9 @@ export default {
     ...mapActions({
       signIn: 'signIn/signIn',
     }),
-    async signInGoogle() {
+    signInGoogle() {
       console.log('loging - ing')
-      await this.signIn()
+      this.$auth.login('google')
       console.log('loging - end')
     },
   },

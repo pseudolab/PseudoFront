@@ -20,10 +20,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-    '~plugins/date-filter.js',
-    '~plugins/global-constants.js',
-  ],
+  plugins: ['~plugins/date-filter.js', '~plugins/global-constants.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -42,7 +39,21 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
+  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+  auth: {
+    strategies: {
+      google: {
+        clientId:
+          '772200427767-sqgu7eupq82cbkkhobjhtmuh69go7ikg.apps.googleusercontent.com',
+        codeChallengeMethod: '',
+        redirectUri: 'http://localhost:3000',
+        scope: ['openid', 'profile', 'email'],
+        responseType: 'code',
+      },
+    },
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
@@ -53,18 +64,18 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: false,
-    theme: { 
+    theme: {
       dark: false,
       themes: {
         // only use assets/styles/common/settings/colors.scss
         light: {
           primary: '#0077a3',
-        //   secondary: '#b0bec5',
-        //   accent: '#8c9eff',
+          //   secondary: '#b0bec5',
+          //   accent: '#8c9eff',
           error: '#b71c1c',
           anchor: '#e9eff1',
         },
-      },      
+      },
     },
   },
 
