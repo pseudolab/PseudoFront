@@ -23,7 +23,7 @@
 
         <v-menu v-if="isSignIn" offset-y nudge-bottom="8">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn plain v-bind="attrs" height="100%" v-on="on">
+            <v-btn class="sign" plain v-bind="attrs" height="100%" v-on="on">
               <UserProfile
                 v-if="isSignIn"
                 :img-url="require('~/assets/img/test.png')"
@@ -36,12 +36,15 @@
             </v-btn>
           </template>
           <v-list>
+            <v-list-item to="/profile">
+              <v-list-item-title>프로필</v-list-item-title>
+            </v-list-item>
             <v-list-item @click="signOut">
               <v-list-item-title>로그 아웃</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-btn v-else plain @click="signIn">
+        <v-btn v-else class="sign" plain @click="signIn">
           <v-avatar size="30">
             <img :src="require('~/assets/img/google.png')" alt="sign-in" />
           </v-avatar>
@@ -90,6 +93,9 @@ export default {
 <style lang="scss" scoped>
 .logo {
   cursor: pointer;
+}
+.sign {
+  width: 300px;
 }
 .navigation {
   flex-grow: 1;
