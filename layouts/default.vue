@@ -47,6 +47,7 @@
           <span class="ml-2"> 로그인 </span>
         </v-btn>
         <div id="g-signin2"></div>
+        <v-btn @click="sendIdToken">서버로 토큰 보내기</v-btn>
       </v-app-bar>
       <v-container>
         <nuxt />
@@ -72,6 +73,7 @@ export default {
         { title: '커뮤니티', to: '/community' },
       ],
       mainTitle: '가짜 연구소',
+      idToken: null,
     }
   },
   computed: {
@@ -107,9 +109,17 @@ export default {
       console.log('Image URL: ' + profile.getImageUrl())
       console.log('Email: ' + profile.getEmail())
 
-      // The ID token you need to pass to your backend:
-      const idToken = user.getAuthResponse().id_token
-      console.log('ID Token: ' + idToken)
+      this.idToken = user.getAuthResponse().id_token
+      console.log('ID Token: ' + this.idToken)
+    },
+    sendIdToken() {
+      if (this.idToken === null) {
+        console.error('아이디 토큰이 없습니다. 로그인을 먼저 진행해주세요')
+        return
+      }
+      this.$axios.$get(
+        `https://localhost:4000/routes/auths/tokeninfo?id_token=${this.idToken}`
+      )
     },
   },
 }
