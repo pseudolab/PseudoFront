@@ -46,6 +46,7 @@
           </v-avatar>
           <span class="ml-2"> 로그인 </span>
         </v-btn>
+        <div id="g-signin2"></div>
       </v-app-bar>
       <v-container>
         <nuxt />
@@ -78,6 +79,13 @@ export default {
       return this.$store.state.signIn.isSignIn
     },
   },
+  mounted() {
+    this.$nextTick(() => {
+      window.gapi.signin2.render('g-signin2', {
+        onsuccess: this.onSignIn,
+      })
+    })
+  },
   methods: {
     ...mapMutations({
       setIsSignIn: 'signIn/SET_IS_SIGN_IN',
@@ -89,6 +97,19 @@ export default {
       console.log('loging - ing')
       this.$auth.login('google')
       console.log('loging - end')
+    },
+    onSignIn(user) {
+      const profile = user.getBasicProfile()
+      console.log('ID: ' + profile.getId())
+      console.log('Full Name: ' + profile.getName())
+      console.log('Given Name: ' + profile.getGivenName())
+      console.log('Family Name: ' + profile.getFamilyName())
+      console.log('Image URL: ' + profile.getImageUrl())
+      console.log('Email: ' + profile.getEmail())
+
+      // The ID token you need to pass to your backend:
+      const idToken = user.getAuthResponse().id_token
+      console.log('ID Token: ' + idToken)
     },
   },
 }
