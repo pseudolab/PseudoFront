@@ -1,6 +1,20 @@
 <script>
 import marked from 'marked'
+import elements from '@/mixins/input/editor/elements'
+import manufacture from '@/mixins/input/editor/manufacture'
+
+/* 
+TODO: gist css 안먹는중
+TODO: nested listing
+TODO: gist 가끔 안먹는중
+TODO: 줄바꿈이 아니라 실시간으로 텍스트 파싱 안되나..?
+TODO: Marked 적용시 Preserve Attribute
+*/
+const DEFAULT_TAG = 'P'
+const EXCEPT_FORMAT_TAGS = ['img']
+
 export default {
+  mixins: [elements, manufacture],
   data() {
     return {
       html: '',
@@ -11,25 +25,7 @@ export default {
       return this.$refs.txtArea
     },
   },
-  mounted() {},
   methods: {
-    format(cmd, value) {
-      document.execCommand(cmd, true, value)
-    },
-    getAnchorElements() {
-      const s = window.getSelection()
-      const node = s.anchorNode
-      // parent is not Editor element, Just wrapping marked element
-      const parent =
-        node.parentElement.id === 'txtArea' ? node : node.parentElement
-      return {
-        node,
-        selection: s,
-        parentElement: parent,
-        prevElement: node.previousSibling,
-        nextElement: node.nextSibling,
-      }
-    },
     trggerUpdateSections() {
       this.editNode.dispatchEvent(
         new CustomEvent('updateSections', { bubbles: true })
@@ -54,33 +50,40 @@ export default {
             }
           },
           input: (evt) => {
-            const {
-              prevElement,
-              parentElement,
-              selection,
-              node,
-            } = self.getAnchorElements()
+            const { prevElement: p, selection: s } = self.getAnchorElements()
             const chr = evt.data
-            const m = marked(node.textContent).replace('\n', '')
-            if (!chr && prevElement && selection.anchorOffset === 0) {
-              prevElement.outerHTML = marked(prevElement.textContent)
-            } else if (parentElement.outerHTML !== m) {
-              // 커서위치 Row의 마크다운 적용
-              // console.log(`orgiin.outerHTML: ${parentElement.outerHTML} \n m: ${m}`)
+            if (
+              !chr &&
+              p &&
+              s.anchorOffset === 0 &&
+              Array.from(p.children).every(
+                (e) => !EXCEPT_FORMAT_TAGS.includes(e.tagName.toLowerCase())
+              ) &&
+              p.attributes.length < 1
+            ) {
+              console.log(p)
+              p.outerHTML = marked(p.textContent)
             }
             self.html = self.editNode.innerHTML
           },
           keyup: (evt) => {
+            const { parentElement } = self.getAnchorElements()
             if (evt.code === 'Enter') {
               self.trggerUpdateSections()
-            }
-            if (evt.keyCode === '91') {
+            } else if (evt.keyCode === '91') {
               self.format('bold')
+            } else if (evt.shiftKey) {
+              console.log('evt.code: ', evt.code)
+              if (evt.code === 'ArrowRight') {
+                self.indentManufacture({ element: parentElement, add: true })
+              } else if (evt.code === 'ArrowLeft') {
+                self.indentManufacture({ element: parentElement, add: false })
+              }
             }
           },
         },
       },
-      [h('p', [h('br')])]
+      [h(DEFAULT_TAG, [h('br')])]
     )
   },
 }
