@@ -47,13 +47,11 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    host: 'http://18.191.67.71:4000',
-    port: 4000,
-    prefix: '/routes',
     proxy: true 
   },
   proxy: {
-    '/git/': 'https://gist.github.com/'
+    '/git/': 'https://gist.github.com/',
+    '/routes/': '18.219.68.85:4000'
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
