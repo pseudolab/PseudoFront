@@ -1,122 +1,133 @@
 <template>
   <main class="archive-category">
-    <v-card
-      v-for="(
-        {
-          imgURL,
-          title,
-          brief,
-          describtion,
-          builder,
-          builderProfileImg,
-          numberMember,
-          isBriefly,
-        },
-        index
-      ) in bookInformation"
-      :key="index"
-      class="mr-5 mb-5 d-flex flex-column category-card"
-    >
-      <v-img
-        class="pointer"
-        :alt="title"
-        max-height="150px"
-        :src="imgURL"
-        @click="handleBook"
-      />
-      <v-card-title class="pointer" @click="handleBook">{{
-        title
-      }}</v-card-title>
-      <v-card-text
-        class="flex-grow-1 d-flex flex-column justify-space-between pointer"
-        @click="handleBook"
+    <StaticBoard :static-data="staticData" />
+    <section class="archive-category__cards">
+      <v-card
+        v-for="(
+          {
+            imgURL,
+            title,
+            brief,
+            describtion,
+            builder,
+            builderProfileImg,
+            numberMember,
+            isBriefly,
+          },
+          index
+        ) in bookInformation"
+        :key="index"
+        class="mr-5 mb-5 d-flex flex-column category-card"
       >
-        <p class="description">
-          {{ isBriefly ? brief : describtion }}
-        </p>
-        <div
-          v-if="brief"
+        <v-img
           class="pointer"
-          @click.stop="bookInformation[index].isBriefly = !isBriefly"
+          :alt="title"
+          max-height="150px"
+          :src="imgURL"
+          @click="handleBook"
+        />
+        <v-card-title class="pointer" @click="handleBook">{{
+          title
+        }}</v-card-title>
+        <v-card-text
+          class="flex-grow-1 d-flex flex-column justify-space-between pointer"
+          @click="handleBook"
         >
-          <span v-if="isBriefly">자세히</span>
-          <span v-if="!isBriefly">간략히</span>
-        </div>
-        <a style="display: block">
-          <span class="mr-3">최근 게시글:</span>
-          xxxxxxxxxxxxxxxxxxxxx
-        </a>
-      </v-card-text>
+          <p class="description">
+            {{ isBriefly ? brief : describtion }}
+          </p>
+          <div
+            v-if="brief"
+            class="pointer"
+            @click.stop="bookInformation[index].isBriefly = !isBriefly"
+          >
+            <span v-if="isBriefly">자세히</span>
+            <span v-if="!isBriefly">간략히</span>
+          </div>
+          <a style="display: block">
+            <span class="mr-3">최근 게시글:</span>
+            xxxxxxxxxxxxxxxxxxxxx
+          </a>
+        </v-card-text>
 
-      <v-divider class="mx-4"></v-divider>
-      <footer class="footer">
-        <strong>Builder&nbsp;</strong>
-        <UserProfile :img-url="builderProfileImg" :width="20" />
-        <span class="builder"> {{ builder }} </span>
-        <span class="member ml-auto">
-          <v-icon small>mdi-account</v-icon>
-          {{ numberMember }}
-        </span>
-      </footer>
-    </v-card>
-    <v-card
-      v-if="isAppending"
-      class="mr-5 mb-5 d-flex flex-column category-card"
-    >
-      <input ref="uploader" type="file" class="d-none" @change="uploadImage" />
-      <v-img
-        v-if="newbookInformation.url"
-        height="150"
-        :src="newbookInformation.url"
-      />
-      <v-btn
+        <v-divider class="mx-4"></v-divider>
+        <footer class="footer">
+          <strong>Builder&nbsp;</strong>
+          <UserProfile :img-url="builderProfileImg" :width="20" />
+          <span class="builder"> {{ builder }} </span>
+          <span class="member ml-auto">
+            <v-icon small>mdi-account</v-icon>
+            {{ numberMember }}
+          </span>
+        </footer>
+      </v-card>
+      <v-card
+        v-if="isAppending"
+        class="mr-5 mb-5 d-flex flex-column category-card"
+      >
+        <input
+          ref="uploader"
+          type="file"
+          class="d-none"
+          @change="uploadImage"
+        />
+        <v-img
+          v-if="newbookInformation.url"
+          height="150"
+          :src="newbookInformation.url"
+        />
+        <v-btn
+          v-else
+          outlined
+          height="138"
+          style="font-size: 20px"
+          class="mx-3 mt-3 text-center"
+          @click.stop="onButtonClick"
+        >
+          <v-icon> mdi-file-image </v-icon>
+          upload
+        </v-btn>
+        <v-text-field
+          v-model="newbookInformation.title"
+          class="mx-3"
+          hide-details
+          dense
+          placeholder="스터디 명"
+        />
+        <v-textarea
+          v-model="newbookInformation.describtion"
+          hide-details
+          outlined
+          no-resize
+          placeholder="간략한 설명"
+          class="flex-grow-1 pa-3"
+        >
+        </v-textarea>
+        <v-divider class="mx-4"></v-divider>
+        <footer class="text-right" style="padding: 12px 25px">
+          <v-btn small outlined color="black" @click.stop="fetchBook"
+            >생성</v-btn
+          >
+        </footer>
+      </v-card>
+      <v-card
         v-else
-        outlined
-        height="138"
-        style="font-size: 20px"
-        class="mx-3 mt-3 text-center"
-        @click.stop="onButtonClick"
+        class="mr-5 mb-5 d-flex justify-center align-center category-card"
+        style="font-size: 100px"
+        @click="() => (isAppending = true)"
       >
-        <v-icon> mdi-file-image </v-icon>
-        upload
-      </v-btn>
-      <v-text-field
-        v-model="newbookInformation.title"
-        class="mx-3"
-        hide-details
-        dense
-        placeholder="스터디 명"
-      />
-      <v-textarea
-        v-model="newbookInformation.describtion"
-        hide-details
-        outlined
-        no-resize
-        placeholder="간략한 설명"
-        class="flex-grow-1 pa-3"
-      >
-      </v-textarea>
-      <v-divider class="mx-4"></v-divider>
-      <footer class="text-right" style="padding: 12px 25px">
-        <v-btn small outlined color="black" @click.stop="fetchBook">생성</v-btn>
-      </footer>
-    </v-card>
-    <v-card
-      v-else
-      class="mr-5 mb-5 d-flex justify-center align-center category-card"
-      style="font-size: 100px"
-      @click="() => (isAppending = true)"
-    >
-      &plus;
-    </v-card>
+        &plus;
+      </v-card>
+    </section>
   </main>
 </template>
 <script>
 import headMixin from '@/mixins/common/head.js'
 import UserProfile from '@/components/common/UserProfile.vue'
+import StaticBoard from '@/components/common/StaticBoard.vue'
 
 export default {
-  components: { UserProfile },
+  components: { UserProfile, StaticBoard },
   mixins: [headMixin],
   data() {
     return {
@@ -211,6 +222,12 @@ export default {
           isBriefly: true,
         },
       ],
+      staticData: [
+        { label: 'in Progress', value: 45 },
+        { label: 'in Progress', value: 12 },
+        { label: 'Upcoming', value: 10 },
+        { label: 'Total Project', value: 67 },
+      ],
       isAppending: false,
     }
   },
@@ -262,23 +279,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 .archive-category {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-template-rows: minmax(420px, 1fr);
-  gap: 30px;
-  & .category-card {
-    width: 100%;
-    height: 100%;
-  }
-  & .footer {
-    padding: 16px 25px;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-  }
-  & .pointer {
-    cursor: pointer;
-    user-select: none;
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: minmax(420px, 1fr);
+    gap: 30px;
+    & .category-card {
+      width: 100%;
+      height: 100%;
+    }
+    & .footer {
+      padding: 16px 25px;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+    }
+    & .pointer {
+      cursor: pointer;
+      user-select: none;
+    }
   }
 }
 </style>
