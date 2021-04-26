@@ -5,7 +5,13 @@
     rounded="xl"
     @click="handleBook"
   >
-    <h6>{{ recentlyUpdate | moment('ll') }}</h6>
+    <h6>
+      {{ startDate | moment('ll') }} -
+      <span v-if="endDate">
+        {{ endDate | moment('ll') }}
+      </span>
+      <span v-else> ing </span>
+    </h6>
     <v-btn
       class="pop-up-btn"
       icon
@@ -44,13 +50,14 @@ import UserProfile from '@/components/common/UserProfile.vue'
 export default {
   components: { UserProfile },
   props: {
-    title: { type: String },
-    briefDescription: { type: String },
-    builder: { type: String },
-    builderProfileImg: { type: String },
-    numberMember: { type: Number },
-    recentlyUpdate: { type: Date },
-    progress: { type: Number },
+    title: { type: String, required: true },
+    briefDescription: { type: String, default: '' },
+    builder: { type: String, required: true },
+    builderProfileImg: { type: String, required: true },
+    numberMember: { type: Number, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, default: null },
+    progress: { type: Number, required: true },
     color: {
       type: Array,
       validator: ([red, green, blue]) => {
@@ -70,6 +77,7 @@ export default {
         }
         return false
       },
+      required: true,
     },
   },
   computed: {
