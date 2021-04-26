@@ -23,7 +23,8 @@ export default {
   plugins: [
     '~plugins/date-filter.js',
     '~plugins/global-constants.js',
-    '~/plugins/axios'
+    '~/plugins/axios.js',
+    '~/plugins/vue-moment.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -47,29 +48,29 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    proxy: true 
+    proxy: true,
   },
   proxy: {
     '/git/': 'https://gist.github.com/',
-    '/routes/': '18.219.68.85:4000'
+    '/routes/': '18.219.68.85:4000',
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: false,
-    theme: { 
+    theme: {
       dark: false,
       themes: {
         // only use assets/styles/common/settings/colors.scss
         light: {
           primary: '#0077a3',
-        //   secondary: '#b0bec5',
-        //   accent: '#8c9eff',
+          //   secondary: '#b0bec5',
+          //   accent: '#8c9eff',
           error: '#b71c1c',
           anchor: '#e9eff1',
         },
-      },      
+      },
     },
   },
 
@@ -92,6 +93,6 @@ export default {
   server: {
     port: 3000, // default: 3000
     host: '0.0.0.0', // default: localhost,
-    timing: false
-  }
+    timing: false,
+  },
 }
