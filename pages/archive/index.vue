@@ -2,65 +2,30 @@
   <main class="archive-category">
     <StaticBoard :static-data="staticData" />
     <section class="archive-category__cards">
-      <v-card
+      <CategoryCard
         v-for="(
           {
-            imgURL,
             title,
-            brief,
-            describtion,
+            briefDescription,
             builder,
             builderProfileImg,
             numberMember,
-            isBriefly,
+            recentlyUpdate,
+            progress,
+            color,
           },
           index
         ) in bookInformation"
         :key="index"
-        class="mr-5 mb-5 d-flex flex-column category-card"
-      >
-        <v-img
-          class="pointer"
-          :alt="title"
-          max-height="150px"
-          :src="imgURL"
-          @click="handleBook"
-        />
-        <v-card-title class="pointer" @click="handleBook">{{
-          title
-        }}</v-card-title>
-        <v-card-text
-          class="flex-grow-1 d-flex flex-column justify-space-between pointer"
-          @click="handleBook"
-        >
-          <p class="description">
-            {{ isBriefly ? brief : describtion }}
-          </p>
-          <div
-            v-if="brief"
-            class="pointer"
-            @click.stop="bookInformation[index].isBriefly = !isBriefly"
-          >
-            <span v-if="isBriefly">자세히</span>
-            <span v-if="!isBriefly">간략히</span>
-          </div>
-          <a style="display: block">
-            <span class="mr-3">최근 게시글:</span>
-            xxxxxxxxxxxxxxxxxxxxx
-          </a>
-        </v-card-text>
-
-        <v-divider class="mx-4"></v-divider>
-        <footer class="footer">
-          <strong>Builder&nbsp;</strong>
-          <UserProfile :img-url="builderProfileImg" :width="20" />
-          <span class="builder"> {{ builder }} </span>
-          <span class="member ml-auto">
-            <v-icon small>mdi-account</v-icon>
-            {{ numberMember }}
-          </span>
-        </footer>
-      </v-card>
+        :title="title"
+        :brief-description="briefDescription"
+        :builder="builder"
+        :builder-profile-img="builderProfileImg"
+        :number-member="numberMember"
+        :recently-update="recentlyUpdate"
+        :progress="progress"
+        :color="color"
+      />
       <v-card
         v-if="isAppending"
         class="mr-5 mb-5 d-flex flex-column category-card"
@@ -123,11 +88,11 @@
 </template>
 <script>
 import headMixin from '@/mixins/common/head.js'
-import UserProfile from '@/components/common/UserProfile.vue'
 import StaticBoard from '@/components/common/StaticBoard.vue'
+import CategoryCard from '@/components/archive/CategoryCard.vue'
 
 export default {
-  components: { UserProfile, StaticBoard },
+  components: { StaticBoard, CategoryCard },
   mixins: [headMixin],
   data() {
     return {
@@ -138,88 +103,94 @@ export default {
       },
       bookInformation: [
         {
-          imgURL: require('~/assets/img/test.png'),
           title: 'Kubeflow 발만 담가보기',
-          describtion: `본 스터디는 Kubernetes 환경에서
-        Kubeflow를 통한 ML 학습, 배포 및 관리 등을 함께 익히고, 공유되면
-        좋겠습니다.`,
-          // recentPost:
+          briefDescription: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
           builder: '김병조',
           builderProfileImg: require('~/assets/img/test.png'),
           numberMember: 4,
-          isBriefly: false,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [255, 0, 0],
         },
         {
-          imgURL: require('~/assets/img/fakelab_card_sample.png'),
           title: 'Kubeflow 발만 담가보기',
-          describtion: `글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함글자수열자를세기위함`,
-          // recentPost:
+          briefDescription: `글자수열자를세기위함글자수열자를세기위함`,
           builder: '김병조',
           builderProfileImg: require('~/assets/img/test.png'),
           numberMember: 4,
-          isBriefly: false,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [255, 144, 144],
         },
         {
-          imgURL: require('~/assets/img/fakelab_card_sample.png'),
           title: 'Kubeflow 발만 담가보기',
-          describtion: `본 스터디는 Kubernetes 환경에서 간단하게 ML 워크플로우를 배포할 수 있게 도와주는 시스템인 Kubeflow의 기능 및 실습을 목표로 하고 있습니다.
-          Kubeflow를 통한 ML 학습, 배포 및 관리 등을 함께 익히고, 공유되면 좋겠습니다.
-          본 스터디는 Kubernetes 환경에서 간단하게 ML 워크플로우를 배포할 수 있게 도와주는 시스템인 Kubeflow의 기능 및 실습을 목표로 하고 있습니다.`,
-          brief: `본 스터디는 Kubernetes 환경에서 간단하게 ML 워크플로우를 배포할 수 있게 도와주는 시스템인 Kubeflow의 기능 및 실습을 목표로 하고 있습니다.
-          Kubeflow를 통한 ML 학습, 배포 및 관리 등을 함께 익히`,
-          // recentPost:
+          briefDescription: `글자수열자를세기위함글자수열자를세기위함`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [0, 0, 0],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          briefDescription: `글자수열자를세기위함글자수열자를세기위함`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [255, 255, 255],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          briefDescription: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
           builder: '김병조',
           builderProfileImg: null,
           numberMember: 4,
-          isBriefly: true,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [13, 178, 48],
         },
         {
-          imgURL: require('~/assets/img/fakelab_card_sample.png'),
           title: 'Kubeflow 발만 담가보기',
-          describtion: `본 스터디는 Kubernetes 환경에서 간단하게 ML 워크플로우를 배포할 수 있게
-        도와주는 시스템인 Kubeflow의 기능 및 실습을 목표로 하고 있습니다.
-        Kubeflow를 통한 ML 학습, 배포 및 관리 등을 함께 익히고, 공유되면
-        좋겠습니다.`,
-          // recentPost:
+          briefDescription: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
           builder: '김병조',
           builderProfileImg: require('~/assets/img/test.png'),
           numberMember: 4,
-          isBriefly: false,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [131, 48, 133],
         },
         {
-          imgURL: require('~/assets/img/fakelab_card_sample.png'),
           title: 'Kubeflow 발만 담가보기',
-          describtion: `본 스터디는 Kubernetes 환경에서 간단하게 ML 워크플로우를 배포할 수 있게
-        도와주는 시스템인 Kubeflow의 기능 및 실습을 목표로 하고 있습니다.
-        Kubeflow를 통한 ML 학습, 배포 및 관리 등을 함께 익히고, 공유되면
-        좋겠습니다.`,
-          // recentPost:
+          briefDescription: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
           builder: '김병조',
           builderProfileImg: require('~/assets/img/test.png'),
           numberMember: 4,
-          isBriefly: false,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [13, 148, 133],
         },
         {
-          imgURL: require('~/assets/img/fakelab_card_sample.png'),
           title: 'Kubeflow 발만 담가보기',
-          describtion:
-            '본 스터디는 Kubernetes 환경에서 간단하게 ML 워크플로우를 배포할 수 있게\n도와주는 시스템인 Kubeflow의 기능 및 실습을 목표로 하고 있습니다.\nKubeflow를 통한 ML 학습, 배포 및 관리 등을 함께 익히고, 공유되면\n좋겠습니다.',
-          // recentPost:
+          briefDescription: 'Kubeflow를 통한 ML 학습, 배포 및 관리',
           builder: '김병조',
           builderProfileImg: require('~/assets/img/test.png'),
           numberMember: 4,
-          isBriefly: false,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [13, 12, 133],
         },
         {
-          imgURL: require('~/assets/img/fakelab_card_sample.png'),
           title: 'Kubeflow 발만 담가보기',
-          describtion: `1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890`,
-          brief: `12345678901234567890123456789012345678901234567890123456789012345678901234567890`,
-          // recentPost:
+          briefDescription: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
           builder: '김병조',
           builderProfileImg: require('~/assets/img/test.png'),
           numberMember: 4,
-          isBriefly: true,
+          recentlyUpdate: new Date(),
+          progress: 84,
+          color: [13, 48, 133],
         },
       ],
       staticData: [
@@ -232,11 +203,6 @@ export default {
     }
   },
   methods: {
-    handleBook() {
-      // TODO: 페이지 이동 추가(빌더 소개, 스터디, 최근 게시물)
-      // TODO: 데이터 바인딩 시키기
-      console.log('book clicked')
-    },
     uploadImage(e) {
       // TODO: 이미지 업로더 작업하시면 할 부분
     },
@@ -258,7 +224,6 @@ export default {
         }
         counter += countLine
       })
-      console.log(brief)
       this.newbookInformation = {
         url: null,
         title: '',
@@ -282,22 +247,7 @@ export default {
   &__cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-template-rows: minmax(420px, 1fr);
     gap: 30px;
-    & .category-card {
-      width: 100%;
-      height: 100%;
-    }
-    & .footer {
-      padding: 16px 25px;
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-    }
-    & .pointer {
-      cursor: pointer;
-      user-select: none;
-    }
   }
 }
 </style>
