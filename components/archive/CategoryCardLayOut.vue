@@ -1,7 +1,7 @@
 <template>
   <v-card
     :style="colorVariable"
-    class="category-card pa-4 pointer"
+    class="category-card pa-4"
     rounded="xl"
     @click="cardClicked"
   >
@@ -10,16 +10,18 @@
     </div>
     <slot name="period"></slot>
     <div class="text-center my-9">
-      <slot name="title"></slot>
-      <slot name="description"></slot>
+      <slot name="title" :changeTone="changeTone"></slot>
+      <slot name="description" :changeTone="changeTone"></slot>
     </div>
-    <h3>Progress</h3>
-    <progress max="100" :value="progressValue" />
+    <slot name="progress">
+      <h3>Progress</h3>
+      <progress max="100" :value="progress" />
+    </slot>
     <footer>
       <strong>Builder&nbsp;</strong>
       <UserProfile :img-url="builderProfileImg" :width="20" />
       <span class="builder mr-auto"> {{ builder }} </span>
-      <slot name="footer-rd-corner"></slot>
+      <slot name="footer-rd-corner" :changeTone="changeTone"></slot>
     </footer>
   </v-card>
 </template>
@@ -53,9 +55,9 @@ export default {
       },
       required: true,
     },
-    progressValue: {
+    progress: {
       type: Number,
-      default: 0,
+      required: true,
     },
     builderProfileImg: {
       type: String,
@@ -65,32 +67,41 @@ export default {
       type: String,
       required: true,
     },
+    hasClickEvent: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     colorVariable() {
       return {
-        '--color': this.changeTone(0),
-        '--bg-color': this.isDeep()
-          ? this.changeTone(-30)
-          : this.changeTone(150),
-        '--p-bg-color': this.isDeep() ? '#efefef' : '#fff',
+        '--color': this.makeColorCode(this.color),
+        '--bg-color': this.isPale()
+          ? this.changeTone(0.1, true)
+          : this.changeTone(0.7),
+        '--p-bg-color': this.isPale() ? '#efefef' : '#fff',
       }
     },
   },
   methods: {
-    isDeep() {
+    isPale() {
       const [red, green, blue] = this.color
-      if (red + green + blue > 400) {
+      if (red + green + blue > 600) {
         return true
       }
       return false
     },
-    changeTone(level) {
-      return this.color.reduce((acc, cur) => {
-        let colorCode = cur + level
-        if (colorCode < 0) colorCode = 0
-        if (colorCode > 255) colorCode = 255
-        colorCode = colorCode.toString(16)
+    changeTone(level, darkness = false) {
+      const direction = darkness ? -1 : 1
+      const color = this.color.map((val) => {
+        const gap = darkness ? val : 255 - val
+        return Math.floor(val + direction * gap * level)
+      })
+      return this.makeColorCode(color)
+    },
+    makeColorCode(color) {
+      return color.reduce((acc, cur) => {
+        let colorCode = cur.toString(16)
         if (colorCode.length < 2) {
           colorCode = '0' + colorCode
         }

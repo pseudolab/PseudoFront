@@ -1,20 +1,20 @@
 <template class="category-card">
   <CategoryCardLayOut
     :color="color"
-    :progress-value="progress"
+    :progress="progress"
     :builder-profile-img="builderProfileImg"
     :builder="builder"
     @cardClicked="handleBook"
   >
     <!-- <button
       class="pre-season season"
-      @click.prevent.stop="fetchPreSeason"
+      @click.stop="fetchPreSeason"
       @mousedown.stop=""
       @touchstart.stop=""
     />
     <button
       class="next-season season"
-      @click.prevent.stop="fetchNextSeason"
+      @click.stop="fetchNextSeason"
       @mousedown.stop=""
       @touchstart.stop=""
     /> -->
@@ -22,7 +22,7 @@
       <v-btn
         icon
         :color="changeTone(0)"
-        @click.prevent.stop="popModal"
+        @click.stop="popModal"
         @mousedown.stop=""
         @touchstart.stop=""
       >
