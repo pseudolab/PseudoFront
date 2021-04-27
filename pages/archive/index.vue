@@ -16,7 +16,6 @@
         :color="info.color"
       />
       <CategoryCardMaker
-        :color="[20, 211, 20]"
         :builder-profile-img="require('~/assets/img/test.png')"
         builder="user1"
       />
