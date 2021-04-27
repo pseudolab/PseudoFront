@@ -1,5 +1,5 @@
-<template class="category-card-maker">
-  <div>
+<template>
+  <div class="category-card-maker">
     <v-card
       v-if="!isAppending"
       class="plus-card"
@@ -20,7 +20,7 @@
         <v-btn
           icon
           :color="changeTone(0)"
-          @click.stop="() => (showProgressBar = !showProgressBar)"
+          @click.stop="() => (showColorPicker = !showColorPicker)"
           @mousedown.stop=""
           @touchstart.stop=""
         >
@@ -59,7 +59,7 @@
         </v-text-field>
       </template>
       <template #progress>
-        <div v-if="!showProgressBar" />
+        <div v-if="!showColorPicker" />
       </template>
       <template #footer-rd-corner="{ changeTone }">
         <v-btn
@@ -82,32 +82,19 @@
         >
       </template>
     </CategoryCardLayOut>
+    <v-color-picker
+      v-show="showColorPicker"
+      v-model="picker"
+      canvas-height="100px"
+      width="300px"
+      class="color-picker no-alpha"
+      hide-inputs
+    ></v-color-picker>
   </div>
 </template>
 <script>
 export default {
   props: {
-    color: {
-      type: Array,
-      validator: ([red, green, blue]) => {
-        function validNumber(value) {
-          if (
-            value !== undefined &&
-            Number.isInteger(value) &&
-            value >= 0 &&
-            value <= 255
-          ) {
-            return true
-          }
-          return false
-        }
-        if (validNumber(red) && validNumber(green) && validNumber(blue)) {
-          return true
-        }
-        return false
-      },
-      required: true,
-    },
     builderProfileImg: {
       type: String,
       required: true,
@@ -119,14 +106,20 @@ export default {
   },
   data: () => ({
     isAppending: true,
-    showProgressBar: false,
+    showColorPicker: false,
     newbookInformation: {
       url: null,
       title: '',
       description: '',
     },
-    picker: null,
+    picker: { rgba: { a: 1, b: 0, g: 0, r: 255 } },
   }),
+  computed: {
+    color() {
+      const { rgba } = this.picker
+      return [rgba.r, rgba.g, rgba.b]
+    },
+  },
   methods: {
     handleBook() {
       console.log('book clicked')
@@ -134,21 +127,44 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.category-card-maker
+  .no-alpha
+  .v-color-picker__controls
+  .v-color-picker__preview
+  .v-color-picker__sliders {
+  .v-color-picker__hue {
+    margin-bottom: 0;
+  }
+  .v-color-picker__alpha {
+    display: none;
+  }
+}
+</style>
 <style lang="scss" scoped>
-.plus-card {
-  overflow: hidden;
-  width: 100%;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 100px;
-}
-.title {
-  font-size: 24px;
-  font-weight: 700;
-}
-.description {
-  font-size: 16px;
+.category-card-maker {
+  position: relative;
+  & .plus-card {
+    overflow: hidden;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+  }
+  & .title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  & .description {
+    font-size: 16px;
+  }
+  & .color-picker {
+    position: absolute;
+    transform: translateY(-105%);
+    top: 0;
+    right: 10px;
+  }
 }
 </style>
