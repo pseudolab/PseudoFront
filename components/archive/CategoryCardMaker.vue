@@ -20,7 +20,7 @@
         <v-btn
           icon
           :color="changeTone(0)"
-          @click.stop="() => (showColorPicker = !showColorPicker)"
+          @click.stop="togglePalete"
           @mousedown.stop=""
           @touchstart.stop=""
         >
@@ -66,7 +66,7 @@
           class="white--text font-weight-bold mr-2"
           x-small
           :color="changeTone(0)"
-          @click.stop="() => (isAppending = false)"
+          @click.stop="cancleCard"
           @mousedown.stop=""
           @touchstart.stop=""
           >취소</v-btn
@@ -75,7 +75,7 @@
           class="white--text font-weight-bold"
           x-small
           :color="changeTone(0)"
-          @click.stop="() => (isAppending = false)"
+          @click.stop="fetchCard"
           @mousedown.stop=""
           @touchstart.stop=""
           >생성</v-btn
@@ -105,7 +105,7 @@ export default {
     },
   },
   data: () => ({
-    isAppending: true,
+    isAppending: false,
     showColorPicker: false,
     newbookInformation: {
       url: null,
@@ -123,6 +123,21 @@ export default {
   methods: {
     handleBook() {
       console.log('book clicked')
+    },
+    appendCard() {
+      this.isAppending = true
+    },
+    fetchCard() {
+      this.isAppending = false
+      this.showColorPicker = false
+      // NOTE: 서버와 연동 추가
+    },
+    cancleCard() {
+      this.isAppending = false
+      this.showColorPicker = false
+    },
+    togglePalete() {
+      this.showColorPicker = !this.showColorPicker
     },
   },
 }
