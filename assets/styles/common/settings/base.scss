@@ -3,3 +3,7 @@ button {
     outline: none;
   }
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}

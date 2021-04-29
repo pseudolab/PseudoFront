@@ -1,7 +1,12 @@
 <template>
   <v-app>
     <v-main>
-      <v-app-bar>
+      <v-app-bar
+        absolute
+        elevate-on-scroll
+        scroll-target="#scrolling-techniques-7"
+        height="64px"
+      >
         <nuxt-link
           class="logo"
           tag="img"
@@ -51,9 +56,16 @@
           <span class="ml-2"> 로그인 </span>
         </v-btn>
       </v-app-bar>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <v-sheet
+        id="scrolling-techniques-7"
+        class="overflow-y-auto"
+        max-height="calc(100vh - 64px)"
+        style="margin-top: 64px"
+      >
+        <v-container>
+          <nuxt />
+        </v-container>
+      </v-sheet>
     </v-main>
   </v-app>
 </template>
@@ -95,7 +107,7 @@ export default {
   cursor: pointer;
 }
 .sign {
-  width: 300px;
+  width: 200px;
 }
 .navigation {
   flex-grow: 1;
