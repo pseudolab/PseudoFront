@@ -22,6 +22,7 @@
             class="navigation"
             :to="item.to"
           >
+            <v-icon class="mr-1">{{ item.icon }}</v-icon>
             {{ item.title }}
           </v-tab>
         </v-tabs>
@@ -83,8 +84,8 @@ export default {
       drawer: false,
       activeTab: 0,
       items: [
-        { title: '아카이브', to: '/archive' },
-        { title: '커뮤니티', to: '/community' },
+        { title: '아카이브', to: '/archive', icon: 'mdi-bank-outline' },
+        { title: '커뮤니티', to: '/community', icon: 'mdi-chat' },
       ],
       mainTitle: '가짜 연구소',
     }
