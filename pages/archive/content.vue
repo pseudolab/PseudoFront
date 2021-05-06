@@ -1,14 +1,31 @@
 <template>
   <section class="archive-content">
-    <aside>
-      <h1>Kubeflow 발만 담가보기</h1>
-      <v-text-field
-        class="px-1 mb-3"
-        prepend-inner-icon="mdi-magnify"
-        placeholder="검색어를 입력하세요"
-        color="primary"
-      />
-      <nav>
+    <LeftDrawer class="main">
+      <template #aside>
+        <nav>
+          <ol v-for="(pageInfo, index) in pageList" :key="index">
+            <div v-if="typeof pageInfo === 'object'" class="classified">
+              <h3>{{ pageInfo.subject }}</h3>
+              <li v-for="title in pageInfo.titleList" :key="title">
+                <nuxt-link to="/">
+                  {{ title }}
+                </nuxt-link>
+              </li>
+            </div>
+            <li v-else>
+              <nuxt-link to="/">
+                {{ pageInfo }}
+              </nuxt-link>
+            </li>
+          </ol>
+        </nav>
+      </template>
+      <template #content>
+        <article v-html="content"></article>
+      </template>
+    </LeftDrawer>
+    <aside ref="toc" class="toc">
+      <nav v-show="showToc">
         <ol v-for="(pageInfo, index) in pageList" :key="index">
           <div v-if="typeof pageInfo === 'object'" class="classified">
             <h3>{{ pageInfo.subject }}</h3>
@@ -26,62 +43,17 @@
         </ol>
       </nav>
     </aside>
-    <main>
-      <article>
-        <h1>Complex Sentence</h1>
-        <div v-for="(contentInfo, index) in contentList" :key="index">
-          <h2 v-if="contentInfo.title">{{ contentInfo.title }}</h2>
-          <h2 v-else>{{ contentInfo }}</h2>
-          <p>
-            Complex Sentence Generator is a free content rewriter that can
-            potentially rephrase, reword, paraphrase and/or rewrite sentences,
-            paragraphs, articles, content, words and/or phrases into a more
-            complex, unorthodox or convoluted alternative while delivering the
-            same meaning. The vocabulary of this sentence paraphraser contains
-            an abundance of rarely used words/phrases and can paraphrase
-            sentences in a variety of ways that are chosen randomly. Aside from
-            this web based software being used as a paraphrasing tool or a text
-            spinner, it can also be used as a vocabulary improvement tool. The
-            artificial intelligence of this paraphrase generator is so
-            sophisticated that it is capable of understanding context. Use the
-            dictionary or thesaurus to learn definitions for words or discover
-            more synonyms.
-          </p>
-        </div>
-      </article>
-      <aside class="describtion">
-        <nav v-show="true" class="content-nav ma-2">
-          <ol v-for="(contentInfo, index) in contentList" :key="index">
-            <div v-if="typeof contentInfo === 'object'">
-              <li>
-                <nuxt-link to="/">
-                  {{ contentInfo.title }}
-                </nuxt-link>
-              </li>
-              <li
-                v-for="title in contentInfo.innerTitle"
-                v-show="true"
-                :key="title"
-              >
-                <nuxt-link to="/">
-                  {{ title }}
-                </nuxt-link>
-              </li>
-            </div>
-            <li v-else>
-              <nuxt-link to="/">
-                {{ contentInfo }}
-              </nuxt-link>
-            </li>
-          </ol>
-        </nav>
-      </aside>
-    </main>
   </section>
 </template>
 <script>
+import contentMockData from '@/mock/archive/content.js'
+import LeftDrawer from '@/components/common/LeftDrawer.vue'
+
 export default {
+  components: { LeftDrawer },
   data: () => ({
+    content: contentMockData,
+    // TODO: 좌측 테이블 구현 방식 변경
     pageList: [
       {
         subject: 'GET STARTED',
@@ -125,73 +97,43 @@ export default {
           'Contribute to Jupyter Book',
         ],
       },
-      'Gallery of Jupyter Books ',
-      'MyST cheat sheet',
-      'The command-line interface',
-      'Glossary',
-      'Cite Jupyter Book',
-      'Change log',
     ],
-    contentList: [
-      {
-        title: 'The Jupyter Book command-line interface',
-        innerTitle: ['What is interface', 'How can use interface brilliantly'],
-      },
-      'The book building process',
-      'Anatomy of a Jupyter Book',
-      {
-        title: 'Create a template book',
-        innerTitle: ['Error situation', 'Optional attributes'],
-      },
-      'Create a template book',
-      'Next step: build your book',
-    ],
+    tocWidth: 0,
   }),
+  computed: {
+    showToc() {
+      if (this.tocWidth < 135) {
+        return false
+      }
+      return true
+    },
+  },
+  mounted() {
+    global.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  methods: {
+    handleResize() {
+      this.tocWidth = this.$refs.toc.clientWidth
+    },
+  },
 }
-// TODO: 왼쪽 nav와 오른쪽 컨텐츠의 scroll 분리를 위해 height를 고정시켜야함 - 전체 nav 디자인 수정 후 작업
 </script>
-<style lang="scss">
-.container {
-  max-width: 1400px;
-}
-</style>
 <style lang="scss" scoped>
 .archive-content {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  & > aside {
-    padding: 30px 10px 10px 10px;
+  display: flex;
+  & .main {
+    flex: 0 0 80%;
   }
-  & main {
-    padding: 30px 10px 10px 10px;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-
-    & article {
-      flex-grow: 1;
-    }
-    .content-nav {
-      & li:not(:last-child),
-      & > ol:not(:last-child) {
-        margin-bottom: 5px;
-      }
-      & li {
-        border-left: 2px blue solid;
-        padding-left: 5px;
-      }
-    }
-  }
-  & ol {
-    padding: 0;
-  }
-  & li {
-    list-style-type: none;
-    & a {
-      color: #333;
-    }
-  }
-  & .classified {
-    margin-bottom: 20px;
+  & .toc {
+    border-left: 1px solid #e0e0e0;
+    position: absolute;
+    right: 10px;
+    padding-left: 15px;
+    max-height: calc(100vh - 94px);
+    width: 15%;
+    overflow-wrap: break-word;
+    overflow: auto;
   }
 }
 </style>
