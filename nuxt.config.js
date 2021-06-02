@@ -20,7 +20,7 @@ export default {
         name: 'google-signin-client_id',
         //client id
         content:
-          '772200427767-sqgu7eupq82cbkkhobjhtmuh69go7ikg.apps.googleusercontent.com',
+          '1073354523687-i8rp8n5gvkju0uva9nrv8tgh0n5bqf47.apps.googleusercontent.com',
       },
     ],
     script: [
@@ -58,19 +58,6 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
   ],
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  auth: {
-    strategies: {
-      google: {
-        clientId:
-          '772200427767-sqgu7eupq82cbkkhobjhtmuh69go7ikg.apps.googleusercontent.com',
-        codeChallengeMethod: '',
-        redirectUri: 'http://localhost:3000',
-        scope: ['openid', 'profile', 'email'],
-        responseType: 'code',
-      },
-    },
-  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {

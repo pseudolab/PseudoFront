@@ -35,18 +35,12 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item @click="setIsSignIn(false)">
+            <v-list-item @click="onSignOut">
               <v-list-item-title>로그 아웃</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-btn v-else plain @click="signInGoogle">
-          <v-avatar size="30">
-            <img :src="require('~/assets/img/google.png')" alt="sign-in" />
-          </v-avatar>
-          <span class="ml-2"> 로그인 </span>
-        </v-btn>
-        <div id="g-signin2"></div>
+        <div v-else id="g-signin2" />
         <v-btn @click="sendIdToken">서버로 토큰 보내기</v-btn>
       </v-app-bar>
       <v-container>
@@ -57,7 +51,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 import UserProfile from '@/components/common/UserProfile.vue'
 
 export default {
@@ -73,7 +67,6 @@ export default {
         { title: '커뮤니티', to: '/community' },
       ],
       mainTitle: '가짜 연구소',
-      idToken: null,
     }
   },
   computed: {
@@ -91,35 +84,29 @@ export default {
   methods: {
     ...mapMutations({
       setIsSignIn: 'signIn/SET_IS_SIGN_IN',
+      setToken: 'signIn/SET_TOKEN',
     }),
-    ...mapActions({
-      signIn: 'signIn/signIn',
-    }),
-    signInGoogle() {
-      console.log('loging - ing')
-      this.$auth.login('google')
-      console.log('loging - end')
-    },
     onSignIn(user) {
-      const profile = user.getBasicProfile()
-      console.log('ID: ' + profile.getId())
-      console.log('Full Name: ' + profile.getName())
-      console.log('Given Name: ' + profile.getGivenName())
-      console.log('Family Name: ' + profile.getFamilyName())
-      console.log('Image URL: ' + profile.getImageUrl())
-      console.log('Email: ' + profile.getEmail())
-
-      this.idToken = user.getAuthResponse().id_token
-      console.log('ID Token: ' + this.idToken)
+      const idToken = user.getAuthResponse().id_token
+      console.log('ID Token: ' + idToken)
+      this.setIsSignIn(true)
+      this.setToken(idToken)
+    },
+    onSignOut() {
+      this.setIsSignIn(false)
+      this.setToken(null)
     },
     sendIdToken() {
-      if (this.idToken === null) {
+      const idToken = this.$store.state.signIn.idToken
+      if (idToken === null) {
         console.error('아이디 토큰이 없습니다. 로그인을 먼저 진행해주세요')
         return
       }
-      this.$axios.$get(
-        `https://localhost:4000/routes/auths/tokeninfo?id_token=${this.idToken}`
-      )
+      this.$axios
+        .$get(`http://localhost:4000/routes/profiles/my?id_token=${idToken}`)
+        .then((res) => {
+          console.log('success', res)
+        })
     },
   },
 }
