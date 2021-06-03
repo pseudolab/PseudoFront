@@ -21,9 +21,15 @@
           </v-tab>
         </v-tabs>
 
-        <v-menu v-if="isSignIn" offset-y nudge-bottom="8">
+        <v-menu offset-y nudge-bottom="8">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn plain v-bind="attrs" height="100%" v-on="on">
+            <v-btn
+              v-show="isSignIn"
+              plain
+              v-bind="attrs"
+              height="100%"
+              v-on="on"
+            >
               <UserProfile
                 :img-url="require('~/assets/img/test.png')"
                 exp-color="red"
@@ -40,8 +46,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <div v-else id="g-signin2" />
-        <v-btn @click="sendIdToken">서버로 토큰 보내기</v-btn>
+        <div v-show="!isSignIn" id="g-signin2" />
       </v-app-bar>
       <v-container>
         <nuxt />
@@ -88,13 +93,15 @@ export default {
     }),
     onSignIn(user) {
       const idToken = user.getAuthResponse().id_token
-      console.log('ID Token: ' + idToken)
       this.setIsSignIn(true)
       this.setToken(idToken)
     },
     onSignOut() {
-      this.setIsSignIn(false)
-      this.setToken(null)
+      const auth2 = window.gapi.auth2.getAuthInstance()
+      auth2.signOut().then(() => {
+        this.setIsSignIn(false)
+        this.setToken(null)
+      })
     },
     sendIdToken() {
       const idToken = this.$store.state.signIn.idToken
