@@ -4,7 +4,7 @@ export default {
   data() {
     return {
       ctgr: '',
-      title: '',
+      subject: '',
       author: '',
       participants: [],
       keywords: [],
@@ -20,7 +20,22 @@ export default {
       ],
     }
   },
+  computed: {
+    txtArea() {
+      return document.getElementById('txtArea')
+    },
+  },
   methods: {
+    getContent() {
+      return {
+        ctgr: this.ctgr,
+        subject: this.subject,
+        author: this.author,
+        participants: this.participants,
+        keywords: this.keywords,
+        content: this.txtArea.innerHTML,
+      }
+    },
     genContent(h) {
       const self = this
       const child = []
@@ -34,9 +49,14 @@ export default {
             outlined: true,
             items: self.ctgrs,
           },
+          on: {
+            change: (val) => {
+              self.ctgr = val
+            },
+          },
         })
       )
-      const datas = ['title', 'author']
+      const datas = ['subject', 'author']
       const txts = ['제목', '작성자']
       txts.forEach((label, idx) => {
         child.push(
@@ -72,7 +92,11 @@ export default {
           },
         })
       )
-      child.push(h(PseudoEditor))
+      child.push(
+        h(PseudoEditor, {
+          ref: 'psedoEditor',
+        })
+      )
       child.push(
         h('v-combobox', {
           props: {
@@ -94,7 +118,37 @@ export default {
       child.push(
         h('v-card-actions', [
           h('v-spacer'),
-          h('v-btn', ['등록']),
+          h(
+            'v-btn',
+            {
+              on: {
+                click: (e) => {
+                  const queryObj = Object.assign(self.getContent(), {
+                    files: self.$refs.psedoEditor.files, // FIXME: 나중에 queryObj 위로 전달해서 거기서 전송하도록
+                  })
+                  const objToForm = (queryObj) =>
+                    Object.keys(queryObj).reduce((form, k) => {
+                      form.append(k, queryObj[k])
+                      return form
+                    }, new FormData())
+                  const formdata = objToForm(queryObj)
+                  // FIXME: How to access to Injected Lib in JSX Or and parent
+                  console.log('queryObj:', queryObj)
+                  self.$root.context.$axios.post(
+                    '/routes/posts', // url
+                    formdata, // data
+                    {
+                      // config
+                      headers: {
+                        'Content-Type': 'multipart/form-data',
+                      },
+                    }
+                  )
+                },
+              },
+            },
+            ['등록']
+          ),
           h('v-btn', ['취소']),
           h('v-spacer'),
         ])
@@ -151,5 +205,10 @@ export default {
 
 .v-text-field__details {
   display: none;
+}
+.v-list-item__title {
+  align-self: center;
+  font-size: 1rem;
+  color: $p-b-blue;
 }
 </style>

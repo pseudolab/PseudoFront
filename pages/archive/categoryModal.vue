@@ -16,13 +16,9 @@
       <strong style="color: #0077a3">Trending</strong>
       <ChipBoadr :chips="chips" @changeSelectedChips="changeSelectedChips" />
     </article>
-    <v-btn
-      class="archive__write-btn font-weight-bold"
-      color="primary"
-      outlined
-      to="/community/query/"
-      >글쓰기</v-btn
-    >
+    <v-btn class="archive__write-btn font-weight-bold" color="primary" outlined>
+      글쓰기
+    </v-btn>
     <div class="d-flex">
       <Table
         :table-data="tableData"
@@ -87,7 +83,7 @@ export default {
     },
   },
   head() {
-    return this.getHead({ pageName: 'community' })
+    return this.getHead({ pageName: 'main' })
   },
 }
 </script>

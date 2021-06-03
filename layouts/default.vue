@@ -1,7 +1,12 @@
 <template>
   <v-app>
     <v-main>
-      <v-app-bar>
+      <v-app-bar
+        absolute
+        elevate-on-scroll
+        scroll-target="#scrolling-techniques-7"
+        height="64px"
+      >
         <nuxt-link
           class="logo"
           tag="img"
@@ -17,6 +22,7 @@
             class="navigation"
             :to="item.to"
           >
+            <v-icon class="mr-1">{{ item.icon }}</v-icon>
             {{ item.title }}
           </v-tab>
         </v-tabs>
@@ -48,9 +54,16 @@
         </v-menu>
         <div v-show="!isSignIn" id="g-signin2" />
       </v-app-bar>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <v-sheet
+        id="scrolling-techniques-7"
+        class="overflow-y-auto"
+        max-height="calc(100vh - 64px)"
+        style="margin-top: 64px"
+      >
+        <v-container>
+          <nuxt />
+        </v-container>
+      </v-sheet>
     </v-main>
   </v-app>
 </template>
@@ -68,8 +81,8 @@ export default {
       drawer: false,
       activeTab: 0,
       items: [
-        { title: '아카이브', to: '/archive' },
-        { title: '커뮤니티', to: '/community' },
+        { title: '아카이브', to: '/archive', icon: 'mdi-bank-outline' },
+        { title: '커뮤니티', to: '/community', icon: 'mdi-chat' },
       ],
       mainTitle: '가짜 연구소',
     }
@@ -121,6 +134,9 @@ export default {
 <style lang="scss" scoped>
 .logo {
   cursor: pointer;
+}
+.sign {
+  width: 200px;
 }
 .navigation {
   flex-grow: 1;

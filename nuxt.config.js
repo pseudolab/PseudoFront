@@ -37,7 +37,12 @@ export default {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~plugins/date-filter.js', '~plugins/global-constants.js'],
+  plugins: [
+    '~plugins/date-filter.js',
+    '~plugins/global-constants.js',
+    '~/plugins/axios.js',
+    '~/plugins/vue-moment.js',
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -61,7 +66,11 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: 'http://localhost:4000',
+    proxy: true,
+  },
+  proxy: {
+    '/git/': 'https://gist.github.com/',
+    '/routes/': '18.219.68.85:4000',
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
@@ -98,5 +107,10 @@ export default {
         })
       }
     },
+  },
+  server: {
+    port: 3000, // default: 3000
+    host: '0.0.0.0', // default: localhost,
+    timing: false,
   },
 }

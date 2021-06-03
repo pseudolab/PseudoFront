@@ -1,10 +1,8 @@
-import { types, range } from '@/fixture/validators.js'
-
 /**
  * @readonly
  * @param {Object.<
  *  cmd: string,
- *  type: icon | img,
+ *  tag: v-icon | v-img,
  *  validator: callback | null
  * >}
  * https://developer.mozilla.org/ko/docs/Web/API/Document/execCommand
@@ -12,29 +10,44 @@ import { types, range } from '@/fixture/validators.js'
 const CmdDict = Object.freeze({
   backColor: {
     src: 'mdi-pencil',
-    type: 'icon',
-    validator: types.str,
+    tag: 'v-icon',
+    val: null,
   },
   contentReadOnly: {
     src: 'mdi-account-circle',
-    type: 'icon',
-    validator: types.bool,
+    tag: 'v-icon',
+    val: null,
   },
   bold: {
-    src: 'mdi-account-circle',
-    type: 'icon',
-    validator: null,
+    src: require('~/assets/img/p-icons/1.png'),
+    tag: 'v-img',
+    val: null,
   },
   // required Selection
   copy: {
     src: 'mdi-owl',
-    type: 'icon',
-    validator: null,
+    tag: 'v-icon',
+    val: null,
   },
-  fontSize: {
-    src: 'mdi-domain',
-    type: 'icon',
-    validator: range(1, 7),
+  selectAll: {
+    src: require('~/assets/img/p-icons/0.png'),
+    tag: 'v-img',
+    val: null,
+  },
+  heading_2: {
+    src: require('~/assets/img/p-icons/4.png'),
+    tag: 'v-img',
+    val: 'H2',
+  },
+  heading_3: {
+    src: require('~/assets/img/p-icons/5.png'),
+    tag: 'v-img',
+    val: 'H3',
+  },
+  strikeThrough: {
+    src: require('~/assets/img/p-icons/7.png'),
+    tag: 'v-img',
+    val: null,
   },
 })
 

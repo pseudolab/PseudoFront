@@ -7,7 +7,7 @@
           <v-subheader>Sections</v-subheader>
           <v-list-item v-for="(section, i) in sections" :key="i">
             <v-list-item-content @click="goSect(section)">
-              <v-list-item-title v-text="section.name"></v-list-item-title>
+              <v-list-item-title v-text="section.id"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -33,12 +33,27 @@ export default {
       sections: [],
     }
   },
+  computed: {
+    sectionIds() {
+      return this.sections.map((obj) => obj.id)
+    },
+  },
+  mounted() {
+    document.addEventListener('updateSections', this.updateSections)
+  },
   methods: {
-    addSection(id) {
-      this.sections.push({
-        name: `section-${id}`,
-        id: `section-${id}`,
+    updateSections() {
+      console.log('updateSections')
+      const txtArea = document.getElementById('txtArea')
+      const idElements = txtArea.querySelectorAll("*[id]:not([id=''])")
+      idElements.forEach((el) => {
+        if (!this.sectionIds.includes(el.id)) {
+          this.addSection(el.id)
+        }
       })
+    },
+    addSection(id) {
+      this.sections.push({ id })
     },
     goSect(section) {
       const id = section.id

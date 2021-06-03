@@ -1,102 +1,176 @@
-<template>
-  <section class="archive">
-    <v-autocomplete
-      class="px-15 mb-3"
-      prepend-inner-icon="mdi-magnify"
-      :items="subjectCategory"
-      placeholder="검색어를 입력하세요"
-      background-color="white"
-      rounded
-      solo
-      :hide-details="true"
-      flat
-      color="primary"
-    />
-    <article class="archive--trend d-flex align-center px-15 mb-4">
-      <strong style="color: #0077a3">Trending</strong>
-      <ChipBoadr :chips="chips" @changeSelectedChips="changeSelectedChips" />
-    </article>
-    <v-btn class="archive__write-btn font-weight-bold" color="primary" outlined>
-      글쓰기
-    </v-btn>
-    <div class="d-flex">
-      <Table
-        :table-data="tableData"
-        :loading="loading"
-        class="flex-grow-1 mr-5"
-        @changeSortType="changeSortType"
-        @changePage="changePage"
+<template class="archive-category">
+  <main>
+    <StaticBoard :static-data="staticData" />
+    <section class="archive-category__cards">
+      <CategoryCard
+        v-for="(info, index) in bookInformation"
+        :key="index"
+        :title="info.title"
+        :description="info.description"
+        :builder="info.builder"
+        :builder-profile-img="info.builderProfileImg"
+        :number-member="info.numberMember"
+        :start-date="info.startDate"
+        :end-date="info.endDate"
+        :progress="info.progress"
+        :color="info.color"
       />
-      <RankBoard />
-    </div>
-  </section>
+      <CategoryCardMaker
+        :builder-profile-img="require('~/assets/img/test.png')"
+        builder="user1"
+      />
+    </section>
+  </main>
 </template>
-
 <script>
 import headMixin from '@/mixins/common/head.js'
-import ChipBoadr from '@/components/common/ChipBoadr.vue'
-import Table from '@/components/common/Table.vue'
-import RankBoard from '@/components/common/RankBoard.vue'
-
-// mock data
-import archiveTableData from '@/mock/archive/archiveTableData.js'
-import subjectCategoryData from '@/mock/subjectCategoryData.js'
+import StaticBoard from '@/components/common/StaticBoard.vue'
+import CategoryCard from '@/components/archive/CategoryCard.vue'
+import CategoryCardMaker from '@/components/archive/CategoryCardMaker.vue'
 
 export default {
-  components: {
-    ChipBoadr,
-    Table,
-    RankBoard,
-  },
+  components: { StaticBoard, CategoryCard, CategoryCardMaker },
   mixins: [headMixin],
   data() {
     return {
-      loading: false,
-      chips: subjectCategoryData.map((subject) => ({
-        name: subject,
-        isSelected: false,
-      })),
-      subjectCategory: subjectCategoryData,
-      tableData: archiveTableData,
-      sortType: null,
-      pageIdx: null,
+      newbookInformation: {
+        url: null,
+        title: '',
+        description: '',
+      },
+      bookInformation: [
+        {
+          title: 'Kubeflow 발만 담가보기1',
+          description: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [255, 0, 0],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: `글자수열자를세기위함글자수열자를세기위함`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          progress: 84,
+          color: [255, 144, 144],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: `글자수열자를세기위함글자수열자를세기위함`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [0, 0, 0],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: `글자수열자를세기위함글자수열자를세기위함`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [255, 255, 255],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [13, 178, 48],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [131, 48, 133],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [13, 148, 133],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: 'Kubeflow를 통한 ML 학습, 배포 및 관리',
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [13, 12, 133],
+        },
+        {
+          title: 'Kubeflow 발만 담가보기',
+          description: `Kubeflow를 통한 ML 학습, 배포 및 관리`,
+          builder: '김병조',
+          builderProfileImg: require('~/assets/img/test.png'),
+          numberMember: 4,
+          startDate: new Date(),
+          endDate: new Date(),
+          progress: 84,
+          color: [13, 48, 133],
+        },
+      ],
+      staticData: [
+        { label: 'in Progress', value: 45 },
+        { label: 'in Progress', value: 12 },
+        { label: 'Upcoming', value: 10 },
+        { label: 'Total Project', value: 67 },
+      ],
+      isAppending: false,
     }
   },
   methods: {
-    changeSelectedChips(chips) {
-      this.chips.forEach((_, idx) => {
-        if (chips.findIndex((val) => val === idx) !== -1) {
-          this.chips[idx].isSelected = true
-        } else {
-          this.chips[idx].isSelected = false
-        }
-      })
-      // TODO: selected chip을 api에 어떻게 보내줄지 결정한 후 작업.
-    },
-    changeSortType(type) {
-      // TODO: sortType 관련 항목 설정
-      this.sortType = type
-    },
-    changePage(idx) {
-      // TODO: pageIdx 관련 항목 설정
-      this.pageIdx = idx
+    fetchBook() {
+      // TODO: 서버와 연동하여 새로운 스터디 생성하기
+      this.newbookInformation = {
+        url: null,
+        title: '',
+        description: '',
+      }
+      this.isAppending = false
+      console.log('fetch book')
     },
   },
   head() {
-    return this.getHead({ pageName: 'main' })
+    return this.getHead({ pageName: 'archive' })
   },
 }
 </script>
-<style lang="scss">
-.archive {
-  &__write-btn {
-    background-color: white !important;
-  }
-  & input:focus {
-    color: #0077a3 !important;
-    &::placeholder {
-      color: #0077a3 !important;
-    }
+<style lang="scss" scoped>
+.archive-category {
+  &__cards {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+    gap: 30px;
   }
 }
 </style>
