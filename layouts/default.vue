@@ -48,11 +48,21 @@
           </template>
           <v-list>
             <v-list-item @click="onSignOut">
+            <v-list-item to="/profile">
+              <v-list-item-title>프로필</v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="signOut">
               <v-list-item-title>로그 아웃</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
         <div v-show="!isSignIn" id="g-signin2" />
+        <v-btn v-else class="sign" plain @click="signIn">
+          <v-avatar size="30">
+            <img :src="require('~/assets/img/google.png')" alt="sign-in" />
+          </v-avatar>
+          <span class="ml-2"> 로그인 </span>
+        </v-btn>
       </v-app-bar>
       <v-sheet
         id="scrolling-techniques-7"
