@@ -12,6 +12,23 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
+      {
+        name: 'google-signin-scope',
+        content: 'profile email',
+      },
+      {
+        name: 'google-signin-client_id',
+        //client id
+        content:
+          '1073354523687-i8rp8n5gvkju0uva9nrv8tgh0n5bqf47.apps.googleusercontent.com',
+      },
+    ],
+    script: [
+      {
+        src: 'https://apis.google.com/js/platform.js',
+        defer: true,
+        async: true,
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
@@ -44,6 +61,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

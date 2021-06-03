@@ -27,11 +27,16 @@
           </v-tab>
         </v-tabs>
 
-        <v-menu v-if="isSignIn" offset-y nudge-bottom="8">
+        <v-menu offset-y nudge-bottom="8">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="sign" plain v-bind="attrs" height="100%" v-on="on">
+            <v-btn
+              v-show="isSignIn"
+              plain
+              v-bind="attrs"
+              height="100%"
+              v-on="on"
+            >
               <UserProfile
-                v-if="isSignIn"
                 :img-url="require('~/assets/img/test.png')"
                 exp-color="red"
                 :exp="30"
@@ -42,6 +47,7 @@
             </v-btn>
           </template>
           <v-list>
+            <v-list-item @click="onSignOut">
             <v-list-item to="/profile">
               <v-list-item-title>프로필</v-list-item-title>
             </v-list-item>
@@ -50,6 +56,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
+        <div v-show="!isSignIn" id="g-signin2" />
         <v-btn v-else class="sign" plain @click="signIn">
           <v-avatar size="30">
             <img :src="require('~/assets/img/google.png')" alt="sign-in" />
@@ -95,11 +102,42 @@ export default {
       return this.$store.state.signIn.isSignIn
     },
   },
+  mounted() {
+    this.$nextTick(() => {
+      window.gapi.signin2.render('g-signin2', {
+        onsuccess: this.onSignIn,
+      })
+    })
+  },
   methods: {
     ...mapMutations({
-      signIn: 'signIn/signIn',
-      signOut: 'signIn/signOut',
+      setIsSignIn: 'signIn/SET_IS_SIGN_IN',
+      setToken: 'signIn/SET_TOKEN',
     }),
+    onSignIn(user) {
+      const idToken = user.getAuthResponse().id_token
+      this.setIsSignIn(true)
+      this.setToken(idToken)
+    },
+    onSignOut() {
+      const auth2 = window.gapi.auth2.getAuthInstance()
+      auth2.signOut().then(() => {
+        this.setIsSignIn(false)
+        this.setToken(null)
+      })
+    },
+    sendIdToken() {
+      const idToken = this.$store.state.signIn.idToken
+      if (idToken === null) {
+        console.error('아이디 토큰이 없습니다. 로그인을 먼저 진행해주세요')
+        return
+      }
+      this.$axios
+        .$get(`http://localhost:4000/routes/profiles/my?id_token=${idToken}`)
+        .then((res) => {
+          console.log('success', res)
+        })
+    },
   },
 }
 </script>

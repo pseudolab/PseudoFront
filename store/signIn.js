@@ -1,12 +1,13 @@
 export const state = () => ({
-  isSignIn: true,
+  isSignIn: false,
+  idToken: null,
 })
 
 export const mutations = {
-  signIn(state) {
-    state.isSignIn = true
+  SET_IS_SIGN_IN(state, signState) {
+    state.isSignIn = signState
   },
-  signOut(state) {
-    state.isSignIn = false
+  SET_TOKEN(state, idToken) {
+    state.idToken = idToken
   },
 }
