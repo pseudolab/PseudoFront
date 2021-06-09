@@ -47,6 +47,9 @@ export default {
     Table,
   },
   mixins: [headMixin],
+  validate({ store }) {
+    return store.state.signIn.idToken !== null
+  },
   data() {
     return {
       profileMenues: ['Summary', 'Posts', 'Q & A', 'Rank', 'Bookmarks'],
