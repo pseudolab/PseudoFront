@@ -37,7 +37,7 @@
               v-on="on"
             >
               <img class="profile-img" :src="profileImgUrl" width="50px" />
-              <span class="ml-2"> 사용자 1 </span>
+              <span class="ml-2"> {{ userName }} </span>
             </v-btn>
           </template>
           <v-list>
@@ -80,6 +80,7 @@ export default {
       ],
       mainTitle: '가짜 연구소',
       profileImgUrl: '',
+      userName: '',
     }
   },
   computed: {
@@ -108,6 +109,7 @@ export default {
         )
         this.setToken(idToken)
         this.setIsSignIn(true)
+        this.userName = res.userName
         this.profileImgUrl = res.photos[0].value
       } catch (e) {
         console.error(e)
