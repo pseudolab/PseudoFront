@@ -1,6 +1,12 @@
 <template>
   <section class="profile d-flex my-15 justify-space-between">
-    <UserInfo />
+    <UserInfo
+      :user-name="userName"
+      :description="description"
+      :region="region"
+      :user-mail="userMail"
+      :img-url="imgUrl"
+    />
     <div class="flex-grow-1 ml-5">
       <v-chip-group class="mb-5" mandatory @change="changeSelectedMenu">
         <v-chip
@@ -47,7 +53,29 @@ export default {
       selectedMenuIdx: 0,
       tableData: archiveTableData,
       loading: false,
+      userName: '',
+      description: '',
+      region: '',
+      userMail: '',
+      imgUrl: '',
     }
+  },
+  computed: {
+    idToken() {
+      return this.$store.state.signIn.idToken
+    },
+  },
+  async mounted() {
+    if (this.idToken === null) {
+      console.error('아이디 토큰이 없습니다. 로그인을 먼저 진행해주세요')
+      return
+    }
+    const res = await this.$axios.$get(
+      `http://localhost:4000/routes/profiles/my?id_token=${this.idToken}`
+    )
+    this.userMail = res.userMail
+    this.userName = res.userName
+    this.imgUrl = res.photos[0].value
   },
 
   methods: {

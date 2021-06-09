@@ -1,44 +1,40 @@
 <template>
   <section class="user-info">
-    <UserProfile
-      :img-url="require('~/assets/img/test.png')"
-      exp-color="red"
-      :exp="10"
-      :remain-exp="20"
-      :width="200"
-      :is-animation="true"
-    />
+    <img width="200px" :src="imgUrl" />
     <v-card class="pa-3" outlined>
-      <v-card-title class="mb-3">Name</v-card-title>
+      <v-card-title class="mb-3">{{ userName }}</v-card-title>
       <v-card-subtitle>한 줄 소개</v-card-subtitle>
-      <v-card-text> 한 줄 설명 추가 </v-card-text>
-      <v-card-subtitle>소속</v-card-subtitle>
-      <v-card-text> 가짜 연구소 </v-card-text>
+      <v-card-text> {{ description }} </v-card-text>
       <v-card-subtitle>지역</v-card-subtitle>
-      <v-card-text> 서울 </v-card-text>
+      <v-card-text> {{ region }} </v-card-text>
       <v-card-subtitle>메일 주소</v-card-subtitle>
-      <v-card-text> abc@abc.com </v-card-text>
-      <v-card-subtitle>개인 웹페이지</v-card-subtitle>
-      <v-card-text> www.abc.com </v-card-text>
+      <v-card-text> {{ userMail }} </v-card-text>
     </v-card>
-    <v-btn
-      class="d-block ml-auto mt-4"
-      :style="{
-        border: 'none',
-      }"
-      disabled
-      small
-      depressed
-      >Edit</v-btn
-    >
   </section>
 </template>
 <script>
-import UserProfile from '@/components/common/UserProfile.vue'
-
 export default {
-  components: {
-    UserProfile,
+  props: {
+    userName: {
+      default: '',
+      type: String,
+    },
+    userMail: {
+      type: String,
+      default: '',
+    },
+    description: {
+      type: String,
+      defualt: '',
+    },
+    region: {
+      type: String,
+      defulat: '',
+    },
+    imgUrl: {
+      typs: String,
+      defualt: '',
+    },
   },
 }
 </script>
