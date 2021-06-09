@@ -104,8 +104,9 @@ export default {
       try {
         const authResponse = await user.getAuthResponse()
         const idToken = authResponse.id_token
+        this.$axios.setHeader('auth-token', idToken)
         const res = await this.$axios.$get(
-          `http://localhost:4000/routes/profiles/my?id_token=${idToken}`
+          `http://localhost:4000/routes/profiles/my`
         )
         this.setToken(idToken)
         this.setIsSignIn(true)
@@ -121,6 +122,7 @@ export default {
         this.setToken(null)
         this.setIsSignIn(false)
         this.profileImgUrl = ''
+        console.log(this.$router.push('/'))
       })
     },
   },

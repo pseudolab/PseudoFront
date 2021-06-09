@@ -61,16 +61,17 @@ export default {
     },
   },
   async mounted() {
-    if (this.idToken === null) {
-      console.error('아이디 토큰이 없습니다. 로그인을 먼저 진행해주세요')
-      return
+    try {
+      this.$axios.setHeader('auth-token', this.idToken)
+      const res = await this.$axios.$get(
+        `http://localhost:4000/routes/profiles/my`
+      )
+      this.userName = res.userName
+      this.imgUrl = res.photos[0].value
+      this.setUserMail(res.userMail)
+    } catch (e) {
+      console.error(e)
     }
-    const res = await this.$axios.$get(
-      `http://localhost:4000/routes/profiles/my?id_token=${this.idToken}`
-    )
-    this.userName = res.userName
-    this.imgUrl = res.photos[0].value
-    this.setUserMail(res.userMail)
   },
 
   methods: {
