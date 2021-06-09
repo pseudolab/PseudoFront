@@ -1,12 +1,6 @@
 <template>
   <section class="profile d-flex my-15 justify-space-between">
-    <UserInfo
-      :user-name="userName"
-      :description="description"
-      :region="region"
-      :user-mail="userMail"
-      :img-url="imgUrl"
-    />
+    <UserInfo :user-name="userName" :img-url="imgUrl" />
     <div class="flex-grow-1 ml-5">
       <v-chip-group class="mb-5" mandatory @change="changeSelectedMenu">
         <v-chip
@@ -36,6 +30,7 @@ import headMixin from '@/mixins/common/head.js'
 import UserInfo from '@/components/profile/UserInfo.vue'
 import Summary from '@/components/profile/Summary.vue'
 import Table from '@/components/common/Table.vue'
+import { mapMutations } from 'vuex'
 
 // mock data
 import archiveTableData from '@/mock/archive/archiveTableData.js'
@@ -57,9 +52,6 @@ export default {
       tableData: archiveTableData,
       loading: false,
       userName: '',
-      description: '',
-      region: '',
-      userMail: '',
       imgUrl: '',
     }
   },
@@ -76,12 +68,17 @@ export default {
     const res = await this.$axios.$get(
       `http://localhost:4000/routes/profiles/my?id_token=${this.idToken}`
     )
-    this.userMail = res.userMail
     this.userName = res.userName
     this.imgUrl = res.photos[0].value
+    this.setUserMail(res.userMail)
   },
 
   methods: {
+    ...mapMutations({
+      setUserMail: 'profile/SET_USER_MAIL',
+      setDescription: 'profile/SET_DESCRIPTION',
+      setRegion: 'profile/SET_REGION',
+    }),
     changeSelectedMenu(idx) {
       this.selectedMenuIdx = idx
     },
