@@ -42,6 +42,7 @@ export default {
     '~plugins/global-constants.js',
     '~/plugins/axios.js',
     '~/plugins/vue-moment.js',
+    '~/plugins/persistedState.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -61,7 +62,6 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

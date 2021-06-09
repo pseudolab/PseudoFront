@@ -1,6 +1,6 @@
 <template>
   <section class="profile d-flex my-15 justify-space-between">
-    <UserInfo />
+    <UserInfo :user-name="userName" :img-url="imgUrl" />
     <div class="flex-grow-1 ml-5">
       <v-chip-group class="mb-5" mandatory @change="changeSelectedMenu">
         <v-chip
@@ -30,6 +30,7 @@ import headMixin from '@/mixins/common/head.js'
 import UserInfo from '@/components/profile/UserInfo.vue'
 import Summary from '@/components/profile/Summary.vue'
 import Table from '@/components/common/Table.vue'
+import { mapMutations } from 'vuex'
 
 // mock data
 import archiveTableData from '@/mock/archive/archiveTableData.js'
@@ -41,16 +42,44 @@ export default {
     Table,
   },
   mixins: [headMixin],
+  validate({ store }) {
+    return store.state.signIn.idToken !== null
+  },
   data() {
     return {
       profileMenues: ['Summary', 'Posts', 'Q & A', 'Rank', 'Bookmarks'],
       selectedMenuIdx: 0,
       tableData: archiveTableData,
       loading: false,
+      userName: '',
+      imgUrl: '',
+    }
+  },
+  computed: {
+    idToken() {
+      return this.$store.state.signIn.idToken
+    },
+  },
+  async mounted() {
+    try {
+      this.$axios.setHeader('auth-token', this.idToken)
+      const res = await this.$axios.$get(
+        `http://localhost:4000/routes/profiles/my`
+      )
+      this.userName = res.userName
+      this.imgUrl = res.photos[0].value
+      this.setUserMail(res.userMail)
+    } catch (e) {
+      console.error(e)
     }
   },
 
   methods: {
+    ...mapMutations({
+      setUserMail: 'profile/SET_USER_MAIL',
+      setDescription: 'profile/SET_DESCRIPTION',
+      setRegion: 'profile/SET_REGION',
+    }),
     changeSelectedMenu(idx) {
       this.selectedMenuIdx = idx
     },

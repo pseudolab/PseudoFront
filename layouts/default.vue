@@ -36,14 +36,8 @@
               height="100%"
               v-on="on"
             >
-              <UserProfile
-                :img-url="require('~/assets/img/test.png')"
-                exp-color="red"
-                :exp="30"
-                :remain-exp="40"
-                :width="50"
-              />
-              <span class="ml-2"> 사용자 1 </span>
+              <img class="profile-img" :src="profileImgUrl" width="50px" />
+              <span class="ml-2"> {{ userName }} </span>
             </v-btn>
           </template>
           <v-list>
@@ -73,12 +67,9 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import UserProfile from '@/components/common/UserProfile.vue'
 
 export default {
-  components: {
-    UserProfile,
-  },
+  name: 'Default',
   data() {
     return {
       drawer: false,
@@ -88,6 +79,8 @@ export default {
         { title: '커뮤니티', to: '/community', icon: 'mdi-chat' },
       ],
       mainTitle: '가짜 연구소',
+      profileImgUrl: '',
+      userName: '',
     }
   },
   computed: {
@@ -107,29 +100,30 @@ export default {
       setIsSignIn: 'signIn/SET_IS_SIGN_IN',
       setToken: 'signIn/SET_TOKEN',
     }),
-    onSignIn(user) {
-      const idToken = user.getAuthResponse().id_token
-      this.setIsSignIn(true)
-      this.setToken(idToken)
+    async onSignIn(user) {
+      try {
+        const authResponse = await user.getAuthResponse()
+        const idToken = authResponse.id_token
+        this.$axios.setHeader('auth-token', idToken)
+        const res = await this.$axios.$get(
+          `http://localhost:4000/routes/profiles/my`
+        )
+        this.setToken(idToken)
+        this.setIsSignIn(true)
+        this.userName = res.userName
+        this.profileImgUrl = res.photos[0].value
+      } catch (e) {
+        console.error(e)
+      }
     },
     onSignOut() {
       const auth2 = window.gapi.auth2.getAuthInstance()
       auth2.signOut().then(() => {
-        this.setIsSignIn(false)
         this.setToken(null)
+        this.setIsSignIn(false)
+        this.profileImgUrl = ''
+        console.log(this.$router.push('/'))
       })
-    },
-    sendIdToken() {
-      const idToken = this.$store.state.signIn.idToken
-      if (idToken === null) {
-        console.error('아이디 토큰이 없습니다. 로그인을 먼저 진행해주세요')
-        return
-      }
-      this.$axios
-        .$get(`http://localhost:4000/routes/profiles/my?id_token=${idToken}`)
-        .then((res) => {
-          console.log('success', res)
-        })
     },
   },
 }
@@ -149,5 +143,9 @@ export default {
   &:last-of-type {
     margin-right: auto;
   }
+}
+
+.profile-img {
+  border-radius: 50%;
 }
 </style>
