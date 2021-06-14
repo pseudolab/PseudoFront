@@ -14,7 +14,7 @@
           to="/"
           height="100%"
         />
-        <v-tabs>
+        <v-tabs color="point" icons-and-text>
           <v-tab class="pa-0 ma-0" style="min-width: 0px" to="/" />
           <v-tab
             v-for="(item, index) in items"
@@ -22,8 +22,8 @@
             class="navigation"
             :to="item.to"
           >
-            <v-icon class="mr-1">{{ item.icon }}</v-icon>
             {{ item.title }}
+            <v-icon class="mr-1">{{ item.icon }}</v-icon>
           </v-tab>
         </v-tabs>
 
@@ -31,6 +31,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-show="isSignIn"
+              v-ripple="{ class: `point--text` }"
               plain
               v-bind="attrs"
               height="100%"
@@ -41,10 +42,14 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item to="/profile">
+            <v-list-item
+              v-ripple="{ class: `point--text` }"
+              to="/profile"
+              color="point"
+            >
               <v-list-item-title>프로필</v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onSignOut">
+            <v-list-item v-ripple="{ class: `point--text` }" @click="onSignOut">
               <v-list-item-title>로그 아웃</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -136,6 +141,7 @@ export default {
   width: 200px;
 }
 .navigation {
+  font-weight: bold;
   flex-grow: 1;
   &:nth-of-type(2) {
     margin-left: auto;

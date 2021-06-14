@@ -31,7 +31,8 @@ export default {
 <style lang="scss" scoped>
 .static-board {
   width: 100%;
-  background-color: #fff;
+  background-color: #2715b9;
+  color: white;
   border-radius: 20px;
   padding: 10px 20px;
   margin-bottom: 20px;

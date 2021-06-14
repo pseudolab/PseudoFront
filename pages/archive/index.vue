@@ -167,9 +167,14 @@ export default {
 <style lang="scss" scoped>
 .archive-category {
   &__cards {
+    width: 100%;
     display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+    justify-content: space-between;
+    padding: 0 auto;
+    grid-template-columns: repeat(auto-fit, 350px);
+    @media screen and (max-width: 755px) {
+      grid-template-columns: 100%;
+    }
     gap: 30px;
   }
 }
