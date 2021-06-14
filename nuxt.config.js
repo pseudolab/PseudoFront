@@ -26,8 +26,6 @@ export default {
     script: [
       {
         src: 'https://apis.google.com/js/platform.js',
-        defer: true,
-        async: true,
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
