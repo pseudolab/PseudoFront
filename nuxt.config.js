@@ -85,6 +85,7 @@ export default {
           //   accent: '#8c9eff',
           error: '#b71c1c',
           anchor: '#e9eff1',
+          point: '#2715b9',
         },
       },
     },
