@@ -42,9 +42,11 @@ export default {
     Table,
   },
   mixins: [headMixin],
-  validate({ store }) {
-    return store.state.signIn.idToken !== null
-  },
+  //   // TODO: 유저 정보 검색 후 없을 경우 에러페이지로 이동
+  // async fetch({ params, error }) {
+  //   error({ statusCode: 404 })
+  //   this.userId = params.userId
+  // },
   data() {
     return {
       profileMenues: ['Summary', 'Posts', 'Q & A', 'Rank', 'Bookmarks'],
@@ -53,6 +55,7 @@ export default {
       loading: false,
       userName: '',
       imgUrl: '',
+      userId: '',
     }
   },
   computed: {
@@ -61,6 +64,7 @@ export default {
     },
   },
   async mounted() {
+    console.log(this.userId)
     try {
       this.$axios.setHeader('auth-token', this.idToken)
       const res = await this.$axios.$get(
