@@ -82,18 +82,19 @@
         >
       </template>
     </CategoryCardLayOut>
-    <v-color-picker
+    <color-picker
       v-show="showColorPicker"
-      v-model="picker"
-      canvas-height="100px"
-      width="300px"
       class="color-picker no-alpha"
-      hide-inputs
-    ></v-color-picker>
+      :palette="pallete"
+      @pick-color="pickColor"
+    />
   </div>
 </template>
 <script>
+import ColorPicker from './ColorPicker.vue'
+
 export default {
+  components: { ColorPicker },
   props: {
     builderProfileImg: {
       type: String,
@@ -112,14 +113,23 @@ export default {
       title: '',
       description: '',
     },
-    picker: { rgba: { a: 1, b: 0, g: 0, r: 255 } },
+    color: [0, 0, 0],
+    pallete: [
+      '#b3b2be',
+      '#b2ade6',
+      '#caa5e4',
+      '#e19cdb',
+      '#e3a0bb',
+      '#e2a49d',
+      '#d5ad71',
+      '#adbc20',
+      '#78c742',
+      '#50cb5c',
+      '#48c895',
+      '#58c2cd',
+      '#98b5e0',
+    ],
   }),
-  computed: {
-    color() {
-      const { rgba } = this.picker
-      return [rgba.r, rgba.g, rgba.b]
-    },
-  },
   methods: {
     handleBook() {
       console.log('book clicked')
@@ -138,6 +148,9 @@ export default {
     },
     togglePalete() {
       this.showColorPicker = !this.showColorPicker
+    },
+    pickColor(color) {
+      this.color = color
     },
   },
 }
@@ -174,12 +187,6 @@ export default {
   }
   & .description {
     font-size: 16px;
-  }
-  & .color-picker {
-    position: absolute;
-    transform: translateY(-105%);
-    top: 0;
-    right: 10px;
   }
 }
 </style>
