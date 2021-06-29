@@ -1,6 +1,6 @@
 <template>
   <section class="user-info">
-    <img width="200px" :src="imgUrl" />
+    <!-- <img width="200px" :src="imgUrl" /> -->
     <article class="information pa-3">
       <h3 class="mb-3">{{ userName }}</h3>
       <EditInput
@@ -34,13 +34,13 @@ export default {
   },
   props: {
     userName: {
-      types: String,
-      defualt: '',
+      type: String,
+      required: true,
     },
-    imgUrl: {
-      typs: String,
-      defualt: '',
-    },
+    // imgUrl: {
+    //   typs: String,
+    //   defualt: '',
+    // },
   },
   computed: {
     userMail() {
