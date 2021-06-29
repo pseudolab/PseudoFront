@@ -12,13 +12,7 @@
     >
       &plus;
     </v-card>
-    <CategoryCardLayOut
-      v-else
-      :color="color"
-      :progress="50"
-      :builder-profile-img="builderProfileImg"
-      :builder="builder"
-    >
+    <CategoryCardLayOut v-else :color="color" :builder="builder">
       <template #icon="{ changeTone }">
         <v-btn
           icon
@@ -104,10 +98,10 @@ import ColorPicker from './ColorPicker.vue'
 export default {
   components: { ColorPicker },
   props: {
-    builderProfileImg: {
-      type: String,
-      required: true,
-    },
+    // builderProfileImg: {
+    //   type: String,
+    //   required: true,
+    // },
     builder: {
       type: String,
       required: true,
