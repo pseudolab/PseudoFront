@@ -4,7 +4,11 @@
       v-if="!isAppending"
       class="plus-card"
       rounded="xl"
-      @click="() => (isAppending = true)"
+      @click="
+        () => {
+          isAppending = true
+        }
+      "
     >
       &plus;
     </v-card>
@@ -14,7 +18,6 @@
       :progress="50"
       :builder-profile-img="builderProfileImg"
       :builder="builder"
-      @cardClicked="() => (isAppending = isAppending)"
     >
       <template #icon="{ changeTone }">
         <v-btn
@@ -29,8 +32,8 @@
       </template>
       <template #title="{ changeTone }">
         <v-text-field
-          v-model="newbookInformation.title"
-          class="title mx-3 mb-4"
+          v-model="newbookInformation.categoryName"
+          class="categoryName mx-3 mb-4"
           hide-details
           dense
           height="36px"
@@ -66,7 +69,12 @@
           class="white--text font-weight-bold mr-2"
           x-small
           :color="changeTone(0)"
-          @click.stop="cancleCard"
+          @click.stop="
+            () => {
+              isAppending = false
+              showColorPicker = false
+            }
+          "
           @mousedown.stop=""
           @touchstart.stop=""
           >취소</v-btn
@@ -109,9 +117,9 @@ export default {
     isAppending: false,
     showColorPicker: false,
     newbookInformation: {
-      url: null,
-      title: '',
+      categoryName: '',
       description: '',
+      cowriter: [], // TODO: 기능 추가
     },
     color: [0, 0, 0],
     pallete: [
@@ -134,17 +142,40 @@ export default {
     handleBook() {
       console.log('book clicked')
     },
-    appendCard() {
-      this.isAppending = true
-    },
-    fetchCard() {
-      this.isAppending = false
-      this.showColorPicker = false
-      // NOTE: 서버와 연동 추가
-    },
-    cancleCard() {
-      this.isAppending = false
-      this.showColorPicker = false
+    async fetchCard() {
+      try {
+        const data = {
+          ...this.newbookInformation,
+          builder: 'builder', // TODO: 현재 사용자 정보로 설정
+          // builderProfileImg: '', // TODO: 현재 사용자 이미지로 설정
+          startDate: this.$moment().format('YYYY-MM-DD'), // TODO: 양식 맞추기
+          endDate: this.$moment().format('YYYY-MM-DD'),
+          // progress: 0,
+          color: this.color.reduce((acc, cur) => {
+            let hex = cur.toString(16)
+            if (hex.length === 1) {
+              hex = `0${hex}`
+            }
+            return acc + hex
+          }, '#'),
+        }
+        const res = await this.$axios({
+          method: 'post',
+          url: '/routes/categories',
+          data,
+        })
+        if (res.status !== 200) {
+          throw new Error(`get ${res.status}`)
+        }
+      } catch (error) {
+        // TODO: 추후에 에로 로직 설정
+        console.error(error)
+        window.alert('서버 에러')
+      } finally {
+        this.$emit('fetchCategories', false)
+        this.showColorPicker = false
+        this.isAppending = false
+      }
     },
     togglePalete() {
       this.showColorPicker = !this.showColorPicker
@@ -181,7 +212,7 @@ export default {
     align-items: center;
     font-size: 100px;
   }
-  & .title {
+  & .categoryName {
     font-size: 24px;
     font-weight: 700;
   }
