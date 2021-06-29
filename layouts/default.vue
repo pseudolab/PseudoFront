@@ -110,9 +110,7 @@ export default {
         const authResponse = await user.getAuthResponse()
         const idToken = authResponse.id_token
         this.$axios.setHeader('auth-token', idToken)
-        const res = await this.$axios.$get(
-          `http://localhost:4000/routes/profiles/my`
-        )
+        const res = await this.$axios.$get('/routes/profiles/my')
         this.setToken(idToken)
         this.setIsSignIn(true)
         this.userName = res.userName
