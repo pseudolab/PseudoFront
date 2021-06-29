@@ -35,7 +35,7 @@ export default {
   color: white;
   border-radius: 20px;
   padding: 10px 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: space-around;
 }
