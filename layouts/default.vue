@@ -109,12 +109,10 @@ export default {
       try {
         const authResponse = await user.getAuthResponse()
         const idToken = authResponse.id_token
-        console.log('idToken', idToken)
         this.$axios.setHeader('auth-token', idToken)
         const res = await this.$axios.$get('/profiles/my')
         this.setToken(idToken)
         this.setIsSignIn(true)
-        console.log(res, 'res')
         this.userName = res.userName
         // this.profileImgUrl = res.photos[0].value
       } catch (e) {
@@ -127,7 +125,7 @@ export default {
         this.setToken(null)
         this.setIsSignIn(false)
         // this.profileImgUrl = ''
-        console.log(this.$router.push('/'))
+        this.$router.push('/')
       })
     },
   },

@@ -64,7 +64,6 @@ export default {
     },
   },
   async mounted() {
-    console.log(this.userId)
     try {
       this.$axios.setHeader('auth-token', this.idToken)
       const res = await this.$axios.$get('/profiles/my')
