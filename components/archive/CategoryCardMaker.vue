@@ -155,7 +155,7 @@ export default {
         }
         const res = await this.$axios({
           method: 'post',
-          url: '/routes/categories',
+          url: '/categories',
           data,
         })
         if (res.status !== 200) {

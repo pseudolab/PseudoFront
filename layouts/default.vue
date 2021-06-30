@@ -37,7 +37,7 @@
               height="100%"
               v-on="on"
             >
-              <img class="profile-img" :src="profileImgUrl" width="50px" />
+              <!-- <img class="profile-img" :src="profileImgUrl" width="50px" /> -->
               <span class="ml-2"> {{ userName }} </span>
             </v-btn>
           </template>
@@ -84,7 +84,7 @@ export default {
         { title: '커뮤니티', to: '/community', icon: 'mdi-chat' },
       ],
       mainTitle: '가짜 연구소',
-      profileImgUrl: '',
+      // profileImgUrl: '',
       userName: '',
     }
   },
@@ -109,12 +109,14 @@ export default {
       try {
         const authResponse = await user.getAuthResponse()
         const idToken = authResponse.id_token
+        console.log('idToken', idToken)
         this.$axios.setHeader('auth-token', idToken)
-        const res = await this.$axios.$get('/routes/profiles/my')
+        const res = await this.$axios.$get('/profiles/my')
         this.setToken(idToken)
         this.setIsSignIn(true)
+        console.log(res, 'res')
         this.userName = res.userName
-        this.profileImgUrl = res.photos[0].value
+        // this.profileImgUrl = res.photos[0].value
       } catch (e) {
         console.error(e)
       }
@@ -124,7 +126,7 @@ export default {
       auth2.signOut().then(() => {
         this.setToken(null)
         this.setIsSignIn(false)
-        this.profileImgUrl = ''
+        // this.profileImgUrl = ''
         console.log(this.$router.push('/'))
       })
     },

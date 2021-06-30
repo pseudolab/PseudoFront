@@ -23,6 +23,7 @@ import StaticBoard from '@/components/common/StaticBoard.vue'
 import CategoryCard from '@/components/archive/CategoryCard.vue'
 import CategoryCardMaker from '@/components/archive/CategoryCardMaker.vue'
 
+// TODO: 사용자 확인 후 카드 생성할 수 있도록 수정
 export default {
   components: { StaticBoard, CategoryCard, CategoryCardMaker },
   mixins: [headMixin],
@@ -48,7 +49,7 @@ export default {
   methods: {
     async fetchCategories() {
       try {
-        const { data } = await this.$axios.get('/routes/categories')
+        const { data } = await this.$axios.get('/categories')
         this.bookInformation = data
       } catch (error) {
         // TODO: 추후에 에로 로직 설정

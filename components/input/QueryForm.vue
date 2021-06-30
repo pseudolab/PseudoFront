@@ -135,7 +135,7 @@ export default {
                   // FIXME: How to access to Injected Lib in JSX Or and parent
                   console.log('queryObj:', queryObj)
                   self.$root.context.$axios.post(
-                    '/routes/posts', // url
+                    '/posts', // url
                     formdata, // data
                     {
                       // config
