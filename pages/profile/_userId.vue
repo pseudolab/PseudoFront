@@ -67,9 +67,7 @@ export default {
     console.log(this.userId)
     try {
       this.$axios.setHeader('auth-token', this.idToken)
-      const res = await this.$axios.$get(
-        `http://localhost:4000/routes/profiles/my`
-      )
+      const res = await this.$axios.$get('/profiles/my')
       this.userName = res.userName
       this.imgUrl = res.photos[0].value
       this.setUserMail(res.userMail)

@@ -13,26 +13,24 @@
       <slot name="title" :changeTone="changeTone"></slot>
       <slot name="description" :changeTone="changeTone"></slot>
     </div>
-    <slot name="progress">
+    <!-- <slot name="progress">
       <h3>Progress</h3>
       <progress max="100" :value="progress" />
-    </slot>
+    </slot> -->
     <footer>
       <strong>Builder&nbsp;</strong>
-      <UserProfile :img-url="builderProfileImg" :width="20" />
+      <!-- <UserProfile :img-url="builderProfileImg" :width="20" /> -->
       <span class="builder mr-auto"> {{ builder }} </span>
       <slot name="footer-rd-corner" :changeTone="changeTone"></slot>
     </footer>
   </v-card>
 </template>
 <script>
-// TODO: 카드 이동 애니메이션 추가하기
 // TODO: 모달창 제작
-// TODO: 카드 생성할때 사용할 카드 컴포넌트 추가
-import UserProfile from '@/components/common/UserProfile.vue'
+// import UserProfile from '@/components/common/UserProfile.vue'
 
 export default {
-  components: { UserProfile },
+  // components: { UserProfile },
   props: {
     color: {
       type: Array,
@@ -55,14 +53,15 @@ export default {
       },
       required: true,
     },
-    progress: {
-      type: Number,
-      required: true,
-    },
-    builderProfileImg: {
-      type: String,
-      required: true,
-    },
+    // TODO: 추후 추가
+    // progress: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // builderProfileImg: {
+    //   type: String,
+    //   required: true,
+    // },
     builder: {
       type: String,
       required: true,

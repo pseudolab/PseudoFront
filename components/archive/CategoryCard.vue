@@ -1,8 +1,6 @@
 <template class="category-card">
   <CategoryCardLayOut
-    :color="color"
-    :progress="progress"
-    :builder-profile-img="builderProfileImg"
+    :color="decimalColor"
     :builder="builder"
     @cardClicked="handleBook"
   >
@@ -31,15 +29,15 @@
     </template>
     <template #period>
       <h6>
-        {{ startDate | moment('ll') }} -
+        {{ startDate }} -
         <span v-if="endDate">
-          {{ endDate | moment('ll') }}
+          {{ endDate }}
         </span>
         <span v-else> ing </span>
       </h6>
     </template>
     <template #title>
-      <h1>{{ title }}</h1>
+      <h1>{{ categoryName }}</h1>
     </template>
     <template #description>
       <p>
@@ -59,34 +57,29 @@ import CategoryCardLayOut from '@/components/archive/CategoryCardLayOut.vue'
 export default {
   components: { CategoryCardLayOut },
   props: {
-    title: { type: String, required: true },
+    categoryName: { type: String, required: true },
     description: { type: String, required: true },
     builder: { type: String, required: true },
-    builderProfileImg: { type: String, required: true },
-    numberMember: { type: Number, required: true },
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, default: null },
-    progress: { type: Number, required: true },
+    // builderProfileImg: { type: String, required: true }, //TODO: 추후 추가
+    cowriter: { type: Array, required: true },
+    startDate: { type: String, required: true },
+    endDate: { type: String, default: null },
+    // progress: { type: Number, required: true }, //TODO: 추후 추가
     color: {
-      type: Array,
-      validator: ([red, green, blue]) => {
-        function validNumber(value) {
-          if (
-            value !== undefined &&
-            Number.isInteger(value) &&
-            value >= 0 &&
-            value <= 255
-          ) {
-            return true
-          }
-          return false
-        }
-        if (validNumber(red) && validNumber(green) && validNumber(blue)) {
-          return true
-        }
-        return false
-      },
+      type: String,
       required: true,
+    },
+  },
+  computed: {
+    numberMember() {
+      return this.cowriter.length + 1
+    },
+    decimalColor() {
+      const { color } = this
+      const r = parseInt(`0x${[...color].slice(1, 3).join('')}`)
+      const g = parseInt(`0x${[...color].slice(3, 5).join('')}`)
+      const b = parseInt(`0x${[...color].slice(5, 7).join('')}`)
+      return [r, g, b]
     },
   },
   methods: {

@@ -18,6 +18,7 @@ export default {
       if (!id) {
         return
       }
+      // BUG: 프록시 설정을 삭제해 /git/ 을 사용할 경우 에러가 발생 할 수 있음
       let url = `/git/${id}.json`
       if (this.file) {
         url = `${url}?file=${this.file}`

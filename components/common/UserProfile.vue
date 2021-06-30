@@ -49,7 +49,7 @@ export default {
   props: {
     imgUrl: {
       // NOTE: 기본 이미지 받아서 기본 defualt에 넣는 작업 필요.
-      isRequired: true,
+      required: true,
       type: String,
     },
     exp: {
