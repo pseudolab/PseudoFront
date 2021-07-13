@@ -2,8 +2,14 @@
   <aside class="toc">
     <nav v-show="showToc">
       <ol>
-        <li v-for="{ style, id, label } in pageList" :key="id" :style="style">
-          <a :href="id">{{ label }}</a>
+        <li
+          v-for="{ style, id, label, type } in pageList"
+          :key="id"
+          :style="style"
+          :class="{ impress: id === `#${h2toc}` || id === `#${h3toc}` }"
+          @click="clickedtoc(type, id)"
+        >
+          <a :href="id"> {{ label }} </a>
         </li>
       </ol>
     </nav>
@@ -17,6 +23,14 @@ export default {
       required: true,
     },
     content: {
+      type: String,
+      required: true,
+    },
+    h2toc: {
+      type: String,
+      required: true,
+    },
+    h3toc: {
       type: String,
       required: true,
     },
@@ -37,10 +51,11 @@ export default {
   methods: {
     extractHeaderTag(content) {
       const matches = content.matchAll(
-        /<h([2-3]) id="(toc-[0-9]{3})">(.*)<\/h[2-3]>/g
+        /<h([2-3]) id="(toc-[0-9]{2}-[0-9]{3})">(.*)<\/h[2-3]>/g
       )
       const headerTag = []
       for (const match of matches) {
+        console.log('match', match)
         headerTag.push({
           type: match[1],
           id: `#${match[2]}`,
@@ -55,8 +70,16 @@ export default {
           label,
           id,
           style: { marginLeft: `${this.gap[type]}px` },
+          type,
         }
       })
+    },
+    clickedtoc(type, id) {
+      if (type === '3') {
+        this.$emit('clickedH3toc', id.slice(1))
+        return
+      }
+      this.$emit('clickedH2toc', id.slice(1))
     },
   },
 }
@@ -77,6 +100,10 @@ export default {
   a {
     text-decoration: none;
     color: grey;
+  }
+  .impress > a {
+    color: #2b14b3;
+    transform: scale(1.3);
   }
 }
 </style>
