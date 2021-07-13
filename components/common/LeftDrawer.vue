@@ -75,6 +75,8 @@ export default {
     max-width: 100%;
     min-width: 0;
     padding: 30px 15px 0 15px;
+    height: calc(100vh - 84px);
+    overflow: scroll;
     & > nav {
       position: fixed;
       top: 64px;
