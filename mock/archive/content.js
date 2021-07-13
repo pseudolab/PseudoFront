@@ -340,8 +340,8 @@ left<span class="token operator">++</span><span class="token punctuation">;</spa
 </ul>
 <hr />
 <br />
-<h2 id="4-네트워크">4. 네트워크</h2>
-<h3 id="tcpudp">TCP/UDP</h3>
+<h2>4. 네트워크</h2>
+<h3>TCP/UDP</h3>
 <ul>
   <li>
     TCP(Trasmission Control Protocol, 전송 제어 프로토콜)
@@ -378,14 +378,14 @@ left<span class="token operator">++</span><span class="token punctuation">;</spa
 <p>그래서 도메인으로 찾는 것이다. 도메인에 IP 주소를 등록시킨다.</p>
 <hr />
 <br />
-<h2>6. 데이터 베이스</h2>
+<h2>5. 데이터 베이스</h2>
 <p>
   <img
     src="https://media.vlpt.us/images/holim0/post/7ed7fd0e-2539-49ec-932c-18c1a9b8ebe5/image.png"
   />
 </p>
 <hr />
-<h2>7. 공통</h2>
+<h2>6. 공통</h2>
 <h3>Call By Value와 Call by Reference</h3>
 <ul>
   <li>
