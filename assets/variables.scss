@@ -43,6 +43,10 @@ $p-shadow: (
   }
 }
 
+.v-application ul, .v-application ol {
+  padding: 0;
+}
+
 .container {
   min-height: calc(100vh - 64px);
 }

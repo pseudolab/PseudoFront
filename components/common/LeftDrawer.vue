@@ -77,6 +77,9 @@ export default {
     padding: 30px 15px 0 15px;
     height: calc(100vh - 84px);
     overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     & > nav {
       position: fixed;
       top: 64px;

@@ -207,7 +207,7 @@ h3 {
 .archive-content {
   display: flex;
   & .main {
-    flex: 0 0 80%;
+    flex: 0 0 75%;
     margin: 0 auto;
   }
 }

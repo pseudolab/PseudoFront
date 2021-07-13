@@ -86,6 +86,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .toc {
+  background-color: white;
   border-left: 1px solid #e0e0e0;
   position: absolute;
   right: 10px;
