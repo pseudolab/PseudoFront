@@ -24,35 +24,18 @@
         <article v-html="content"></article>
       </template>
     </LeftDrawer>
-    <aside ref="toc" class="toc">
-      <nav v-show="showToc">
-        <ol v-for="(pageInfo, index) in pageList" :key="index">
-          <div v-if="typeof pageInfo === 'object'" class="classified">
-            <h3>{{ pageInfo.subject }}</h3>
-            <li v-for="title in pageInfo.titleList" :key="title">
-              <nuxt-link to="/">
-                {{ title }}
-              </nuxt-link>
-            </li>
-          </div>
-          <li v-else>
-            <nuxt-link to="/">
-              {{ pageInfo }}
-            </nuxt-link>
-          </li>
-        </ol>
-      </nav>
-    </aside>
+    <TableOfContents ref="toc" :content="content" :show-toc="showToc" />
   </section>
 </template>
 <script>
 import contentMockData from '@/mock/archive/content.js'
 import LeftDrawer from '@/components/common/LeftDrawer.vue'
+import TableOfContents from '@/components/archive/TableOfContents.vue'
 
 export default {
-  components: { LeftDrawer },
+  components: { LeftDrawer, TableOfContents },
   data: () => ({
-    content: contentMockData,
+    content: '',
     // TODO: 좌측 테이블 구현 방식 변경
     pageList: [
       {
@@ -111,6 +94,21 @@ export default {
   mounted() {
     global.addEventListener('resize', this.handleResize)
     this.handleResize()
+    let headerIdIndex = 0
+    let replacedConstent = contentMockData
+      .replace(/<h2/g, `<h2 id="toc-000"`)
+      .replace(/<h3/g, `<h3 id="toc-000"`)
+    let startIndex = replacedConstent.indexOf('toc-000')
+    while (startIndex >= 0) {
+      const indexStr = String(headerIdIndex)
+      headerIdIndex++
+      replacedConstent =
+        replacedConstent.substring(0, startIndex + 7 - indexStr.length) +
+        indexStr +
+        replacedConstent.substring(startIndex + 7)
+      startIndex = replacedConstent.indexOf('toc-000', startIndex + 1)
+    }
+    this.content = replacedConstent
   },
   methods: {
     handleResize() {
@@ -125,6 +123,11 @@ h1 {
   text-align: center;
   margin-bottom: 1rem;
 }
+h2,
+h3 {
+  padding-top: 10rem;
+  margin-top: -10rem;
+}
 </style>
 <style lang="scss" scoped>
 .archive-content {
@@ -132,16 +135,6 @@ h1 {
   & .main {
     flex: 0 0 80%;
     margin: 0 auto;
-  }
-  & .toc {
-    border-left: 1px solid #e0e0e0;
-    position: absolute;
-    right: 10px;
-    padding-left: 15px;
-    max-height: calc(100vh - 94px);
-    width: 15%;
-    overflow-wrap: break-word;
-    overflow: auto;
   }
 }
 </style>
