@@ -119,11 +119,19 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+</style>
 <style lang="scss" scoped>
 .archive-content {
   display: flex;
   & .main {
     flex: 0 0 80%;
+    margin: 0 auto;
   }
   & .toc {
     border-left: 1px solid #e0e0e0;
