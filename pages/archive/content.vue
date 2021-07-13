@@ -7,8 +7,8 @@
             <div v-if="typeof pageInfo === 'object'" class="classified">
               <h3>{{ pageInfo.subject }}</h3>
               <li v-for="title in pageInfo.titleList" :key="title">
-                <nuxt-link to="/">
-                  {{ title }}
+                <nuxt-link v-slot="{ href, navigate }" to="/">
+                  <a :href="href" @click="navigate">{{ title }}</a>
                 </nuxt-link>
               </li>
             </div>
