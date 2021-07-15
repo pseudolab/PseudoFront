@@ -1,8 +1,8 @@
 <template>
   <section class="profile d-flex my-15 justify-space-between">
     <UserInfo :user-name="userName" :img-url="imgUrl" />
-    <div class="flex-grow-1 ml-5">
-      <v-chip-group class="mb-5" mandatory @change="changeSelectedMenu">
+    <div class="ml-5">
+      <!-- <v-chip-group class="mb-5" mandatory @change="changeSelectedMenu">
         <v-chip
           v-for="(name, idx) in profileMenues"
           :key="name"
@@ -13,7 +13,7 @@
         >
           {{ name }}
         </v-chip>
-      </v-chip-group>
+      </v-chip-group> -->
       <Summary v-if="selectedMenuIdx === 0" />
       <Table
         v-else-if="selectedMenuIdx === 1"
