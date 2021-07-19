@@ -2,13 +2,13 @@
   <div class="activity-calender">
     <svg
       ref="calender"
-      width="800"
-      height="120"
+      width="500"
+      height="150"
       class="activity-calender--calender"
     ></svg>
     <div class="activity-calender--bottom">
       <a href="">Learn how we count contributions.</a>
-      <svg ref="palette" width="150" height="15"></svg>
+      <svg ref="palette" width="200" height="15"></svg>
     </div>
   </div>
 </template>
@@ -24,6 +24,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    maxMonth: {
+      type: Number,
+      default: 6,
+    },
   },
   computed: {
     isLeapYear() {
@@ -35,7 +39,7 @@ export default {
   },
   mounted() {
     const { year, isLeapYear, calenderDataset } = this
-    const tileSize = 11
+    const tileSize = 15
     const gap = tileSize + 3
 
     const calenderContext = document.createElementNS(
@@ -93,25 +97,33 @@ export default {
       30,
       31,
     ]
-    const dateAcc = monthDayCntSet.reduce(
-      (acc, cur, idx) => {
-        const pre = acc[idx]
-        acc.push(pre + cur)
-        return acc
-      },
-      [0]
-    )
 
-    const firstOffset = new Date(`January 1, ${year}`).getDay()
-    const lastOffset = isLeapYear ? firstOffset + 1 : firstOffset
     function makeDataDate(month, day) {
       if (month < 10) month = '0' + month
       if (day < 10) day = '0' + day
       return `${year}-${month}-${day}`
     }
 
-    let curMonth = 1
+    const endMonth = new Date().getMonth() + 1
+    const beginMonth =
+      endMonth - this.maxMonth + 1 <= 1 ? 1 : endMonth - this.maxMonth + 1
+    let curMonth = beginMonth
+    let curMonthIdx = 0
+    const firstMonthDay = new Date(
+      `${monthStringSet[beginMonth - 1]} 1, ${year}`
+    ).getDay()
     let curDate = 1
+    const firstOffset = firstMonthDay
+    const lastOffset = new Date().getDay()
+    const dateAcc = [0]
+    for (let i = beginMonth; i <= endMonth; ++i) {
+      const pre = dateAcc[dateAcc.length - 1]
+      const cur = monthDayCntSet[i - 1]
+      dateAcc.push(pre + cur)
+    }
+    const totalDateCnt = dateAcc[dateAcc.length - 2] + new Date().getDate()
+    const totalWeekCnt = Math.floor(totalDateCnt / 7)
+
     function makeWeekTile(col, startOffset = 0, endOffset = 6) {
       const weekTile = document.createElementNS(
         'http://www.w3.org/2000/svg',
@@ -129,7 +141,7 @@ export default {
         tile.setAttribute('x', 0)
         tile.setAttribute('y', gap * i)
         tile.setAttribute('rx', 2)
-        const curFullDate = makeDataDate(curMonthIdx, curDate)
+        const curFullDate = makeDataDate(curMonth, curDate)
         tile.setAttribute('data-date', curFullDate)
         if (calenderDataset[curFullDate]) {
           const interval = Math.ceil(100 / ColorPalette.length)
@@ -168,13 +180,12 @@ export default {
       calenderContext.appendChild(addTextSVG(val, -20, 22 + idx * 28))
     })
 
-    let curMonthIdx = 0
-    for (let i = 0; i <= 52; i++) {
+    for (let i = 0; i <= totalWeekCnt; i++) {
       // render Month text
       const curAccTile = (i + 1) * 7 - firstOffset
       if (curAccTile > dateAcc[curMonthIdx]) {
         calenderContext.appendChild(
-          addTextSVG(monthStringSet[curMonthIdx], i * gap, -10)
+          addTextSVG(monthStringSet[curMonthIdx + beginMonth - 1], i * gap, -10)
         )
         curMonthIdx += 1
       }
@@ -182,7 +193,7 @@ export default {
       // render Tile
       if (i === 0) {
         calenderContext.appendChild(makeWeekTile(i, firstOffset))
-      } else if (i === 52) {
+      } else if (i === totalWeekCnt) {
         calenderContext.appendChild(makeWeekTile(i, 0, lastOffset))
       } else {
         calenderContext.appendChild(makeWeekTile(i, 0, 6))
