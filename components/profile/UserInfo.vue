@@ -64,8 +64,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .user-info {
+  flex: 0 0 200px;
   & .information {
-    width: 200px;
     border: 1px solid #797979;
     border-radius: 5px;
   }

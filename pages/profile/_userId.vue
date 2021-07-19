@@ -1,5 +1,5 @@
 <template>
-  <section class="profile d-flex my-15">
+  <section class="profile d-flex justify-space-between my-15">
     <UserInfo :user-name="userName" :img-url="imgUrl" />
     <div class="ml-3">
       <Summary />
