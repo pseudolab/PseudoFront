@@ -1,6 +1,14 @@
 <template>
   <section class="user-info">
-    <!-- <img width="200px" :src="imgUrl" /> -->
+    <label for="profile-upload" class="profile-img">
+      <img width="250px" :src="profileUrl" />
+    </label>
+    <input
+      id="profile-upload"
+      type="file"
+      accept="image/png, image/jpeg"
+      @change="uploadImage(e)"
+    />
     <article class="information pa-3">
       <v-btn x-small depressed class="edit-button" @click="toggleIsEdited">{{
         isEdited ? '저장' : '수정'
@@ -83,9 +91,14 @@ export default {
       type: String,
       required: true,
     },
+    profileImgUrl: {
+      type: [String, null],
+      default: null,
+    },
   },
   data: () => ({
     isEdited: false,
+    tempProfileValue: '',
   }),
   computed: {
     userMail() {
@@ -112,6 +125,12 @@ export default {
     website() {
       return this.$store.state.profile.website
     },
+    profileUrl() {
+      if (this.profileImgUrl === null) {
+        return require('../../assets/img/test.png')
+      }
+      return this.profileImgUrl
+    },
   },
   beforeDestroy() {
     if (this.isEdited) {
@@ -137,6 +156,21 @@ export default {
     toggleIsEdited() {
       this.isEdited = !this.isEdited
     },
+
+    uploadImage(e) {
+      // const URL = 'http://foobar.com/upload'
+      // const data = new FormData()
+      // data.append('name', 'my-picture')
+      // data.append('file', e.target.files[0])
+      // const config = {
+      //   header: {
+      //     'Content-Type': 'image/png',
+      //   },
+      // }
+      // axios.put(URL, data, config).then((response) => {
+      //   console.log('image upload response > ', response)
+      // })
+    },
   },
 }
 </script>
@@ -146,6 +180,34 @@ export default {
   .information {
     border: 1px solid #797979;
     border-radius: 5px;
+  }
+  .profile-img {
+    position: relative;
+    display: block;
+    width: 250px;
+    height: 250px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+      &::before {
+        position: absolute;
+        content: 'EDIT';
+        color: white;
+        z-index: 3;
+        font-size: 15px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  input[type='file'] {
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
   }
 }
 </style>
