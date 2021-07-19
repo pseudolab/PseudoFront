@@ -4,7 +4,7 @@ import * as Cookies from 'js-cookie'
 export default (context) => {
   const { store } = context
   createPersistedState({
-    paths: ['signIn'],
+    paths: ['signIn', 'profile'],
     storage: {
       getItem: (key) => {
         if (process.client) {

@@ -1,15 +1,22 @@
 <template>
-  <div class="edit-input">
-    <label>{{ label }}</label>
+  <div
+    class="edit-input"
+    :class="{ inline: iconUrl !== null && !isEdited && inputValue }"
+  >
+    <label v-if="isEdited || iconUrl === null">{{ label }}</label>
     <input
       v-if="isEdited"
       ref="input"
       v-model="editInputValue"
-      @blur="blurInput"
+      :placeholder="placeholder"
     />
-    <div v-else class="content">
+    <img
+      v-else-if="iconUrl !== null && inputValue"
+      class="icon"
+      :src="iconUrl"
+    />
+    <div v-if="iconUrl === null && !isEdited" class="content">
       <p>{{ textValue }}</p>
-      <v-icon class="icon" small @click="editInput">mdi-pencil</v-icon>
     </div>
   </div>
 </template>
@@ -28,11 +35,18 @@ export default {
       default: '',
       type: String,
     },
+    isEdited: {
+      type: Boolean,
+      required: true,
+    },
+    iconUrl: {
+      type: [String, null],
+      default: null,
+    },
   },
   data() {
     return {
       editInputValue: '',
-      isEdited: false,
     }
   },
   computed: {
@@ -47,46 +61,34 @@ export default {
     inputValue(newVal) {
       this.editInputValue = newVal
     },
+    isEdited() {
+      this.$emit('changeInput', this.editInputValue)
+    },
   },
   mounted() {
     this.editInputValue = this.inputValue
-  },
-  methods: {
-    blurInput() {
-      this.isEdited = false
-      this.$emit('changeInput', this.editInputValue)
-    },
-    editInput() {
-      this.isEdited = true
-      this.$nextTick(() => {
-        this.$refs.input.focus()
-      })
-    },
   },
 }
 </script>
 <style lang="scss" scoped>
 .edit-input {
-  & p {
+  &.inline {
+    display: inline;
+    margin-right: 8px;
+  }
+  p {
     font-size: 12px;
     margin: 0;
   }
-  & input {
+  input {
     font-size: 12px;
     width: 100%;
+    border: 1px solid #000;
+    border-radius: 3px;
   }
-
-  & .content {
-    position: relative;
-    & .icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      visibility: hidden;
-    }
-    &:hover .icon {
-      visibility: visible;
-    }
+  .icon {
+    width: 20px;
+    height: 20px;
   }
 }
 </style>

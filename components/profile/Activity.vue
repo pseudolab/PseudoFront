@@ -1,7 +1,7 @@
 <template>
   <section class="activity">
     <v-chip class="mb-4" label color="primary"> Activity </v-chip>
-    <article>
+    <article class="content">
       <HexagonGraph
         :activity-score-data-set="activityScoreDataSet"
         :has-animation="true"
@@ -41,4 +41,12 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.activity {
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+</style>
