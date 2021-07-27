@@ -55,7 +55,6 @@ export default {
       )
       const headerTag = []
       for (const match of matches) {
-        console.log('match', match)
         headerTag.push({
           type: match[1],
           id: `#${match[2]}`,
