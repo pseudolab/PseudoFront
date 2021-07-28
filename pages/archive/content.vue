@@ -2,6 +2,21 @@
   <section class="archive-content">
     <LeftDrawer class="main">
       <template #aside>
+        <v-btn
+          v-if="false"
+          color="light-blue lighten-1"
+          class="archive-content-enroll"
+        >
+          아카이브 참여하기
+        </v-btn>
+        <v-btn
+          v-else
+          color="light-blue lighten-1"
+          class="archive-content-enroll"
+          @click="enrollDialog = true"
+        >
+          아카이브 참여 인원 관리
+        </v-btn>
         <nav>
           <ol v-for="(pageInfo, index) in pageList" :key="index">
             <div v-if="typeof pageInfo === 'object'" class="classified">
@@ -33,6 +48,48 @@
       @clickedH3toc="clickedH3toc"
       @clickedH2toc="clickedH2toc"
     />
+    <v-dialog
+      v-model="enrollDialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <v-card>
+        <v-toolbar dark color="point">
+          <v-btn icon dark @click="enrollDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>아카이브 참여 인원 관리</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark text @click="enrollDialog = false"> Save </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <v-list three-line subheader>
+          <v-subheader>참여 승인 관리</v-subheader>
+          <v-list-item v-for="(val, index) in 5" :key="index">
+            <v-list-item-action>
+              <v-btn color="point" text> 승인 </v-btn>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>이름</v-list-item-title>
+              <v-list-item-subtitle> 사용자 간단 정보 </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
+        <v-list three-line subheader>
+          <v-subheader>멤버 목록</v-subheader>
+          <v-list-item v-for="(val, index) in 5" :key="index">
+            <v-list-item-content>
+              <v-list-item-title>이름</v-list-item-title>
+              <v-list-item-subtitle> 사용자 간단 정보 </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 <script>
@@ -93,6 +150,7 @@ export default {
     h2toc: '',
     h3toc: '',
     tocClicked: false,
+    enrollDialog: false,
   }),
   computed: {
     showToc() {
@@ -178,7 +236,6 @@ export default {
     clickedH2toc(id) {
       this.tocClicked = true
       this.h2toc = id
-      console.log(id)
       const parent = id.slice(4, 6)
       this.h3toc = `toc-${parent}-001`
     },
@@ -192,15 +249,17 @@ export default {
 }
 </script>
 <style lang="scss">
-h1 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-h2,
-h3 {
-  padding-top: 10rem;
-  margin-top: -10rem;
+.archive-content {
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  h2,
+  h3 {
+    padding-top: 10rem;
+    margin-top: -10rem;
+  }
 }
 </style>
 <style lang="scss" scoped>
