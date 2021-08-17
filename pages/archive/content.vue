@@ -3,19 +3,19 @@
     <LeftDrawer class="main">
       <template #aside>
         <v-btn
-          v-if="false"
-          color="light-blue lighten-1"
-          class="archive-content-enroll"
-        >
-          아카이브 참여하기
-        </v-btn>
-        <v-btn
-          v-else
+          v-if="isAdmin"
           color="light-blue lighten-1"
           class="archive-content-enroll"
           @click="enrollDialog = true"
         >
           아카이브 참여 인원 관리
+        </v-btn>
+        <v-btn
+          v-else
+          color="light-blue lighten-1"
+          class="archive-content-enroll"
+        >
+          아카이브 참여하기
         </v-btn>
         <nav>
           <ol v-for="(pageInfo, index) in pageList" :key="index">
@@ -158,6 +158,9 @@ export default {
         return false
       }
       return true
+    },
+    isAdmin() {
+      return this.$store.state.profile.isAdmin
     },
   },
   mounted() {
