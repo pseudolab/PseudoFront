@@ -1,37 +1,23 @@
 export const state = () => ({
-  userMail: '',
+  id: null,
+  isAdmin: null,
+  userName: null,
+  profileImageURL: null,
+  userMail: null,
   description: '',
   region: '',
   github: '',
-  linkedin: '',
+  linkedIn: '',
   facebook: '',
   googleScholar: '',
   website: '',
 })
 
 export const mutations = {
-  SET_USER_MAIL(state, userMail) {
-    state.userMail = userMail
-  },
-  SET_DESCRIPTION(state, description) {
-    state.description = description
-  },
-  SET_REGION(state, region) {
-    state.region = region
-  },
-  SET_GITHUB(state, github) {
-    state.github = github
-  },
-  SET_LINKEDIN(state, linkedin) {
-    state.linkedin = linkedin
-  },
-  SET_FACEBOOK(state, facebook) {
-    state.facebook = facebook
-  },
-  SET_GOOGLESCHOLAR(state, googleScholar) {
-    state.googleScholar = googleScholar
-  },
-  SET_WEBSITE(state, website) {
-    state.website = website
+  SET_USER_INFO(state, payload) {
+    Object.keys(state).forEach((key) => {
+      state[key] = payload[key] ?? state[key]
+    })
+    console.log(state, payload)
   },
 }
