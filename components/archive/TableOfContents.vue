@@ -85,13 +85,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 .toc {
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
   background-color: white;
   border-left: 1px solid #e0e0e0;
   position: absolute;
   right: 10px;
   padding-left: 15px;
   max-height: calc(100vh - 94px);
-  width: 15%;
+  width: 20%;
   overflow-wrap: break-word;
   overflow: auto;
   li {

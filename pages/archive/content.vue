@@ -267,6 +267,10 @@ export default {
   display: flex;
   & .main {
     flex: 0 0 90%;
+    @media screen and (min-width: 768px) {
+      flex: 0 0 100%;
+      padding: 12px;
+    }
   }
 }
 </style>
