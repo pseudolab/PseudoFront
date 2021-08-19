@@ -55,8 +55,6 @@ export default {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
   min-width: 0;
 
   & > aside {

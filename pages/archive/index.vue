@@ -13,7 +13,11 @@
         :end-date="info.endDate"
         :color="info.color"
       />
-      <CategoryCardMaker builder="user1" @fetchCategories="fetchCategories" />
+      <CategoryCardMaker
+        v-if="isAdmin"
+        builder="user1"
+        @fetchCategories="fetchCategories"
+      />
     </section>
   </main>
 </template>
@@ -37,6 +41,11 @@ export default {
         { label: 'Total Project', value: 67 },
       ],
     }
+  },
+  computed: {
+    isAdmin() {
+      return this.$store.state.profile.isAdmin
+    },
   },
   async mounted() {
     try {
